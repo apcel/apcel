@@ -75,7 +75,9 @@ int main (int argc, char* argv[])
     //Итак, мы имеем адрес хоста из ссылки. Мда.
     int socketFd;
     socketFd = socket(he->ai_family, he->ai_socktype, he->ai_protocol);
-
+#	ifdef DEBUG  
+    log(std::to_string(socketFd));
+#	endif
 
 	return 0;
 }
