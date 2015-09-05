@@ -3,6 +3,7 @@
 #include <arpa/inet.h>
 #include <iostream>
 #include <sys/socket.h>
+#include <sys/types.h>
 
 #define DEBUG
 
@@ -68,11 +69,12 @@ int main (int argc, char* argv[])
     }
 
 #	ifdef DEBUG
-    log ("resolved to " + std::string(he->ai_addr->sa_data));
+  //  log ("resolved to " + std::string(he->ai_addr->sa_data));
 #	endif
     ////////////////////////////////////////////////////
     //Итак, мы имеем адрес хоста из ссылки. Мда.
-
+    int socketFd;
+    socketFd = socket(he->ai_family, he->ai_socktype, he->ai_protocol);
 
 
 	return 0;
