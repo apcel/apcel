@@ -95,7 +95,7 @@ void show_help(char* cmdname) {
 	fprintf(stdout, "A simple wget implementation\n" );
 	fprintf(stdout, "Usage: %s ADDRESS\n", cmdname );
 }
-#define DEBUG_GETHOST
+//#define DEBUG_GETHOST
 std::string gethost(char* address, int *begin, int *end) {
 	*begin = 0;
 	std::string s = address;
