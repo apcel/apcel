@@ -72,7 +72,7 @@ int main (int argc, char* argv[])
   //  log ("resolved to " + std::string(he->ai_addr->sa_data));
 #	endif
     ////////////////////////////////////////////////////
-    //Итак, мы имеем адрес хоста из ссылки. Мда.
+    //So we have host adress from link.
     int socketFd;
     socketFd = socket(he->ai_family, he->ai_socktype, he->ai_protocol);
 #	ifdef DEBUG
