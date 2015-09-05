@@ -107,13 +107,15 @@ std::string gethost(char* address, int *begin, int *end) {
 	temp = s.find("/", *begin + 1);
 	if (temp != s.npos)
 		*end = temp;
+
+	s = s.substr(*begin, abs(*end - *begin));
 #	ifdef DEBUG_GETHOST
 	log("gethost returns:");
 	log("*begin = " + std::to_string(*begin));
 	log("*end   = " + std::to_string(*end));
-	log("ukhm, host may be the \'" + s.substr(*begin, abs(*end - *begin)) + "\'");
+	log("ukhm, host may be the \'" + s + "\'");
 #	endif
-	s = s.substr(*begin, abs(*end - *begin));
+	
 	return s;
 }
 
