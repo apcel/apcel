@@ -92,7 +92,7 @@ std::string gethost(char* address, int *begin, int *end) {
 	std::string s = address;
 	*end = s.size() / sizeof(char);
 	int temp = 0;
-	temp = s.find("//", 0);
+	temp = s.find("//", -1);
 	if (temp != s.npos)
 		*begin = temp + 2;
 	temp = s.find("/", *begin + 1);
