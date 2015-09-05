@@ -8,7 +8,7 @@
 
 
 void show_help(char* cmdname);
-void gethost(char* address, int *begin, int *end);
+std::string gethost(char* address, int *begin, int *end);
 void log(std::string message);
 
 int main (int argc, char* argv[])
@@ -40,9 +40,9 @@ int main (int argc, char* argv[])
 	fprintf(stdout, "found link-like %s\n", argv[temporaryInteger]);
 #	endif
 
-	gethost(argv[temporaryInteger], &beginOfHostPosition, &endOfHostPosition);
+	std::string hostname = gethost(argv[temporaryInteger], &beginOfHostPosition, &endOfHostPosition);
 
-    he = gethostbyname (argv[temporaryInteger]);
+    he = gethostbyname (hostname.c_str());
  	if (he == NULL)
     {
         switch (h_errno)
@@ -77,7 +77,7 @@ void show_help(char* cmdname) {
 	fprintf(stdout, "Usage: %s ADDRESS\n", cmdname );
 }
 #define DEBUG_GETHOST
-void gethost(char* address, int *begin, int *end) {
+std::string gethost(char* address, int *begin, int *end) {
 	*begin = 0;
 	std::string s = address;
 	*end = s.size() / sizeof(char);
@@ -94,6 +94,8 @@ void gethost(char* address, int *begin, int *end) {
 	log("*end   = " + std::to_string(*end));
 	log("ukhm, host may be the \'" + s.substr(*begin, abs(*end - *begin)) + "\'");
 #	endif
+	s = s.substr(*begin, abs(*end - *begin));
+	return s;
 }
 
 void log(std::string  message) {
