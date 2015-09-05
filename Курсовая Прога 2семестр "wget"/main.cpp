@@ -23,7 +23,7 @@ int main (int argc, char* argv[])
 
 	int temporaryInteger = 0;
 
-	struct hostent *he;
+	//struct hostent *he;
 
 	int endOfHostPosition = 0;
 	int beginOfHostPosition = 0;
@@ -42,7 +42,11 @@ int main (int argc, char* argv[])
 
 	std::string hostname = gethost(argv[temporaryInteger], &beginOfHostPosition, &endOfHostPosition);
 
-    he = gethostbyname (hostname.c_str());
+
+
+	struct addrinfo * he;
+
+    getaddrinfo (hostname.c_str(), NULL, NULL,&he);
  	if (he == NULL)
     {
         switch (h_errno)
@@ -64,7 +68,7 @@ int main (int argc, char* argv[])
     }
 
 #	ifdef DEBUG
-    log ("resolved to " + he->h_addr[0]);
+    log ("resolved to " + std::string(he->ai_addr->sa_data));
     ////////////////////////////////////////////////////
     //Итак, мы имеем адрес хоста из ссылки. Мда.
 #	endif
