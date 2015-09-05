@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <netdb.h>
 #include <arpa/inet.h>
-
+#include <iostream>
 
 
 
@@ -18,6 +18,38 @@ int main (int argc, char* argv[])
 		show_help(argv[0]);
 		return -1;
 	}
+
+
+	struct hostent *he;
+
+	for (int i = 1; i < argc; i++)
+	{
+		std::string s = argv[i];
+		if (s.find("/"))
+			fprintf(stdout, "found link-like argument \"%s\"\n", argv[i] );
+	}
+
+    he = gethostbyname (argv[0]);
+ 	if (he == NULL)
+    {
+        switch (h_errno)
+        {
+            case HOST_NOT_FOUND:
+                fputs ("The host was not found.\n", stderr);
+                break;
+            case NO_ADDRESS:
+                fputs ("The name is valid but it has no address.\n", stderr);
+                break;
+            case NO_RECOVERY:
+                fputs ("A non-recoverable name server error occurred.\n", stderr);
+                break;
+            case TRY_AGAIN:
+                fputs ("The name server is temporarily unavailable.", stderr);
+                break;
+        }
+        return 1;
+    }
+
 
 
 	return 0;
