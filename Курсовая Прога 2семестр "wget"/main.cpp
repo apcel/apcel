@@ -40,7 +40,7 @@ int main (int argc, char* argv[])
 	fprintf(stdout, "found link-like %s\n", argv[temporaryInteger]);
 #	endif
 
-
+	gethost(argv[temporaryInteger], &beginOfHostPosition, &endOfHostPosition);
 
     he = gethostbyname (argv[temporaryInteger]);
  	if (he == NULL)
@@ -77,18 +77,18 @@ void show_help(char* cmdname) {
 	fprintf(stdout, "Usage: %s ADDRESS\n", cmdname );
 }
 
-void gethost(char* address, int &begin, int &end) {
+void gethost(char* address, int *begin, int *end) {
 	begin = 0;
 	std::string s = address;
-	end = s.size() / sizeof(char);
+	*end = s.size() / sizeof(char);
 	int temp = 0;
 	if (temp = s.find("//") != s.npos)
-		begin = temp + 2;
-	if (temp = s.find("/", begin) != s.npos)
-		end = temp - 1;
+		*begin = temp + 2;
+	if (temp = s.find("/", *begin) != s.npos)
+		*end = temp - 1;
 	log("gethost returns:");
-	log("*begin = " + std::to_string(begin));
-	log("*end   = " + std::to_string(end));
+	log("*begin = " + std::to_string(*begin));
+	log("*end   = " + std::to_string(*end));
 }
 
 void log(std::string  message) {
