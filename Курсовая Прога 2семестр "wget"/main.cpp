@@ -32,7 +32,9 @@ int main (int argc, char* argv[])
 			temporaryInteger = i;
 		}
 	}
-
+#	ifdef DEBUG
+	fprintf(stdout, "found link-like %s\n", argv[temporaryInteger]);
+#	endif
     he = gethostbyname (argv[temporaryInteger]);
  	if (he == NULL)
     {
