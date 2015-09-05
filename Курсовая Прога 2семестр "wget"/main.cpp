@@ -87,7 +87,7 @@ void gethost(char* address, int *begin, int *end) {
 		*begin = temp + 2;
 	temp = s.find("/", *begin + 1);
 	if (temp != s.npos)
-		*end = temp - 1;
+		*end = temp;
 #	ifdef DEBUG_GETHOST
 	log("gethost returns:");
 	log("*begin = " + std::to_string(*begin));
