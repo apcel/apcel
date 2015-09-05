@@ -4,6 +4,8 @@
 #include <iostream>
 
 
+#define DEBUG
+
 
 void show_help(char* cmdname);
 
