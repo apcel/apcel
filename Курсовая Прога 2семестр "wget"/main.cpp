@@ -84,11 +84,12 @@ void gethost(char* address, int *begin, int *end) {
 	int temp = 0;
 	if (temp = s.find("//") != s.npos)
 		*begin = temp + 2;
-	if (temp = s.find("/", *begin - 1) != s.npos)
+	if (temp = s.find("/", *begin + 1) != s.npos)
 		*end = temp - 1;
 	log("gethost returns:");
 	log("*begin = " + std::to_string(*begin));
 	log("*end   = " + std::to_string(*end));
+	log("ukhm, host may be the \'" + s.substr(*begin, abs(*end - *begin)) + "\'");
 }
 
 void log(std::string  message) {
