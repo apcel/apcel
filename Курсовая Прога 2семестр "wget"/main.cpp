@@ -93,6 +93,6 @@ void gethost(char* address, int &begin, int &end) {
 
 void log(std::string  message) {
 #	ifdef DEBUG
-	fprintf(stdout, "%s\n", &message);
+	fprintf(stdout, "%s\n", message.c_str());
 #	endif
 }
