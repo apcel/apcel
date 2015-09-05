@@ -26,7 +26,7 @@ int main (int argc, char* argv[])
 	for (int i = 1; i < argc; i++)
 	{
 		std::string s = argv[i];
-		if (s.find("/")) 
+		if (s.find("/") != 0) 
 		{
 			fprintf(stdout, "found link-like argument \"%s\"\n", argv[i] );
 			temporaryInteger = i;
