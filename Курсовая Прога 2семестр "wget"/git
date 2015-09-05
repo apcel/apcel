@@ -1,3 +1,2 @@
-git add .
-git commit -m 'autobuild by Sublime Text'
+git commit -am 'autobuild by Sublime Text'
 git push
