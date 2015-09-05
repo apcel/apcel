@@ -78,7 +78,7 @@ void show_help(char* cmdname) {
 }
 
 void gethost(char* address, int *begin, int *end) {
-	begin = 0;
+	*begin = 0;
 	std::string s = address;
 	*end = s.size() / sizeof(char);
 	int temp = 0;
