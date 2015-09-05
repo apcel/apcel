@@ -103,7 +103,11 @@ std::string gethost(char* address, int *begin, int *end) {
 	int temp = 0;
 	temp = s.find("//", 1);
 	if (temp != s.npos)
+	{
 		*begin = temp + 2;
+	} else {
+		temp = 0;
+	}
 	temp = s.find("/", *begin + 1);
 	if (temp != s.npos)
 		*end = temp;
@@ -115,7 +119,7 @@ std::string gethost(char* address, int *begin, int *end) {
 	log("*end   = " + std::to_string(*end));
 	log("ukhm, host may be the \'" + s + "\'");
 #	endif
-	
+
 	return s;
 }
 
