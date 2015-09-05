@@ -19,17 +19,21 @@ int main (int argc, char* argv[])
 		return -1;
 	}
 
+	int temporaryInteger = 0;
 
 	struct hostent *he;
 
 	for (int i = 1; i < argc; i++)
 	{
 		std::string s = argv[i];
-		if (s.find("/"))
+		if (s.find("/")) 
+		{
 			fprintf(stdout, "found link-like argument \"%s\"\n", argv[i] );
+			temporaryInteger = i;
+		}
 	}
 
-    he = gethostbyname (argv[0]);
+    he = gethostbyname (argv[temporaryInteger]);
  	if (he == NULL)
     {
         switch (h_errno)
