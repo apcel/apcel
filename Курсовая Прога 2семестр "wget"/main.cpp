@@ -32,7 +32,7 @@ int main (int argc, char* argv[])
 		std::string s = argv[i];
 		if (s.find("/") != s.npos)
 		{
-			fprintf(stdout, "found link-like argument \"%s\"\n", argv[i] );
+			//fprintf(stdout, "found link-like argument \"%s\"\n", argv[i] );
 			temporaryInteger = i;
 		}
 	}
