@@ -99,7 +99,7 @@ void show_help(char* cmdname) {
 std::string gethost(char* address, int *begin, int *end) {
 	*begin = 0;
 	std::string s = address;
-	*end = s.size() / sizeof(char);
+	*end = s.size() / sizeof(char) + 1;
 	int temp = 0;
 	temp = s.find("//", 1);
 	if (temp != s.npos)
