@@ -76,7 +76,7 @@ int main (int argc, char* argv[])
     int socketFd;
     socketFd = socket(he->ai_family, he->ai_socktype, he->ai_protocol);
 #	ifdef DEBUG
-    log(std::to_string(socketFd));
+    log("socketFd = " + std::to_string(socketFd));
 #	endif
     if(socketFd < 0)
     {
