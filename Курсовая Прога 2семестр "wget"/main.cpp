@@ -64,7 +64,7 @@ int main (int argc, char* argv[])
     }
 
 #	ifdef DEBUG
-    log ("resolved to " + *he->h_addr);
+    log ("resolved to " + he->h_addr[0]);
     ////////////////////////////////////////////////////
     //Итак, мы имеем адрес хоста из ссылки. Мда.
 #	endif
