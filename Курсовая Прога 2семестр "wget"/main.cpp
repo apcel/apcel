@@ -85,7 +85,8 @@ void gethost(char* address, int *begin, int *end) {
 	temp = s.find("//", 0);
 	if (temp != s.npos)
 		*begin = temp + 2;
-	if (temp = s.find("/", *begin + 1) != s.npos)
+	temp = s.find("/", *begin + 1);
+	if (temp != s.npos)
 		*end = temp - 1;
 #	ifdef DEBUG_GETHOST
 	log("gethost returns:");
