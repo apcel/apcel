@@ -63,6 +63,15 @@ int main (int argc, char* argv[])
         return 1;
     }
 
+#	ifdef DEBUG
+    log ("resolved to " + std::to_string(*he->h_addr));
+    ////////////////////////////////////////////////////
+    //Итак, мы имеем адрес хоста из ссылки. Мда.
+#	endif
+
+
+
+
 
 
 	return 0;
