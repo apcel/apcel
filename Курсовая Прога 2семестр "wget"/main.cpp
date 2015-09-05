@@ -8,8 +8,8 @@
 
 
 void show_help(char* cmdname);
-
-
+void gethost(char* address, int *begin, int *end);
+void log(std::string message);
 
 int main (int argc, char* argv[])
 {
@@ -25,10 +25,12 @@ int main (int argc, char* argv[])
 
 	struct hostent *he;
 
+	int endOfHostPosition = 0;
+	int beginOfHostPosition = 0;
 	for (int i = 1; i < argc; i++)
 	{
 		std::string s = argv[i];
-		if (s.find("/") != s.npos) 
+		if (s.find("/") != s.npos)
 		{
 			fprintf(stdout, "found link-like argument \"%s\"\n", argv[i] );
 			temporaryInteger = i;
@@ -37,6 +39,9 @@ int main (int argc, char* argv[])
 #	ifdef DEBUG
 	fprintf(stdout, "found link-like %s\n", argv[temporaryInteger]);
 #	endif
+
+
+
     he = gethostbyname (argv[temporaryInteger]);
  	if (he == NULL)
     {
@@ -70,6 +75,24 @@ int main (int argc, char* argv[])
 void show_help(char* cmdname) {
 	fprintf(stdout, "A simple wget implementation\n" );
 	fprintf(stdout, "Usage: %s ADDRESS\n", cmdname );
+}
 
+void gethost(char* address, int &begin, int &end) {
+	begin = 0;
+	std::string s = address;
+	end = s.size() / sizeof(char);
+	int temp = 0;
+	if (temp = s.find("//") != s.npos)
+		begin = temp + 2;
+	if (temp = s.find("/", begin) != s.npos)
+		end = temp - 1;
+	log("gethost returns:");
+	log("*begin = " + std::to_string(begin));
+	log("*end   = " + std::to_string(end));
+}
 
+void log(std::string  message) {
+#	ifdef DEBUG
+	fprintf(stdout, "%s\n", &message);
+#	endif
 }
