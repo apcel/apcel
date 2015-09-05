@@ -2,7 +2,7 @@
 #include <netdb.h>
 #include <arpa/inet.h>
 #include <iostream>
-
+#include <sys/socket.h>
 
 #define DEBUG
 
@@ -69,12 +69,9 @@ int main (int argc, char* argv[])
 
 #	ifdef DEBUG
     log ("resolved to " + std::string(he->ai_addr->sa_data));
+#	endif
     ////////////////////////////////////////////////////
     //Итак, мы имеем адрес хоста из ссылки. Мда.
-#	endif
-
-
-
 
 
 
@@ -95,10 +92,10 @@ std::string gethost(char* address, int *begin, int *end) {
 	std::string s = address;
 	*end = s.size() / sizeof(char);
 	int temp = 0;
-	temp = s.find("//", 0);
+	temp = s.find("\/\/", 0);
 	if (temp != s.npos)
 		*begin = temp + 2;
-	temp = s.find("/", *begin + 1);
+	temp = s.find("\/", *begin + 1);
 	if (temp != s.npos)
 		*end = temp;
 #	ifdef DEBUG_GETHOST
