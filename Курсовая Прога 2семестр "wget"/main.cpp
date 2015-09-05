@@ -76,20 +76,22 @@ void show_help(char* cmdname) {
 	fprintf(stdout, "A simple wget implementation\n" );
 	fprintf(stdout, "Usage: %s ADDRESS\n", cmdname );
 }
-
+#define DEBUG_GETHOST
 void gethost(char* address, int *begin, int *end) {
 	*begin = 0;
 	std::string s = address;
 	*end = s.size() / sizeof(char);
 	int temp = 0;
 	if (temp = s.find("//", 0) != s.npos)
-		*begin = temp + 2;
+		*begin = temp /*+ 2*/;
 	if (temp = s.find("/", *begin + 1) != s.npos)
 		*end = temp - 1;
+#	ifdef DEBUG_GETHOST
 	log("gethost returns:");
 	log("*begin = " + std::to_string(*begin));
 	log("*end   = " + std::to_string(*end));
 	log("ukhm, host may be the \'" + s.substr(*begin, abs(*end - *begin)) + "\'");
+#	endif
 }
 
 void log(std::string  message) {
