@@ -113,6 +113,10 @@ int main (int argc, char* argv[])
     	return 2;
     }
 
+#	ifdef DEBUG
+    log("Binding socketFd = " + std::to_string(socketFd));
+#	endif
+
     temporaryInteger = bind(socketFd, he->ai_addr, he->ai_addrlen);
     if(temporaryInteger != 0) {
     	log("Bind error: " + temporaryInteger);
