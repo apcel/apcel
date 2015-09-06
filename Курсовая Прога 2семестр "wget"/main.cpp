@@ -82,7 +82,7 @@ int main (int argc, char* argv[])
 
 
     log("struct addrinfo {\
-    int     ai_flags;		" + std::to_string(he->ai_flags) +\
+    \nint     ai_flags;		" + std::to_string(he->ai_flags) +\
     "\nint     ai_family;	" + std::to_string(he->ai_family) +\
     "\nint     ai_socktype;	" + std::to_string(he->ai_family) +\
     "\nint     ai_protocol;	" + std::to_string(he->ai_protocol) +\
