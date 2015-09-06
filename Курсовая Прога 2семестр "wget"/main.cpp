@@ -102,7 +102,9 @@ int main (int argc, char* argv[])
     	return 2;
     }
 
-    bind(socketFd, he->ai_addr, he->ai_addrlen);
+    temporaryInteger = bind(socketFd, he->ai_addr, he->ai_addrlen);
+    if(temporaryInteger != 0)
+    	return temporaryInteger;
 
 #	ifdef DEBUG
     log("Binded socketFd = " + std::to_string(socketFd));
