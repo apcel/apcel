@@ -147,6 +147,11 @@ int main (int argc, char* argv[])
     log("Trying to connect..");
     temporaryInteger = connect(socketFd, he->ai_addr, he->ai_addrlen);
     log("connected; return value: " + std::to_string(temporaryInteger));
+    if (temporaryInteger != 0) {
+    	log ("connection error, exitting");
+    	return 50;
+    }
+
 
 	return 0;
 }
