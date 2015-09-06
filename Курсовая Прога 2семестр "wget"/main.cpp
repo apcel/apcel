@@ -14,6 +14,11 @@ struct link
 	std::string relative;
 	std::string filename;
 };
+struct request
+{
+	std::string method;
+	char SP = char(32);
+};
 
 void show_help(char* cmdname);
 int gethost(char* address, link *result);
@@ -113,6 +118,11 @@ int main (int argc, char* argv[])
 #	ifdef DEBUG
     log("Binded socketFd = " + std::to_string(socketFd));
 #	endif
+
+    //std::string request;
+
+
+
 
 	return 0;
 }
