@@ -206,7 +206,7 @@ int main (int argc, char* argv[])
 
 
     ////////////////////////////////////////
-    char  server_reply_buf[2];
+    /*char  server_reply_buf[2];
     std::string server_reply;
     {
     temporaryInteger = recv(socketFd, server_reply_buf, 1, 0);
@@ -215,9 +215,9 @@ int main (int argc, char* argv[])
 	} while(server_reply.find("\r\n\r\n") == server_reply.npos);
     log("received data: " + std::to_string(temporaryInteger));
     log(server_reply);
-    //fprintf(localFd, "%s\n", server_reply);
+    //fprintf(localFd, "%s\n", server_reply);*/
 
-
+    FILE * recvSocketFd = fdopen(socketFd, "rb+");
 
 	return 0;
 }
