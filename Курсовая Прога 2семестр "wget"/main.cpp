@@ -138,15 +138,21 @@ int gethost(char* address, link * result) {
 	if(temp != s.npos)
 	{
 		result->filename = s.substr(temp);
+	} else {
+		return -2;
 	}
 
 
-	s = s.substr(begin, abs(end - begin));
+	//s = s.substr(begin, abs(end - begin));
 #	ifdef DEBUG_GETHOST
 	log("gethost returns:");
-	log("*begin = " + std::to_string(begin));
-	log("*end   = " + std::to_string(end));
-	log("ukhm, host may be the \'" + s + "\'");
+	log("begin = " + std::to_string(begin));
+	log("end   = " + std::to_string(end));
+	//log("ukhm, host may be the \'" + s + "\'");
+	log(result->protocol);
+	log(result->hostname);
+	log(result->relative);
+	log(result->filename);
 #	endif
 
 //	return s;
