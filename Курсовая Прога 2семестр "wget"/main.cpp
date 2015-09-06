@@ -206,7 +206,7 @@ int main (int argc, char* argv[])
 
 
     ////////////////////////////////////////
-    char  server_reply_buf[20000];
+  /*/  char  server_reply_buf[20000];
     std::string server_reply;
     {
     temporaryInteger = recv(socketFd, server_reply_buf,250, 0);
@@ -217,7 +217,7 @@ int main (int argc, char* argv[])
     log(server_reply);
     //fprintf(localFd, "%s\n", server_reply);*/
 
-    FILE * recvSocketFd = fdopen(socketFd, "rb+");
+    /*FILE * recvSocketFd = fdopen(socketFd, "rb+");
     struct recvBuf
     {
     	char * recvPtr = 0;
@@ -234,7 +234,9 @@ int main (int argc, char* argv[])
 
   //  for(int i = 0; i < *recvBuf.recvSize; ++i)
     //	fprintf(stdout, "%c\n", *recvBuf.recvPtr[i]);
-
+*/
+	char* server_reply_buf;
+	while(recv(socketFd, server_reply_buf, 1, 0))
 	return 0;
 }
 
