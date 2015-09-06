@@ -88,7 +88,7 @@ int main (int argc, char* argv[])
     "\nint     ai_protocol;			" + std::to_string(he->ai_protocol) +\
     "\nsize_t  ai_addrlen;			" + std::to_string(he->ai_addrlen) +\
     "\nstruct  sockaddr *ai_addr;	" + std::to_string(he->ai_addr->sa_family) + "  " + std::string(he->ai_addr->sa_data) + \
-    "\nchar    *ai_canonname;     /* canonical name */" + std::string(he->ai_canonname) + \
+    "\nchar    *ai_canonname;     /* canonical name */	" + std::string(he->ai_canonname) + \
     "\nstruct  addrinfo *ai_next; /* this struct can form a linked list */" + \
 "}");
 
