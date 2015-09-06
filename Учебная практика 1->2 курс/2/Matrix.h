@@ -12,13 +12,15 @@ class MyMatrix: public std::vector<__Type> {
   private:
     std::vector<std::vector<__Type>> temp;
     int sizeM, sizeN;
-    __Type container[2][2];
+    //__Type container[2][2];
+    int sizeCol();
+    int sizeRow();
   public:
     std::ostream & operator << (std::ostream &output);
     std::istream & operator >> (std::istream &output);
     MyMatrix<__Type> &operator +  (const MyMatrix<__Type> &m);
-    __Type & operator () (const unsigned long el);
-    __Type & operator () (const unsigned long m, const unsigned long n);
+    //__Type & operator () (const unsigned long el);
+    //__Type & operator () (const unsigned long m, const unsigned long n);
     void transpone();
     MyMatrix()
     {

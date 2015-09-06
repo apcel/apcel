@@ -1,5 +1,5 @@
 #pragma once
-#include "MyVector.h" // Объявление структуры класса 
+#include "MyVector.h" // Объявление структуры класса
 
 
 
@@ -7,14 +7,14 @@
 template<typename __Type>
 void MyVector<__Type>::sort(SortType type) // Сортирока указанным методом
   {
-    switch (type) 
+    switch (type)
 	{
-      case Insertion: 
+      case Insertion:
 	  {
         sortInsertion();//
         break;
       }
-      case Bubble: 
+      case Bubble:
 	  {
         sortBubble();// Сортировка пузырьком
         break;
@@ -31,7 +31,7 @@ template<typename __Type>
 int MyVector<__Type>::find(FindType type, __Type keyIn) // Поиск указанным методом
   {
   	this->key = keyIn;
-    switch (type) 
+    switch (type)
 	{
       case   Binary:
       {
@@ -41,7 +41,7 @@ int MyVector<__Type>::find(FindType type, __Type keyIn) // Поиск указа
       case  Interpolation:
       {
       	return findInterpolation();
-      }     
+      }
     }
   };
 ///////////////////сортировка///////////////////////////////
@@ -50,17 +50,17 @@ void MyVector<__Type>::sortBubble() //поплавок.
     {
       size_t i, j;
       bool flag = true;// признак наличия перестановок
-      //__Type temp; // временная переменная 
+      //__Type temp; // временная переменная
       size_t numLength = this->size(); // размер вектора
       nswap = 0; // количество перестановок
-      for(i = 1; (i <= numLength) && flag; i++) // сортировка прекращается по достижении конца вектора 
+      for(i = 1; (i <= numLength) && flag; i++) // сортировка прекращается по достижении конца вектора
                           //или при отсутствии перестановок
-      { 
+      {
         flag = false;
-          for (j = 0; j < (numLength - 1); j++) 
+          for (j = 0; j < (numLength - 1); j++)
       	  {
-            if ((*this)[j + 1] < (*this)[j]) 
-	        { 
+            if ((*this)[j + 1] < (*this)[j])
+	        {
 	          nswap++;
 	          temp = (*this)[j];
 	          (*this)[j] = (*this)[j + 1];
@@ -73,7 +73,7 @@ void MyVector<__Type>::sortBubble() //поплавок.
 
 template<typename __Type>
 void MyVector<__Type>::sortInsertion() //вставок.
-    {	
+    {
         nswap=0;
 	    for(int i = 0; i < this->size(); i++)
 	    {
@@ -84,24 +84,24 @@ void MyVector<__Type>::sortInsertion() //вставок.
 	            (*this)[j-1]=(*this)[j];
 	            (*this)[j]=temp;
 	        }
-	    }	    
+	    }
 	}
 
 template<typename __Type>
 void MyVector<__Type>::sortCount() //подсчётом.
-	{	
+	{
 		nswap = 0;
 		sortCountMinMax();
 		std::vector<__Type> tempVector ((countMax - countMin) + 1, 0u);
 		auto k = this->begin();
-		for (auto i = k; i != this->end(); ++i) 
+		for (auto i = k; i != this->end(); ++i)
 		{
 		    ++tempVector[*i - countMin];
 		    nswap++;
 		}
-		for (auto i = countMin; i <= countMax; ++i) 
+		for (auto i = countMin; i <= countMax; ++i)
 		{
-		    for (auto j = 0; j < tempVector[i - countMin]; ++j) 
+		    for (auto j = 0; j < tempVector[i - countMin]; ++j)
 		    {
 		     	nswap++;
 				*k++ = i;
@@ -117,8 +117,8 @@ int MyVector<__Type>::findBinary()
 		int left=0;
 		int right=this->size();
 		int mid;
-		while(left < right) 
-		{	
+		while(left < right)
+		{
 			nview++;
 			mid=left+(right-left)/2;
 			if (key < (*this)[mid]) right=mid-1;
@@ -128,7 +128,7 @@ int MyVector<__Type>::findBinary()
 		return -1;
 	}
 
-	
+
 template<typename __Type>
 int MyVector<__Type>::findInterpolation()
 	{
@@ -146,7 +146,7 @@ int MyVector<__Type>::findInterpolation()
 			else return mid;
 		}
 		if ((*this)[left]==key) return left;
-		else return -1;		
+		else return -1;
 	}
 /////////////////////helpers/////////////////////////////
 
@@ -171,14 +171,14 @@ void MyVector<__Type>::fillWithRandomNumbers(int n)
 		n -= this->size();
 		for (auto i = 0; i < n; i++)
 		{
-			this->push_back(random(apcel_RAND_MIN,apcel_RAND_MAX));			
+			this->push_back(random(apcel_RAND_MIN,apcel_RAND_MAX));
 		}
 	}
 
 template<typename __Type>
 int MyVector<__Type>::random(int a, int b)
 {
-	int u=rand(); // от 0 до RAND_MAX (2^16)	
+	int u=rand(); // от 0 до RAND_MAX (2^16)
 	return a+u%(b-a); // для b>a
 };
 

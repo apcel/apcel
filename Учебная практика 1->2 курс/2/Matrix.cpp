@@ -44,3 +44,15 @@ void MyMatrix<__Type>::transpone()
 ///////////////////сортировка///////////////////////////////
 
 /////////////////////Поиск////////////////////////////////
+template<typename __Type>
+int MyMatrix<__Type>::operator sizeRow()
+{
+
+
+}
+template<typename __Type>
+int MyMatrix<__Type>::operator sizeCol()
+{
+	return temp.size();
+
+}

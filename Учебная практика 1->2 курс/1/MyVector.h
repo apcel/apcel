@@ -16,19 +16,19 @@ class MyVector: public std::vector<__Type> {
     int findInterpolation();//Интерполяционный поиск  +
     //void sortBubble();
 
-   
+
     __Type countMin;
     __Type countMax;
     __Type temp;
     void sortCountMinMax();
-   
+
     int random(int a, int b);
     __Type key;
-  public:  
+  public:
     void fillWithRandomNumbers(int n);
     unsigned long int nswap; // количество перестановок элементов
     unsigned long int nview; // Количество просмотренных элементов
-   
+
 
 
     enum SortType {// Тип сортировки
