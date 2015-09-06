@@ -162,7 +162,7 @@ int main (int argc, char* argv[])
     message = requestSkeleton.method + requestSkeleton.SP + addr.relative + requestSkeleton.SP + requestSkeleton.httpVer + requestSkeleton.CRLF;
     log(message);
 
-    temporaryInteger = write(socketFd, message.c_str(), message.size());
+    temporaryInteger = send(socketFd, message.c_str(), message.size(), 0);
     log("Sent data: " + std::to_string(temporaryInteger));
 
 
