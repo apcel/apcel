@@ -23,7 +23,7 @@ int main (int argc, char* argv[])
 		//return -1;
 	}
 
-	int temporaryInteger = 0;
+	int temporaryInteger = 1;
 
 	//struct hostent *he;
 
