@@ -187,7 +187,7 @@ int main (int argc, char* argv[])
     std::string message = "";
     requestSkeleton requestSkeleton;
     message = requestSkeleton.method + requestSkeleton.SP + addr.relative + requestSkeleton.SP + requestSkeleton.requestHeader 
-    	+ "Host:" + addr.hostname
+    	//+ "Host:" + addr.hostname
     		+ requestSkeleton.SP + requestSkeleton.httpVer + requestSkeleton.CRLF;
    // message = "GET  	/doc12560157_378499337  	HTTP/1.1\r\n\r\n";
     log(message);
