@@ -73,8 +73,9 @@ int main (int argc, char* argv[])
 
 
 	struct addrinfo * he;
+	he->ai_socktype = SOCK_DGRAM;
 
-    temporaryInteger = getaddrinfo (addr.hostname.c_str(), NULL, NULL,&he);
+    temporaryInteger = getaddrinfo (addr.hostname.c_str(), NULL, he, &he);
 #	ifdef DEBUG
     log ("getaddrinfo done: " + std::to_string(temporaryInteger));
 #	endif
@@ -89,13 +90,13 @@ int main (int argc, char* argv[])
     {
 #		ifdef DEBUG
     	log("he->ai_socktype = " + std::to_string(he->ai_socktype));
-#    	endif
+
 
 
     log("struct addrinfo {\
     \nint     ai_flags;			" + std::to_string(he->ai_flags) +\
     "\nint     ai_family;			" + std::to_string(he->ai_family) +\
-    "\nint     ai_socktype;			" + std::to_string(he->ai_family) +\
+    "\nint     ai_socktype;			" + std::to_string(he->ai_socktype) +\
     "\nint     ai_protocol;			" + std::to_string(he->ai_protocol) +\
     "\nsize_t  ai_addrlen;			" + std::to_string(he->ai_addrlen) +\
     "\nstruct  sockaddr *ai_addr;	" + std::to_string(he->ai_addr->sa_family) + "  " + std::string(he->ai_addr->sa_data));
@@ -104,7 +105,7 @@ int main (int argc, char* argv[])
     "\nstruct  addrinfo *ai_next; /* this struct can form a linked list */" /*+ std::to_string(he->ai_next) +*/\
     "\n}");
 
-
+#    	endif
 
     	he = he->ai_next;
     } while (he->ai_socktype != SOCK_DGRAM && temporaryPointer != he && true);
