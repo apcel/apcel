@@ -89,7 +89,7 @@ int main (int argc, char* argv[])
 
 
     struct addrinfo * temporaryPointer = he;
-    {
+  //  {
 #		ifdef DEBUG_FUCKN
     	log("he->ai_socktype = " + std::to_string(he->ai_socktype));
 
@@ -109,8 +109,8 @@ int main (int argc, char* argv[])
 
 #    	endif
 
-    	he = he->ai_next;
-    } while (he->ai_socktype != SOCK_DGRAM && temporaryPointer != he && true);
+    //	he = he->ai_next;
+   // } while (he->ai_socktype != SOCK_DGRAM && temporaryPointer != he && true);
  	/*if (he == NULL)
     {
         switch (h_errno)
