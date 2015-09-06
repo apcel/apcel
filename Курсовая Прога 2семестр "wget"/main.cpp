@@ -8,7 +8,7 @@
 #include <sys/sendfile.h>
 
 #define DEBUG
-//#define DEBUG_FUCKN
+#define DEBUG_FUCKN
 struct linkStruct
 {
 	std::string protocol;
