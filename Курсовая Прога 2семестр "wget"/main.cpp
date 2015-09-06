@@ -225,6 +225,7 @@ int main (int argc, char* argv[])
 	};
 	log("recvSocketFd opened");
 	recvBuf recvBuf;
+	log("recvBuf recvBuf");
     getline(recvBuf.recvPtr, recvBuf.recvSize, recvSocketFd);
     log("getline");
     printf("%s\n", *recvBuf.recvPtr);
