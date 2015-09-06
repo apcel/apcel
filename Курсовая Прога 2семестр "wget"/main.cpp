@@ -174,8 +174,8 @@ int main (int argc, char* argv[])
     	return 100;
     }
     log("Success.");*/
-    char  server_reply[10000];
-    temporaryInteger = recv(socketFd, server_reply, 10000, 0);
+    char  server_reply[2000];
+    temporaryInteger = recv(socketFd, server_reply, 2000, 0);
     log(server_reply);
    // fprintf(localFd, "%s\n", server_reply);
 
