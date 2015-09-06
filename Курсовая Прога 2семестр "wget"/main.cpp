@@ -273,7 +273,7 @@ int main (int argc, char* argv[])
 	int i = 0;
 	//fprintf(localFd, "%s\n", server_reply.c_str());
 
-	CONTENTLENGTH = (CONTENTLENGTH / sizeof(char) )/ 8;
+	CONTENTLENGTH = (CONTENTLENGTH / sizeof(char) );
 	//while(recv(socketFd, &server_reply_buf, sizeof(char), 0) != 0 && ++i < CONTENTLENGTH)
 	while(++i < CONTENTLENGTH + 1) {
 		recv(socketFd, &server_reply_buf, sizeof(char), 0);
