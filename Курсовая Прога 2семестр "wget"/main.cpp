@@ -254,6 +254,7 @@ int main (int argc, char* argv[])
 	int temp = 0;
 	int temp2 = 0;
 	temp = server_reply.find("CONTENT-LENGTH:");
+	temp2 = server_reply.find("\r\n", temp);
 
 	while(recv(socketFd, &server_reply_buf, 1, 0) != 0 && true)
 	return 0;
