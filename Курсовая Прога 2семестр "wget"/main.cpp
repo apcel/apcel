@@ -71,7 +71,7 @@ int main (int argc, char* argv[])
 
     temporaryInteger = getaddrinfo (addr.hostname.c_str(), NULL, NULL,&he);
 #	ifdef DEBUG
-    log ("getaddrinfo done");
+    log ("getaddrinfo done: " + std::to_string(temporaryInteger));
 #	endif
     if(temporaryInteger != 0)
     	return temporaryInteger;
