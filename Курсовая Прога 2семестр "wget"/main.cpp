@@ -101,9 +101,10 @@ int main (int argc, char* argv[])
     	fprintf(stderr, "Error opening socketFd: %i\n", socketFd);
     	return 2;
     }
-    
 
-    
+    bind(socketFd, he->ai_addr, he->ai_addrlen);
+
+
 
 	return 0;
 }
