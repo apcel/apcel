@@ -88,7 +88,7 @@ int main (int argc, char* argv[])
 #    	endif
 
     	he = he->ai_next;
-    } while (he->ai_socktype != SOCK_DGRAM && temporaryPointer != &he);
+    } while (he->ai_socktype != SOCK_DGRAM && temporaryPointer != &he && true);
  	/*if (he == NULL)
     {
         switch (h_errno)
@@ -194,7 +194,7 @@ void show_help(char* cmdname) {
 }
 
 
-#define DEBUG_GETHOST
+//#define DEBUG_GETHOST
 
 int gethost(char* address, linkStruct * result) {
 	int begin = 0;
