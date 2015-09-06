@@ -203,11 +203,17 @@ int main (int argc, char* argv[])
     	return 100;
     }
     log("Success.");
-    char  server_reply[2000];
-    temporaryInteger = recv(socketFd, server_reply, 2000, 0);
+
+
+    ////////////////////////////////////////
+    char  server_reply_buf[100];
+    std::string server_reply;
+    {
+    temporaryInteger = recv(socketFd, server_reply_buf, 4, 0);
+	} while(server_reply.find("\r\n\r\n") != server_reply.npos)
     log("received data: " + std::to_string(temporaryInteger));
     log(server_reply);
-    fprintf(localFd, "%s\n", server_reply);
+    //fprintf(localFd, "%s\n", server_reply);
 
 
 
