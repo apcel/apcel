@@ -163,7 +163,7 @@ int main (int argc, char* argv[])
     log(message);
 
     temporaryInteger = write(socketFd, message.c_str(), message.size());
-
+    log("Sent data: " + std::to_string(temporaryInteger));
 
 
 
