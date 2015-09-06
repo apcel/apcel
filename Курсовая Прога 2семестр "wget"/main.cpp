@@ -81,7 +81,7 @@ int main (int argc, char* argv[])
     if(temporaryInteger != 0)
     	return temporaryInteger;
 
-
+    log("SOCK_DGRAM = " + std::to_string(SOCK_DGRAM));
 
 
 
@@ -107,7 +107,7 @@ int main (int argc, char* argv[])
 
 
     	he = he->ai_next;
-    } while (/*he->ai_socktype != SOCK_DGRAM && temporaryPointer != &he */true);
+    } while (he->ai_socktype != SOCK_DGRAM && temporaryPointer != he && true);
  	/*if (he == NULL)
     {
         switch (h_errno)
