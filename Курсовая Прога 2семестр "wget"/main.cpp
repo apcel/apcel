@@ -173,7 +173,7 @@ int main (int argc, char* argv[])
     	return 100;
     }
     char  server_reply[10000];
-    temporaryInteger = recv(socketFd, server_reply,  0, 1000);
+    temporaryInteger = recv(socketFd, server_reply,  0, 10000);
     fprintf(localFd, "%s\n", server_reply);
 
 
