@@ -228,7 +228,7 @@ int main (int argc, char* argv[])
 	log("recvBuf recvBuf");
     getline(&recvBuf.recvPtr, &recvBuf.recvSize, recvSocketFd);
     log("getline");
-    printf("%s\n", *recvBuf.recvPtr);
+    printf("%s\n", recvBuf.recvPtr);
 
 
   //  for(int i = 0; i < *recvBuf.recvSize; ++i)
