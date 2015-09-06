@@ -132,12 +132,12 @@ int gethost(char* address, link * result) {
 	{
 		end = temp;
 		result->hostname = s.substr(begin, abs(end - begin));
-		result->relative = s.substr(end + 1);
+		result->relative = s.substr(end);
 	}
 	temp = s.rfind("/");
 	if(temp != s.npos)
 	{
-		result->filename = s.substr(temp);
+		result->filename = s.substr(temp + 1);
 	} else {
 		return -2;
 	}
