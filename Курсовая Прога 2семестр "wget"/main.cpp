@@ -83,7 +83,7 @@ int main (int argc, char* argv[])
     log ("getaddrinfo done: " + std::to_string(temporaryInteger));
 #	endif
     if(temporaryInteger != 0) {
-    	return temporaryInteger;
+    	//return temporaryInteger;
     	temporaryInteger = getaddrinfo(addr.hostname.c_str(), "80", NULL, &he);
     }
 
