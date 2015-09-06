@@ -72,7 +72,8 @@ int main (int argc, char* argv[])
 
 
 
-	struct addrinfo * he;
+	struct addrinfo *he = new struct addrinfo;
+
 	//he->ai_socktype = SOCK_DGRAM;
 	he->ai_family = AF_INET;
 
