@@ -246,6 +246,10 @@ int main (int argc, char* argv[])
 		//printf("%s\n", server_reply_buf);
 	}
 	log(server_reply);
+	server_reply.push_back('\0');
+	for(int i = 0; server_reply[i] != '\0'; ++i)
+	server_reply.find("CONTENT-LENGTH:");
+	while(recv(socketFd, &server_reply_buf, 1, 0) != 0 && true)
 	return 0;
 }
 
