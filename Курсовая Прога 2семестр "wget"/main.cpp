@@ -92,7 +92,7 @@ int main (int argc, char* argv[])
 #		ifdef DEBUG
     	log("he->ai_socktype = " + std::to_string(he->ai_socktype));
 
-
+	struct sockaddr_in *tempinadr =  (struct sockaddr_in *)he->ai_addr;
 
     log("struct addrinfo {\
     \nint     ai_flags;			" + std::to_string(he->ai_flags) +\
@@ -100,9 +100,9 @@ int main (int argc, char* argv[])
     "\nint     ai_socktype;			" + std::to_string(he->ai_socktype) +\
     "\nint     ai_protocol;			" + std::to_string(he->ai_protocol) +\
     "\nsize_t  ai_addrlen;			" + std::to_string(he->ai_addrlen) +\
-    "\nstruct  sockaddr *ai_addr;	" + std::to_string(he->ai_addr->sa_family) + "  " + std::string(he->ai_addr->sa_data));
+    "\nstruct  sockaddr *ai_addr;	" + std::to_string(he->ai_addr->sa_family) + "  " + inet_ntoa(tempinadr->sin_addr));
 
-    log("char    *ai_canonname;     /* canonical name */"\
+    log("char    *ai_canonname;     /* canonical name */" \
     "\nstruct  addrinfo *ai_next; /* this struct can form a linked list */" /*+ std::to_string(he->ai_next) +*/\
     "\n}");
 
