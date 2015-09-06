@@ -87,7 +87,7 @@ int main (int argc, char* argv[])
     }
 
 #	ifdef DEBUG
-    log ("resolved to " + std::string(he->ai_addr->sa_data));
+    //log ("resolved to " + std::string(he->ai_addr->sa_data));
 #	endif
     ////////////////////////////////////////////////////
     //So we have host adress from link.
