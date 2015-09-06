@@ -133,7 +133,7 @@ int main (int argc, char* argv[])
     	log("protocol егор");
     	return 15;
     }
-    log(std::string(he->ai_addr->sa_data));
+    log("he->ai_addr->sa_data = " + std::string(he->ai_addr->sa_data));
 
     log("Trying to connect..");
     temporaryInteger = connect(socketFd, he->ai_addr, he->ai_addrlen);
