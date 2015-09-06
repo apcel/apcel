@@ -38,9 +38,9 @@ int main (int argc, char* argv[])
 
 		fprintf(stderr, "%i : %s\n", argc, argv[argc - 1]);
 		show_help(argv[0]);
-		argv[1] = "http://vk.com/doc12560157_378499337";
+		//argv[1] = "http://vk.com/doc12560157_378499337";
 		argc += 1;
-		//return -1;
+		return -1;
 	}
 
 	int temporaryInteger = 1;
