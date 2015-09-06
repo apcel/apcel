@@ -118,11 +118,11 @@ int main (int argc, char* argv[])
 #	endif
 
     temporaryInteger = bind(socketFd, he->ai_addr, he->ai_addrlen);
-    if(temporaryInteger != 0) {
+    /*if(temporaryInteger != 0) {
     	log("Bind error: " + temporaryInteger);
     	return temporaryInteger;
 
-    }
+    }*/
 
 #	ifdef DEBUG
     log("Binded socketFd = " + std::to_string(socketFd));
