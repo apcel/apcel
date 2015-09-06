@@ -77,7 +77,7 @@ int main (int argc, char* argv[])
     	return temporaryInteger;
 
 
- 	if (he == NULL)
+ 	/*if (he == NULL)
     {
         switch (h_errno)
         {
@@ -95,7 +95,7 @@ int main (int argc, char* argv[])
                 break;
         }
         return 1;
-    }
+    }*/
 
 #	ifdef DEBUG
     //log ("resolved to " + std::string(he->ai_addr->sa_data));
@@ -114,8 +114,11 @@ int main (int argc, char* argv[])
     }
 
     temporaryInteger = bind(socketFd, he->ai_addr, he->ai_addrlen);
-    if(temporaryInteger != 0)
+    if(temporaryInteger != 0) {
+    	log("Bind error: " + temporaryInteger);
     	return temporaryInteger;
+
+    }
 
 #	ifdef DEBUG
     log("Binded socketFd = " + std::to_string(socketFd));
