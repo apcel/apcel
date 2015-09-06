@@ -76,7 +76,7 @@ int main (int argc, char* argv[])
     if(temporaryInteger != 0)
     	return temporaryInteger;
 
-    
+    he = he->ai_next;
  	/*if (he == NULL)
     {
         switch (h_errno)
