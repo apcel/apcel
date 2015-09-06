@@ -81,6 +81,20 @@ int main (int argc, char* argv[])
     	return temporaryInteger;
 
 
+    log("struct addrinfo {\
+    int     ai_flags;		" + std::to_string(he->ai_flags) +\
+    "\nint     ai_family;	" + std::to_string(he->ai_family) +\
+    "\nint     ai_socktype;	" + std::to_string(he->ai_family) +\
+    "\nint     ai_protocol;	" + std::to_string(he->ai_protocol) +\
+    "\nsize_t  ai_addrlen;	" + std::to_string(he->ai_addrlen) +\
+    "\nstruct  sockaddr *ai_addr;" +\
+    "\nchar    *ai_canonname;     /* canonical name */" +\
+    "\nstruct  addrinfo *ai_next; /* this struct can form a linked list */" + \
+"}");
+
+
+
+
     addrinfo ** temporaryPointer = &he;
     {
 #		ifdef DEBUG
@@ -88,7 +102,7 @@ int main (int argc, char* argv[])
 #    	endif
 
     	he = he->ai_next;
-    } while (/*he->ai_socktype != SOCK_DGRAM && temporaryPointer != &he &&*/ he->ai_addr->sa_data == NULL);
+    } while (he->ai_socktype != SOCK_DGRAM && temporaryPointer != &he );
  	/*if (he == NULL)
     {
         switch (h_errno)
