@@ -85,6 +85,7 @@ int main (int argc, char* argv[])
     if(temporaryInteger != 0) {
     	//return temporaryInteger;
     	temporaryInteger = getaddrinfo(addr.hostname.c_str(), "80", NULL, &he);
+    	log("getaddrinfo done[+1]: " + std::to_string(temporaryInteger));
     }
 
     log("SOCK_DGRAM = " + std::to_string(SOCK_DGRAM));
