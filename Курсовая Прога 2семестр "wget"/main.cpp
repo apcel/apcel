@@ -79,7 +79,10 @@ int main (int argc, char* argv[])
 
     addrinfo ** temporaryPointer = &he;
     {
+#		ifdef DEBUG
     	log("he->ai_socktype = " + std::to_string(he->ai_socktype));
+#    	endif
+
     	he = he->ai_next;
     } while (he->ai_socktype != SOCK_DGRAM && temporaryPointer != &he);
  	/*if (he == NULL)
@@ -101,9 +104,9 @@ int main (int argc, char* argv[])
         }
         return 1;
     }*/
-	log("he->ai_socktype = " + std::to_string(he->ai_socktype));
 #	ifdef DEBUG
-    //log ("resolved to " + std::string(he->ai_addr->sa_data));
+	log("he->ai_socktype = " + std::to_string(he->ai_socktype));
+    log ("resolved to " + std::string(he->ai_addr->sa_data));
 #	endif
     ////////////////////////////////////////////////////
     //So we have host adress from link.
