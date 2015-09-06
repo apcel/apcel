@@ -164,7 +164,8 @@ int main (int argc, char* argv[])
     //Connection established. It's time to send data! ^.^
     std::string message = "";
     requestSkeleton requestSkeleton;
-    message = requestSkeleton.method + requestSkeleton.SP + addr.relative + requestSkeleton.SP + requestSkeleton.requestHeader + requestSkeleton.httpVer + requestSkeleton.CRLF;
+    message = requestSkeleton.method + requestSkeleton.SP + addr.relative + requestSkeleton.SP + requestSkeleton.requestHeader
+    		+ requestSkeleton.SP + requestSkeleton.httpVer + requestSkeleton.CRLF;
     log(message);
 
     temporaryInteger = send(socketFd, message.c_str(), message.size(), 0);
