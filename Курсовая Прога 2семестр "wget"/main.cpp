@@ -19,7 +19,7 @@ struct requestSkeleton
 	std::string method = "GET";
 	char SP = char(32);
 	std::string httpVer = "HTTP/1.1";
-	std::string CRLF = "\r\n\r\n";
+	std::string CRLF = "\r\n";
 };
 
 void show_help(char* cmdname);
@@ -133,6 +133,7 @@ int main (int argc, char* argv[])
     	log("protocol егор");
     	return 15;
     }
+    log(std::string(he->ai_addr->sa_data));
     temporaryInteger = connect(socketFd, he->ai_addr, he->ai_addrlen);
     log("connected; return value: " + std::to_string(temporaryInteger));
 
