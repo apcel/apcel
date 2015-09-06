@@ -153,6 +153,22 @@ int main (int argc, char* argv[])
     }
 
 
+    //////////////////////////////////////////////////
+    //Connection established. It's time to send data! ^.^
+    std::string message = "";
+    requestSkeleton requestSkeleton;
+    message = requestSkeleton.method + requestSkeleton.SP + addr.relative + requestSkeleton.SP + requestSkeleton.httpVer + requestSkeleton.CRLF;
+
+
+
+
+
+
+
+
+
+
+
 	return 0;
 }
 
