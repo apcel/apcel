@@ -239,7 +239,7 @@ int main (int argc, char* argv[])
 	std::string server_reply;
 	char server_reply_buf;
 	log("char server_reply_buf;");
-	while(recv(socketFd, &server_reply_buf, 1, 0) != 0 && server_reply.find("\r\n\r\n") == server_reply.npos) {
+	/*while(recv(socketFd, &server_reply_buf, sizeof(char), 0) != 0 && server_reply.find("\r\n\r\n") == server_reply.npos) {
 		//log("beginning of while loop");
 		server_reply.push_back(server_reply_buf);
 		//log(server_reply);
@@ -270,8 +270,8 @@ int main (int argc, char* argv[])
 	log(std::to_string(CONTENTLENGTH));
 	int i = 0;
 	//fprintf(localFd, "%s\n", server_reply.c_str());
-	CONTENTLENGTH = (CONTENTLENGTH / sizeof(char) )/ 8;
-	while(recv(socketFd, &server_reply_buf, sizeof(char), 0) != 0 && ++i < CONTENTLENGTH)
+	CONTENTLENGTH = (CONTENTLENGTH / sizeof(char) )/ 8;*/
+	while(recv(socketFd, &server_reply_buf, sizeof(char), 0) != 0 /*&& ++i < CONTENTLENGTH*/)
 		fprintf(localFd, "%s\n", &server_reply_buf);
 	return 0;
 }
