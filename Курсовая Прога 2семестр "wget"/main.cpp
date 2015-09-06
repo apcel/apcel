@@ -276,7 +276,7 @@ int main (int argc, char* argv[])
 	CONTENTLENGTH = (CONTENTLENGTH / sizeof(char) );
 	//while(recv(socketFd, &server_reply_buf, sizeof(char), 0) != 0 && ++i < CONTENTLENGTH)
 	log(std::to_string(CONTENTLENGTH));
-	while(++i < CONTENTLENGTH + 1) {
+	while(++i < CONTENTLENGTH) {
 		recv(socketFd, &server_reply_buf, sizeof(char), 0);
 		fprintf(localFd, "%s\n", &server_reply_buf);
 	}
