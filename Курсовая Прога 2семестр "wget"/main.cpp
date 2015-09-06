@@ -172,7 +172,7 @@ int main (int argc, char* argv[])
     	log("Error opening localFd");
     	return 100;
     }
-    temporaryInteger = recv(socketFd, localFd,  0, 1000);
+    temporaryInteger = recv(socketFd, &localFd,  0, 1000);
 
 
 
