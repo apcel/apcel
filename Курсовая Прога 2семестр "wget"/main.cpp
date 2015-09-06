@@ -38,8 +38,8 @@ int main (int argc, char* argv[])
 
 		fprintf(stderr, "%i : %s\n", argc, argv[argc - 1]);
 		show_help(argv[0]);
-		//argv[1] = "google.com";
-		return -1;
+		argv[1] = "google.com";
+		//return -1;
 	}
 
 	int temporaryInteger = 1;
