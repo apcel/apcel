@@ -101,6 +101,9 @@ int main (int argc, char* argv[])
     	fprintf(stderr, "Error opening socketFd: %i\n", socketFd);
     	return 2;
     }
+    
+
+    
 
 	return 0;
 }
