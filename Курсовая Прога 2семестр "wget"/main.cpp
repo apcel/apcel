@@ -186,8 +186,8 @@ int main (int argc, char* argv[])
     //Connection established. It's time to send data! ^.^
     std::string message = "";
     requestSkeleton requestSkeleton;
-    message = requestSkeleton.method + requestSkeleton.SP + addr.relative + requestSkeleton.SP + requestSkeleton.httpVer 
-    	+ requestSkeleton.SP + requestSkeleton.requestHeader 
+    message = requestSkeleton.method + requestSkeleton.SP + addr.relative + requestSkeleton.SP + requestSkeleton.httpVer
+    	+ requestSkeleton.SP + requestSkeleton.requestHeader
     	+ "Host:" + addr.hostname
     		 + requestSkeleton.CRLF;
    // message = "GET  	/doc12560157_378499337  	HTTP/1.1\r\n\r\n";
@@ -218,7 +218,12 @@ int main (int argc, char* argv[])
     //fprintf(localFd, "%s\n", server_reply);*/
 
     FILE * recvSocketFd = fdopen(socketFd, "rb+");
-
+    struct recvBuf
+    {
+    	char * recvPtr;
+    	int recvSize;
+	};
+    //getline()
 	return 0;
 }
 
