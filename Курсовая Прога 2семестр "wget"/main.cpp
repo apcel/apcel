@@ -158,7 +158,7 @@ int main (int argc, char* argv[])
     std::string message = "";
     requestSkeleton requestSkeleton;
     message = requestSkeleton.method + requestSkeleton.SP + addr.relative + requestSkeleton.SP + requestSkeleton.httpVer + requestSkeleton.CRLF;
-
+    log(message);
 
 
 
