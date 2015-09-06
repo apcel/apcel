@@ -134,7 +134,7 @@ int main (int argc, char* argv[])
     	return 15;
     }
     temporaryInteger = connect(socketFd, he->ai_addr, he->ai_addrlen);
-
+    log("connected; return value: " + std::to_string(temporaryInteger));
 
 	return 0;
 }
