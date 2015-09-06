@@ -21,6 +21,7 @@ struct requestSkeleton
 	std::string method = "GET";
 	char SP = char(32);
 	std::string httpVer = "HTTP/1.1";
+	std::string requestHeader = "Accept: */*; ";
 	std::string CRLF = "\r\n";
 	int flags = 0;
 };
