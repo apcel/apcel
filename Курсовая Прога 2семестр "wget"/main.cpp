@@ -278,7 +278,7 @@ int main (int argc, char* argv[])
 	log(std::to_string(CONTENTLENGTH));
 	while(++i < CONTENTLENGTH) {
 		recv(socketFd, server_reply_buf, sizeof(char), 0);
-		fprintf(localFd, "%s", *server_reply_buf);
+		fprintf(localFd, "%c" , *server_reply_buf);
 	}
 	return 0;
 }
