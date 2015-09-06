@@ -16,7 +16,15 @@ std::ostream & MyMatrix<__Type>::operator << (std::ostream &output)
 template<typename __Type>
 std::istream & MyMatrix<__Type>::operator >> (std::istream &output)
 {
-
+	int j;
+	int i;
+	for(i = 0; i <= sizeN; ++i) {
+		{
+			std::cin >> temp[i][j];
+		} for (j = i; temp[i][j] != "\n"; ++j)
+		sizeM == j - 1;
+	}
+	sizeN == i - 1;
 }
 template<typename __Type>
 MyMatrix<__Type> & MyMatrix<__Type>::operator + (const MyMatrix<__Type> &m)
