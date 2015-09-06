@@ -190,7 +190,7 @@ int main (int argc, char* argv[])
     temporaryInteger = send(socketFd, message.c_str(), message.size(), 0);
     log("Sent data: " + std::to_string(temporaryInteger));
     log("Trying to open file: " + std::string("./" + addr.filename) + "\n...");
-    FILE * localFd = fopen(std::string("./" + addr.filename).c_str(), "wb+");
+    FILE * localFd = fopen(std::string("./wget_" + addr.filename).c_str(), "wb+");
     //temporaryInteger = recv();
     if (localFd == NULL) {
     	log("Error opening localFd");
