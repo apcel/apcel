@@ -149,10 +149,10 @@ int gethost(char* address, link * result) {
 	log("begin = " + std::to_string(begin));
 	log("end   = " + std::to_string(end));
 	//log("ukhm, host may be the \'" + s + "\'");
-	log(result->protocol);
-	log(result->hostname);
-	log(result->relative);
-	log(result->filename);
+	log("result->protocol = " + result->protocol);
+	log("result->hostname = " + result->hostname);
+	log("result->relative = " + result->relative);
+	log("result->filename = " + result->filename);
 #	endif
 
 //	return s;
