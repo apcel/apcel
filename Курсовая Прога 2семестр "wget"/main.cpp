@@ -14,10 +14,12 @@ struct link
 	std::string relative;
 	std::string filename;
 };
-struct request
+struct requestSkeleton
 {
-	std::string method;
+	std::string method = "GET";
 	char SP = char(32);
+	std::string httpVer = "HTTP/1.1";
+	std::string CRLF = "\r\n\r\n";
 };
 
 void show_help(char* cmdname);
