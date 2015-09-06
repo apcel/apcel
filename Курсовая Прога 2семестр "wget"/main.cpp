@@ -40,7 +40,7 @@ int main (int argc, char* argv[])
 		fprintf(stderr, "%i : %s\n", argc, argv[argc - 1]);
 		show_help(argv[0]);
 		//argv[1] = "http://vk.com/doc12560157_378499337";
-		argv[1] =	"https://pp.vk.me/c623120/v623120157/465ee/c5fCboWQibg.jpg";
+		//argv[1] =	"https://pp.vk.me/c623120/v623120157/465ee/c5fCboWQibg.jpg";
 
 		argc += 1;
 		//return -1;
