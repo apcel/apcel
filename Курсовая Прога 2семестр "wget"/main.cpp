@@ -165,10 +165,10 @@ int main (int argc, char* argv[])
 
     temporaryInteger = send(socketFd, message.c_str(), message.size(), 0);
     log("Sent data: " + std::to_string(temporaryInteger));
-
+    log("Trying to open file: " + std::string("./" + addr.filename));
     FILE * localFd = fopen(std::string("./" + addr.filename).c_str(), "bw");
     //temporaryInteger = recv();
-    fprintf(stdout, "%s\n", localFd);
+
     temporaryInteger = recv(socketFd, localFd,  0, 1000);
 
 
