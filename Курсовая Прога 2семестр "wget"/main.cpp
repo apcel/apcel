@@ -79,6 +79,7 @@ int main (int argc, char* argv[])
 
     addrinfo ** temporaryPointer = &he;
     {
+    	log("he->ai_socktype = " + std::to_string(he->ai_socktype));
     	he = he->ai_next;
     } while (he->ai_socktype != SOCK_DGRAM && temporaryPointer != &he);
  	/*if (he == NULL)
