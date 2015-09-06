@@ -250,6 +250,8 @@ int main (int argc, char* argv[])
 	for(int i = 0; i < server_reply[i] != '\0'; ++i)
 		server_reply[i] = std::toupper(server_reply[i]);
 	log(server_reply);
+
+
 	server_reply.find("CONTENT-LENGTH:");
 	while(recv(socketFd, &server_reply_buf, 1, 0) != 0 && true)
 	return 0;
