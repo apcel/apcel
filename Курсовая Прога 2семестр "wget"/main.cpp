@@ -237,7 +237,7 @@ int main (int argc, char* argv[])
 */
 	log("starting recv in a loop");
 	char* server_reply_buf;
-	while(recv(socketFd, server_reply_buf, 1, 0))
+	while(recv(socketFd, server_reply_buf, 1, 0) != 0)
 		printf("%s\n", server_reply_buf);
 	return 0;
 }
