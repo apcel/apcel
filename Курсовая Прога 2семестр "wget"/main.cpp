@@ -134,6 +134,12 @@ int gethost(char* address, link * result) {
 		result->hostname = s.substr(begin, abs(end - begin));
 		result->relative = s.substr(end + 1);
 	}
+	temp = s.rfind("/");
+	if(temp != s.npos)
+	{
+		result->filename = s.substr(temp);
+	}
+
 
 	s = s.substr(begin, abs(end - begin));
 #	ifdef DEBUG_GETHOST
