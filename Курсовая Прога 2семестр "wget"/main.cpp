@@ -63,6 +63,9 @@ int main (int argc, char* argv[])
 	struct addrinfo * he;
 
     getaddrinfo (addr.hostname.c_str(), NULL, NULL,&he);
+#	ifdef DEBUG
+    log ("getaddrinfo done");
+#	endif
  	if (he == NULL)
     {
         switch (h_errno)
@@ -158,6 +161,7 @@ int gethost(char* address, link * result) {
 //	return s;
 	return 0;
 }
+//http://img2-ak.lst.fm/i/u/174s/85f037ecf5ed4b7bcb94b79ef139c385.gif
 
 void log(std::string  message) {
 #	ifdef DEBUG
