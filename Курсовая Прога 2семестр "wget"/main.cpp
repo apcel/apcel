@@ -286,8 +286,6 @@ void show_help(char* cmdname) {
 }
 
 
-//Меня не слышно?
-//Тебя слышно
 
 int gethost(char* address, linkStruct * result) {
 	int begin = 0;
