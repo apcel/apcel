@@ -253,6 +253,13 @@ int main (int argc, char* argv[])
 
 	int temp = 0;
 	int temp2 = 0;
+
+	temp = server_reply.find("200 OK");
+	if(temp == server_reply.npos)
+		fprintf(stderr, "Could not find \'200 OK\' in the header.\n");
+
+
+
 	temp = server_reply.find("CONTENT-LENGTH:");
 	temp = server_reply.find(":", temp);
 	temp += 2;
