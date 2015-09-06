@@ -5,6 +5,7 @@
 #include <sys/socket.h>
 #include <sys/types.h>
 //#include <unistd.h>
+#include <sys/sendfile.h>
 
 #define DEBUG
 
@@ -165,9 +166,9 @@ int main (int argc, char* argv[])
     temporaryInteger = send(socketFd, message.c_str(), message.size(), 0);
     log("Sent data: " + std::to_string(temporaryInteger));
 
-
-
-
+    FILE * localFd = fopen(std::string("./" + addr.filename).c_str(), "bw");
+    //temporaryInteger = recv();
+    temporaryInteger = recv(socketFd, localFd,  0, 1000);
 
 
 
