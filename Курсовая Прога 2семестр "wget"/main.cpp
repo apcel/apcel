@@ -240,7 +240,7 @@ int main (int argc, char* argv[])
 	log("char* server_reply_buf;");
 	while(recv(socketFd, server_reply_buf, 1, 0) != 0) {
 		log("beginning of while loop");
-		printf("%s\n", server_reply_buf);
+		printf("%s\n", *server_reply_buf);
 	}
 	return 0;
 }
