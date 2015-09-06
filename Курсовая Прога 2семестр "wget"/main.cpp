@@ -266,7 +266,7 @@ int main (int argc, char* argv[])
 	temp2 = server_reply.find("\r\n", temp);
 	log(server_reply.substr(temp, abs(temp2-temp)));
 
-	int CONTENTLENGTH = stoi(server_reply.substr(temp, abs(temp2-temp)), NULL, NULL);
+	int CONTENTLENGTH = stoi(server_reply.substr(temp, abs(temp2-temp)), NULL, 10);
 	log(std::to_string(CONTENTLENGTH));
 
 	while(recv(socketFd, &server_reply_buf, 1, 0) != 0 && true)
