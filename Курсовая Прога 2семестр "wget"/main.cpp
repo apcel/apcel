@@ -99,7 +99,8 @@ int main (int argc, char* argv[])
     "\nsize_t  ai_addrlen;			" + std::to_string(he->ai_addrlen) +\
     "\nstruct  sockaddr *ai_addr;	" + std::to_string(he->ai_addr->sa_family) + "  " + std::string(he->ai_addr->sa_data));
 
-    log("char    *ai_canonname;     /* canonical name */\nstruct  addrinfo *ai_next; /* this struct can form a linked list */\n}");
+    log("char    *ai_canonname;     /* canonical name */"\
+    "\nstruct  addrinfo *ai_next; /* this struct can form a linked list */\n}");
 
 
 
