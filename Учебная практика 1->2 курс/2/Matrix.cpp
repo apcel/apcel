@@ -18,7 +18,7 @@ std::istream & MyMatrix<__Type>::operator >> (std::istream &output)
 {
 	int j;
 	int i;
-	for(i = 0; i <= sizeN; ++i) {
+	for(i = 0; temp[i][j] != EOF; ++i) {
 		{
 			std::cin >> temp[i][j];
 		} for (j = i; temp[i][j] != "\n"; ++j)
