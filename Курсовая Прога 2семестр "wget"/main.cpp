@@ -268,8 +268,9 @@ int main (int argc, char* argv[])
 
 	int CONTENTLENGTH = stoi(server_reply.substr(temp, abs(temp2-temp)), NULL, 10);
 	log(std::to_string(CONTENTLENGTH));
-
-	while(recv(socketFd, &server_reply_buf, 1, 0) != 0 && true)
+	int i = 0;
+	while(recv(socketFd, &server_reply_buf, 1, 0) != 0 && ++i < CONTENTLENGTH)
+		fprintf(localFd, "%s\n", server_reply_buf);
 	return 0;
 }
 
