@@ -8,7 +8,7 @@
 #include <sys/sendfile.h>
 
 #define DEBUG
-
+//#define DEBUG_FUCKN
 struct linkStruct
 {
 	std::string protocol;
@@ -90,7 +90,7 @@ int main (int argc, char* argv[])
 
     struct addrinfo * temporaryPointer = he;
     {
-#		ifdef DEBUG
+#		ifdef DEBUG_FUCKN
     	log("he->ai_socktype = " + std::to_string(he->ai_socktype));
 
 	struct sockaddr_in *tempinadr =  (struct sockaddr_in *)he->ai_addr;
