@@ -137,7 +137,6 @@ int main (int argc, char* argv[])
     if(temporaryInteger != 0) {
     	log("Bind error: " + temporaryInteger);
     	return temporaryInteger;
-
     }*/
 
 #	ifdef DEBUG
@@ -178,7 +177,7 @@ int main (int argc, char* argv[])
     }
     log("Success.");*/
     char  server_reply[10000];
-    temporaryInteger = recv(socketFd, server_reply,  0, 10000);
+    temporaryInteger = recv(socketFd, server_reply, 10000, 0);
     log(server_reply);
    // fprintf(localFd, "%s\n", server_reply);
 
