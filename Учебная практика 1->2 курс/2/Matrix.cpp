@@ -39,12 +39,12 @@ void MyMatrix<__Type>::transpone()
 template<typename __Type>
 int MyMatrix<__Type>::sizeRow()
 {
-
+	return temp.size();
 
 }
 template<typename __Type>
 int MyMatrix<__Type>::sizeCol()
 {
-	return temp.size();
+	return temp[1].size();
 
 }
