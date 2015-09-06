@@ -84,7 +84,7 @@ int main (int argc, char* argv[])
 #    	endif
 
     	he = he->ai_next;
-    } while (he->ai_socktype != SOCK_DGRAM && temporaryPointer != &he);
+    } while (/*he->ai_socktype != SOCK_DGRAM && */temporaryPointer != &he);
  	/*if (he == NULL)
     {
         switch (h_errno)
