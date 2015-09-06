@@ -27,10 +27,11 @@ template<typename __Type>
 void MyMatrix<__Type>::transpone()
 {
 	this->sizeN = sizeCol;
+	this->sizeM = sizeRow;
 	for (int i = 0; i <= sizeN; ++i)
 		for (int j = i; j <= sizeM; ++j)
-		//	std::swap(container[i][j], container[j][i]);
-			true;
+			std::swap(temp[i][j], temp[j][i]);
+			//true;
 
 }
 
