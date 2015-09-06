@@ -70,14 +70,13 @@ int main (int argc, char* argv[])
 	struct addrinfo * he;
 
     temporaryInteger = getaddrinfo (addr.hostname.c_str(), NULL, NULL,&he);
-    fprintf(stderr, "%s\n", *he);
 #	ifdef DEBUG
     log ("getaddrinfo done: " + std::to_string(temporaryInteger));
 #	endif
     if(temporaryInteger != 0)
     	return temporaryInteger;
 
-
+    
  	/*if (he == NULL)
     {
         switch (h_errno)
