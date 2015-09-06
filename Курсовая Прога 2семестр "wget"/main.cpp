@@ -8,7 +8,7 @@
 #include <sys/sendfile.h>
 
 #define DEBUG
-//#define DEBUG_FUCKN
+#define DEBUG_FUCKN
 #define DEBUG_GETHOST
 struct linkStruct
 {
@@ -84,7 +84,7 @@ int main (int argc, char* argv[])
 #	endif
     if(temporaryInteger != 0) {
     	return temporaryInteger;
-    	//temporaryInteger = getaddrinfo(a)
+    	temporaryInteger = getaddrinfo(addr.hostname.c_str(), "80", NULL, &he);
     }
 
     log("SOCK_DGRAM = " + std::to_string(SOCK_DGRAM));
