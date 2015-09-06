@@ -1,21 +1,29 @@
-#include <stdio.h>
+//#include <stdio.h>
+
+//#include <sys/types.h>
+//#include <unistd.h>
+//#include <sys/sendfile.h>
+
 #include <netdb.h>
-#include <arpa/inet.h>
 #include <iostream>
 #include <sys/socket.h>
-#include <sys/types.h>
-//#include <unistd.h>
-#include <sys/sendfile.h>
+
 
 #define DEBUG
+#ifdef DEBUG
+
 #define DEBUG_FUCKN
-//#define DEBUG_GETHOST
+#define DEBUG_GETHOST
+
+#include <arpa/inet.h>
+#endif
+
 struct linkStruct
 {
-	std::string protocol;
-	std::string hostname;
-	std::string relative;
-	std::string filename;
+	std::string protocol = "";
+	std::string hostname = "";
+	std::string relative = "";
+	std::string filename = "";
 };
 struct requestSkeleton
 {
@@ -30,7 +38,7 @@ struct requestSkeleton
 void show_help(char* cmdname);
 int gethost(char* address, linkStruct *result);
 void log(std::string message);
-
+void log(FILE * fd, std::string message);
 
 int main (int argc, char* argv[])
 {
@@ -39,33 +47,36 @@ int main (int argc, char* argv[])
 
 		fprintf(stderr, "%i : %s\n", argc, argv[argc - 1]);
 		show_help(argv[0]);
-		//argv[1] = "http://vk.com/doc12560157_378499337";
-		//argv[1] =	"https://pp.vk.me/c623120/v623120157/465ee/c5fCboWQibg.jpg";
-
+#		ifdef DEBUG
+		argv[1] = (char *)"https://pp.vk.me/c623120/v623120157/465ee/c5fCboWQibg.jpg";
 		argc += 1;
-		//return -1;
+#		else
+		return -1;
+#		endif
 	}
 
 	int temporaryInteger = 1;
-//
-	//struct hostent *he;
 
-	//int endOfHostPosition = 0;
-	//int beginOfHostPosition = 0;
+	linkStruct addr;
+
 	for (int i = 1; i < argc; i++)
 	{
 		std::string s = argv[i];
-		if (s.find("/") != s.npos)
+		if(s == "-o") {
+
+			addr.filename = argv[i + 1];
+			i += 2;
+		} else if (s.find("/") != s.npos)
 		{
 			//fprintf(stdout, "found link-like argument \"%s\"\n", argv[i] );
 			temporaryInteger = i;
 		}
 	}
-#	ifdef DEBUG
-	fprintf(stdout, "found link-like %s\n", argv[temporaryInteger]);
-#	endif
 
-	linkStruct addr;
+	log("found link-like " + std::string(argv[temporaryInteger]));
+
+
+
 
 	temporaryInteger = gethost(argv[temporaryInteger], &addr);
 
@@ -81,105 +92,71 @@ int main (int argc, char* argv[])
 	he->ai_family = AF_INET;
 
     temporaryInteger = getaddrinfo (addr.hostname.c_str(), "80", he, &he);
-#	ifdef DEBUG
+
     log ("getaddrinfo done: " + std::to_string(temporaryInteger));
-#	endif
+
     if(temporaryInteger != 0) {
     	//return temporaryInteger;
     	temporaryInteger = getaddrinfo(addr.hostname.c_str(), "80", NULL, &he);
-    	log("getaddrinfo done[+1]: " + std::to_string(temporaryInteger));
+    	log(stderr, "getaddrinfo done[+1]: " + std::to_string(temporaryInteger));
     }
 
     log("SOCK_DGRAM = " + std::to_string(SOCK_DGRAM));
 	log("SOCK_STREAM = " + std::to_string(SOCK_STREAM));
 
-
+#	ifdef DEBUG_FUCKN
     struct addrinfo * temporaryPointer = he;
-  //  {
-#		ifdef DEBUG_FUCKN
-    	log("he->ai_socktype = " + std::to_string(he->ai_socktype));
+
+
+    log("he->ai_socktype = " + std::to_string(he->ai_socktype));
 
 	struct sockaddr_in *tempinadr =  (struct sockaddr_in *)he->ai_addr;
 
-    log("struct addrinfo {\
-    \nint     ai_flags;			" + std::to_string(he->ai_flags) +\
-    "\nint     ai_family;			" + std::to_string(he->ai_family) +\
-    "\nint     ai_socktype;			" + std::to_string(he->ai_socktype) +\
-    "\nint     ai_protocol;			" + std::to_string(he->ai_protocol) +\
-    "\nsize_t  ai_addrlen;			" + std::to_string(he->ai_addrlen) +\
-    "\nstruct  sockaddr *ai_addr;	" + std::to_string(he->ai_addr->sa_family) + "  " + inet_ntoa(tempinadr->sin_addr));
+    log("struct addrinfo {"\
+    	"\nint     ai_flags;			" + std::to_string(he->ai_flags) +\
+   		"\nint     ai_family;			" + std::to_string(he->ai_family) +\
+    	"\nint     ai_socktype;			" + std::to_string(he->ai_socktype) +\
+    	"\nint     ai_protocol;			" + std::to_string(he->ai_protocol) +\
+    	"\nsize_t  ai_addrlen;			" + std::to_string(he->ai_addrlen) +\
+    	"\nstruct  sockaddr *ai_addr;	" + std::to_string(he->ai_addr->sa_family) + "  " + inet_ntoa(tempinadr->sin_addr));
 
     log("char    *ai_canonname;     /* canonical name */" \
-    "\nstruct  addrinfo *ai_next; /* this struct can form a linked list */" /*+ std::to_string(he->ai_next) +*/\
-    "\n}");
-
-#    	endif
-
-    //	he = he->ai_next;
-   // } while (he->ai_socktype != SOCK_DGRAM && temporaryPointer != he && true);
- 	/*if (he == NULL)
-    {
-        switch (h_errno)
-        {
-            case HOST_NOT_FOUND:
-                fputs ("The host was not found.\n", stderr);
-                break;
-            case NO_ADDRESS:
-                fputs ("The name is valid but it has no address.\n", stderr);
-                break;
-            case NO_RECOVERY:
-                fputs ("A non-recoverable name server error occurred.\n", stderr);
-                break;
-            case TRY_AGAIN:
-                fputs ("The name server is temporarily unavailable.", stderr);
-                break;
-        }
-        return 1;
-    }*/
-#	ifdef DEBUG
-	log("he->ai_socktype = " + std::to_string(he->ai_socktype));
-    //log ("resolved to " + std::string(he->ai_addr->sa_data));
-#	endif
+    	"\nstruct  addrinfo *ai_next; /* this struct can form a linked list */" /*+ std::to_string(he->ai_next) +*/\
+    	"\n}");
     delete  temporaryPointer;
+#   endif
+
+
+
+	log("he->ai_socktype = " + std::to_string(he->ai_socktype));
+
+
+
     ////////////////////////////////////////////////////
     //So we have host adress from link.
     int socketFd;
     socketFd = socket(he->ai_family, he->ai_socktype, he->ai_protocol);
-#	ifdef DEBUG
+
     log("socketFd = " + std::to_string(socketFd));
-#	endif
     if(socketFd < 0)
     {
-    	fprintf(stderr, "Error opening socketFd: %i\n", socketFd);
+    	log(stderr, "Error opening socketFd: " + std::to_string(socketFd));
     	return 2;
     }
 
-#	ifdef DEBUG
-    log("Binding socketFd = " + std::to_string(socketFd));
-#	endif
 
-   /* temporaryInteger = bind(socketFd, he->ai_addr, he->ai_addrlen);
-    if(temporaryInteger != 0) {
-    	log("Bind error: " + temporaryInteger);
-    	return temporaryInteger;
-    }*/
 
-#	ifdef DEBUG
-    log("Binded socketFd = " + std::to_string(socketFd));
-#	endif
-
-    //std::string request;
     if (addr.protocol != "http") {
-    	log("protocol егор");
+    	log("protocol егор!");
     	//return 15;
     }
-    log("he->ai_addr->sa_data = " + std::string(he->ai_addr->sa_data));
+
 
     log("Trying to connect..");
     temporaryInteger = connect(socketFd, he->ai_addr, he->ai_addrlen);
     log("connected; return value: " + std::to_string(temporaryInteger));
     if (temporaryInteger != 0) {
-    	log ("connection error, exitting");
+    	log (stderr, "connection error, exitting");
     	return 50;
     }
 
@@ -189,70 +166,36 @@ int main (int argc, char* argv[])
     std::string message = "";
     requestSkeleton requestSkeleton;
     message = requestSkeleton.method + requestSkeleton.SP + addr.relative + requestSkeleton.SP + requestSkeleton.httpVer
-    	+ requestSkeleton.SP + requestSkeleton.requestHeader
-    	+ "Host:" + addr.hostname
-    		 + requestSkeleton.CRLF;
-   // message = "GET  	/doc12560157_378499337  	HTTP/1.1\r\n\r\n";
+    	+ requestSkeleton.SP + requestSkeleton.requestHeader + "Host:" + addr.hostname + requestSkeleton.CRLF;
     log(message);
 
     temporaryInteger = send(socketFd, message.c_str(), message.size(), 0);
     log("Sent data: " + std::to_string(temporaryInteger));
-    log("Trying to open file: " + std::string("./wget_" + addr.filename) + "\n...");
-    FILE * localFd = fopen(std::string("./wget_" + addr.filename).c_str(), "wb+");
-    //temporaryInteger = recv();
+    log("Trying to open file: " + std::string("./" + addr.filename) + "\n...");
+    FILE * localFd = fopen(std::string("./" + addr.filename).c_str(), "wb+");
+
     if (localFd == NULL) {
-    	log("Error opening localFd");
+    	fprintf(stderr, "%s\n", "Error opening localFd");
     	return 100;
     }
     log("Success.");
 
 
     ////////////////////////////////////////
-  /*/  char  server_reply_buf[20000];
-    std::string server_reply;
-    {
-    temporaryInteger = recv(socketFd, server_reply_buf,250, 0);
-    //server_reply.push_back(server_reply_buf[0]);
-    log(server_reply_buf);
-	} while(server_reply.find("\r\n\r\n") == server_reply.npos);
-    log("received data: " + std::to_string(temporaryInteger));
-    log(server_reply);
-    //fprintf(localFd, "%s\n", server_reply);*/
-
-    /*FILE * recvSocketFd = fdopen(socketFd, "rb+");
-    struct recvBuf
-    {
-    	char * recvPtr = 0;
-    	size_t  recvSize = 0;
-	};
-	//log("recvSocketFd opened");
-	recvBuf recvBuf;
-	//log("recvBuf recvBuf");
-    {
-    getline(&recvBuf.recvPtr, &recvBuf.recvSize, recvSocketFd);
-    //log("getline");
-    printf("%s\n", recvBuf.recvPtr);
-	} while(recvBuf.recvPtr != "\r\n");
-
-  //  for(int i = 0; i < *recvBuf.recvSize; ++i)
-    //	fprintf(stdout, "%c\n", *recvBuf.recvPtr[i]);
-*/
 	log("starting recv in a loop");
 	std::string server_reply;
 	char * server_reply_buf;
-	log("char server_reply_buf;");
+
 	while(server_reply.find("\r\n\r\n") == server_reply.npos) {
-		//log("beginning of while loop");
 		recv(socketFd, server_reply_buf, sizeof(char), 0);
 		server_reply.push_back(*server_reply_buf);
-		//log(server_reply);
-		//printf("%s\n", server_reply_buf);
+
 	}
 	log(server_reply);
 	server_reply.push_back('\0');
 	for(int i = 0; server_reply[i] != '\0'; ++i)
 		server_reply[i] = std::toupper(server_reply[i]);
-	log(server_reply);
+	//log(server_reply);
 
 	int temp = 0;
 	int temp2 = 0;
@@ -267,17 +210,15 @@ int main (int argc, char* argv[])
 	temp = server_reply.find(":", temp);
 	temp += 2;
 	temp2 = server_reply.find("\r\n", temp);
-	log(server_reply.substr(temp, abs(temp2-temp)));
 
-	int CONTENTLENGTH = stoi(server_reply.substr(temp, abs(temp2-temp)), NULL, 10);
-	log(std::to_string(CONTENTLENGTH));
+	int contentLength = stoi(server_reply.substr(temp, abs(temp2-temp)), NULL, 10);
+	log(std::to_string(contentLength) + " bytes");
+
+	contentLength = (contentLength / sizeof(char) );
+	log(std::to_string(contentLength) + " chars");
+
 	int i = 0;
-	//fprintf(localFd, "%s\n", server_reply.c_str());
-
-	CONTENTLENGTH = (CONTENTLENGTH / sizeof(char) );
-	//while(recv(socketFd, &server_reply_buf, sizeof(char), 0) != 0 && ++i < CONTENTLENGTH)
-	log(std::to_string(CONTENTLENGTH));
-	while(++i < CONTENTLENGTH) {
+	while(++i < contentLength) {
 		recv(socketFd, server_reply_buf, sizeof(char), 0);
 		fprintf(localFd, "%c" , *server_reply_buf);
 	}
@@ -315,17 +256,18 @@ int gethost(char* address, linkStruct * result) {
 		result->hostname = s.substr(begin, abs(end - begin));
 		result->relative = s.substr(end);
 	}
-	temp = s.rfind("/");
-	end = s.find("?", temp) - 1;
-	if(temp != s.npos)
-	{
-		result->filename = s.substr(temp + 1, abs(end - temp));
-	} else {
-		return -2;
+	if(result->filename == "") {
+		temp = s.rfind("/");
+		end = s.find("?", temp) - 1;
+		if(temp != s.npos) {
+			if(end == s.npos - 1)
+				result->filename = s.substr(temp + 1);
+			result->filename = s.substr(temp + 1, abs(end - temp));
+		} else {
+			return -2;
+		}
 	}
 
-
-	//s = s.substr(begin, abs(end - begin));
 #	ifdef DEBUG_GETHOST
 	log("gethost returns:");
 	log("begin = " + std::to_string(begin));
@@ -336,14 +278,14 @@ int gethost(char* address, linkStruct * result) {
 	log("result->relative = " + result->relative);
 	log("result->filename = " + result->filename);
 #	endif
-
-//	return s;
 	return 0;
 }
-//http://img2-ak.lst.fm/i/u/174s/85f037ecf5ed4b7bcb94b79ef139c385.gif
 
 void log(std::string  message) {
 #	ifdef DEBUG
-	fprintf(stdout, "%s\n", message.c_str());
+	log(stdout, message);
 #	endif
+}
+void log( FILE * fd, std::string message) {
+	fprintf(fd, "%s\n", message.c_str());
 }
