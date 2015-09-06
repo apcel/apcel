@@ -209,7 +209,7 @@ int main (int argc, char* argv[])
     char  server_reply_buf[20000];
     std::string server_reply;
     {
-    temporaryInteger = recv(socketFd, server_reply_buf,200, 0);
+    temporaryInteger = recv(socketFd, server_reply_buf,250, 0);
     //server_reply.push_back(server_reply_buf[0]);
     log(server_reply_buf);
 	} while(server_reply.find("\r\n\r\n") == server_reply.npos);
