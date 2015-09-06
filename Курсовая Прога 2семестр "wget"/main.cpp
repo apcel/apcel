@@ -223,6 +223,7 @@ int main (int argc, char* argv[])
     	char ** recvPtr;
     	size_t * recvSize;
 	};
+	log("recvSocketFd opened");
 	recvBuf recvBuf;
     getline(recvBuf.recvPtr, recvBuf.recvSize, recvSocketFd);
     printf("%s\n", *recvBuf.recvPtr);
