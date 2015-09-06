@@ -101,7 +101,7 @@ int main (int argc, char* argv[])
         }
         return 1;
     }*/
-
+	log("he->ai_socktype = " + std::to_string(he->ai_socktype));
 #	ifdef DEBUG
     //log ("resolved to " + std::string(he->ai_addr->sa_data));
 #	endif
