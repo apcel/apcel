@@ -206,11 +206,11 @@ int main (int argc, char* argv[])
 
 
     ////////////////////////////////////////
-    /*char  server_reply_buf[2];
+    char  server_reply_buf[20000];
     std::string server_reply;
     {
-    temporaryInteger = recv(socketFd, server_reply_buf, 1, 0);
-    server_reply.push_back(server_reply_buf[0]);
+    temporaryInteger = recv(socketFd, server_reply_buf,20000, 0);
+    //server_reply.push_back(server_reply_buf[0]);
     log(server_reply);
 	} while(server_reply.find("\r\n\r\n") == server_reply.npos);
     log("received data: " + std::to_string(temporaryInteger));
