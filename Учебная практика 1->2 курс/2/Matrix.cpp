@@ -45,6 +45,6 @@ int MyMatrix<__Type>::sizeRow()
 template<typename __Type>
 int MyMatrix<__Type>::sizeCol()
 {
-	return temp[1].size();
+	return temp[0].size();
 
 }
