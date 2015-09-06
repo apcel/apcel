@@ -100,7 +100,8 @@ int main (int argc, char* argv[])
     "\nstruct  sockaddr *ai_addr;	" + std::to_string(he->ai_addr->sa_family) + "  " + std::string(he->ai_addr->sa_data));
 
     log("char    *ai_canonname;     /* canonical name */"\
-    "\nstruct  addrinfo *ai_next; /* this struct can form a linked list */\n}");
+    "\nstruct  addrinfo *ai_next; /* this struct can form a linked list */" /*+ std::to_string(he->ai_next) +*/\
+    "\n}");
 
 
 
