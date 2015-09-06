@@ -89,7 +89,7 @@ int main (int argc, char* argv[])
     }
 
     log("SOCK_DGRAM = " + std::to_string(SOCK_DGRAM));
-
+	log("SOCK_STREAM = " + std::to_string(SOCK_STREAM));
 
 
     struct addrinfo * temporaryPointer = he;
