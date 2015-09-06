@@ -220,10 +220,14 @@ int main (int argc, char* argv[])
     FILE * recvSocketFd = fdopen(socketFd, "rb+");
     struct recvBuf
     {
-    	char * recvPtr;
-    	int recvSize;
+    	char ** recvPtr;
+    	size_t * recvSize;
 	};
-    //getline()
+	recvBuf recvBuf;
+    getline(recvBuf.recvPtr, recvBuf.recvSize, recvSocketFd);
+
+
+
 	return 0;
 }
 
