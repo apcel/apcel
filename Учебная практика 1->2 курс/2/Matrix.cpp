@@ -7,8 +7,11 @@
 template<typename __Type>
 std::ostream & MyMatrix<__Type>::operator << (std::ostream &output)
 {
-
-
+	for(int i = 0; i <= sizeN; ++i) {
+		for (int j = i; j <= sizeM; ++j)
+			std::cout << temp[i][j];
+		std::cout<<std::endl;
+	}
 }
 template<typename __Type>
 std::istream & MyMatrix<__Type>::operator >> (std::istream &output)
@@ -32,7 +35,6 @@ void MyMatrix<__Type>::transpone()
 		for (int j = i; j <= sizeM; ++j)
 			std::swap(temp[i][j], temp[j][i]);
 			//true;
-
 }
 
 ///////////////////сортировка///////////////////////////////
