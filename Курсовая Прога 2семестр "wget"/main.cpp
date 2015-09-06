@@ -74,6 +74,7 @@ int main (int argc, char* argv[])
 
 	struct addrinfo * he;
 	he->ai_socktype = SOCK_DGRAM;
+	he->ai_family = AF_INET;
 
     temporaryInteger = getaddrinfo (addr.hostname.c_str(), NULL, he, &he);
 #	ifdef DEBUG
