@@ -77,7 +77,7 @@ int main (int argc, char* argv[])
 	he->ai_socktype = SOCK_DGRAM;
 	he->ai_family = AF_INET;
 
-    temporaryInteger = getaddrinfo (addr.hostname.c_str(), NULL, NULL, &he);
+    temporaryInteger = getaddrinfo (addr.hostname.c_str(), "80", NULL, &he);
 #	ifdef DEBUG
     log ("getaddrinfo done: " + std::to_string(temporaryInteger));
 #	endif
