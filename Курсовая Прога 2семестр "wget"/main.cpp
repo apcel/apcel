@@ -4,10 +4,11 @@
 #include <iostream>
 #include <sys/socket.h>
 #include <sys/types.h>
+#include <unistd.h>
 
 #define DEBUG
 
-struct link
+struct linkStruct
 {
 	std::string protocol;
 	std::string hostname;
@@ -20,10 +21,11 @@ struct requestSkeleton
 	char SP = char(32);
 	std::string httpVer = "HTTP/1.1";
 	std::string CRLF = "\r\n";
+	int flags = 0;
 };
 
 void show_help(char* cmdname);
-int gethost(char* address, link *result);
+int gethost(char* address, linkStruct *result);
 void log(std::string message);
 
 
@@ -57,7 +59,7 @@ int main (int argc, char* argv[])
 	fprintf(stdout, "found link-like %s\n", argv[temporaryInteger]);
 #	endif
 
-	link addr;
+	linkStruct addr;
 
 	temporaryInteger = gethost(argv[temporaryInteger], &addr);
 
@@ -160,6 +162,7 @@ int main (int argc, char* argv[])
     message = requestSkeleton.method + requestSkeleton.SP + addr.relative + requestSkeleton.SP + requestSkeleton.httpVer + requestSkeleton.CRLF;
     log(message);
 
+    temporaryInteger = write(socketFd, message.c_str(), message.size());
 
 
 
@@ -183,7 +186,7 @@ void show_help(char* cmdname) {
 
 #define DEBUG_GETHOST
 
-int gethost(char* address, link * result) {
+int gethost(char* address, linkStruct * result) {
 	int begin = 0;
 	std::string s = address;
 	int end = s.size() / sizeof(char);
