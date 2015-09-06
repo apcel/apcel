@@ -199,6 +199,7 @@ int main (int argc, char* argv[])
     log("Success.");
     char  server_reply[2000];
     temporaryInteger = recv(socketFd, server_reply, 2000, 0);
+    log("received data: " + std::to_string(temporaryInteger));
     log(server_reply);
     fprintf(localFd, "%s\n", server_reply);
 
