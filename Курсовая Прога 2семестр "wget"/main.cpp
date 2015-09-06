@@ -34,10 +34,6 @@ void log(std::string message);
 int main (int argc, char* argv[])
 {
 
-
-#	ifdef __cplusplus
-		std::cout << "Это всё-таки с++" << std::endl;
-#	endif
 	if (argc < 2) {
 
 		fprintf(stderr, "%i : %s\n", argc, argv[argc - 1]);
