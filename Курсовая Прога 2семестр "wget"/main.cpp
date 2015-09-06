@@ -9,7 +9,7 @@
 
 #define DEBUG
 #define DEBUG_FUCKN
-#define DEBUG_GETHOST
+//#define DEBUG_GETHOST
 struct linkStruct
 {
 	std::string protocol;
