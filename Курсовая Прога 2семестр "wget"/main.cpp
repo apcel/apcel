@@ -240,7 +240,7 @@ int main (int argc, char* argv[])
 	char server_reply_buf;
 	log("char server_reply_buf;");
 	while(recv(socketFd, &server_reply_buf, 1, 0) != 0 && server_reply.find("\r\n\r\n") == server_reply.npos) {
-		log("beginning of while loop");
+		//log("beginning of while loop");
 		server_reply.push_back(server_reply_buf);
 		//log(server_reply);
 		//printf("%s\n", server_reply_buf);
