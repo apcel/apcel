@@ -254,6 +254,7 @@ int main (int argc, char* argv[])
 	int temp = 0;
 	int temp2 = 0;
 	temp = server_reply.find("CONTENT-LENGTH:");
+	temp = server_reply.find(":", temp);
 	temp2 = server_reply.find("\r\n", temp);
 	log(server_reply.substr(temp, abs(temp2-temp)));
 
