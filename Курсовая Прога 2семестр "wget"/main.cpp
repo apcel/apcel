@@ -12,10 +12,11 @@ struct link
 	std::string protocol;
 	std::string hostname;
 	std::string relative;
+	std::string filename;
 };
 
 void show_help(char* cmdname);
-int gethost(char* address, int *begin, int *end, link *result);
+int gethost(char* address, link *result);
 void log(std::string message);
 
 
@@ -34,8 +35,8 @@ int main (int argc, char* argv[])
 
 	//struct hostent *he;
 
-	int endOfHostPosition = 0;
-	int beginOfHostPosition = 0;
+	//int endOfHostPosition = 0;
+	//int beginOfHostPosition = 0;
 	for (int i = 1; i < argc; i++)
 	{
 		std::string s = argv[i];
@@ -50,10 +51,10 @@ int main (int argc, char* argv[])
 #	endif
 
 	link addr;
-	
-	temporaryInteger = gethost(argv[temporaryInteger], &beginOfHostPosition, &endOfHostPosition, &addr);
-	
-	
+
+	temporaryInteger = gethost(argv[temporaryInteger], &addr);
+
+
 	if(temporaryInteger != 0)
 		return temporaryInteger;
 
@@ -112,27 +113,27 @@ void show_help(char* cmdname) {
 
 #define DEBUG_GETHOST
 
-int gethost(char* address, int *begin, int *end, link * result) {
-	*begin = 0;
+int gethost(char* address, link * result) {
+	int begin = 0;
 	std::string s = address;
-	*end = s.size() / sizeof(char);
+	int end = s.size() / sizeof(char);
 	int temp = 0;
 	temp = s.find("//", 1);
 	if (temp != s.npos)
 	{
-		*begin = temp + 2;
+		begin = temp + 2;
 	} else {
 		temp = 0;
 	}
-	temp = s.find("/", *begin + 1);
+	temp = s.find("/", begin + 1);
 	if (temp != s.npos)
-		*end = temp;
+		end = temp;
 
-	s = s.substr(*begin, abs(*end - *begin));
+	s = s.substr(begin, abs(end - begin));
 #	ifdef DEBUG_GETHOST
 	log("gethost returns:");
-	log("*begin = " + std::to_string(*begin));
-	log("*end   = " + std::to_string(*end));
+	log("*begin = " + std::to_string(begin));
+	log("*end   = " + std::to_string(end));
 	log("ukhm, host may be the \'" + s + "\'");
 #	endif
 
