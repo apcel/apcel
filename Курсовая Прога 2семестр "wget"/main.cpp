@@ -81,6 +81,16 @@ int main (int argc, char* argv[])
     	return temporaryInteger;
 
 
+
+
+
+    addrinfo ** temporaryPointer = &he;
+    {
+#		ifdef DEBUG
+    	log("he->ai_socktype = " + std::to_string(he->ai_socktype));
+#    	endif
+
+
     log("struct addrinfo {\
     \nint     ai_flags;			" + std::to_string(he->ai_flags) +\
     "\nint     ai_family;			" + std::to_string(he->ai_family) +\
@@ -94,13 +104,6 @@ int main (int argc, char* argv[])
 "}");
 
 
-
-
-    addrinfo ** temporaryPointer = &he;
-    {
-#		ifdef DEBUG
-    	log("he->ai_socktype = " + std::to_string(he->ai_socktype));
-#    	endif
 
     	he = he->ai_next;
     } while (he->ai_socktype != SOCK_DGRAM && temporaryPointer != &he );
