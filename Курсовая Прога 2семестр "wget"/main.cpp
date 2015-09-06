@@ -108,6 +108,7 @@ int main (int argc, char* argv[])
 	log("he->ai_socktype = " + std::to_string(he->ai_socktype));
     log ("resolved to " + std::string(he->ai_addr->sa_data));
 #	endif
+    delete temporaryPointer;
     ////////////////////////////////////////////////////
     //So we have host adress from link.
     int socketFd;
