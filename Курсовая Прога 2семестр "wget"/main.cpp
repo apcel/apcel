@@ -45,7 +45,7 @@ int main (int argc, char* argv[])
 	}
 
 	int temporaryInteger = 1;
-
+//
 	//struct hostent *he;
 
 	//int endOfHostPosition = 0;
@@ -169,7 +169,7 @@ int main (int argc, char* argv[])
     //std::string request;
     if (addr.protocol != "http") {
     	log("protocol егор");
-    	return 15;
+    	//return 15;
     }
     log("he->ai_addr->sa_data = " + std::string(he->ai_addr->sa_data));
 
