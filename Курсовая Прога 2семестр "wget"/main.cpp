@@ -215,7 +215,7 @@ int gethost(char* address, linkStruct * result) {
 		result->relative = s.substr(end);
 	}
 	temp = s.rfind("/");
-	end = s.find("?", temp);
+	end = s.find("?", temp) - 1;
 	if(temp != s.npos)
 	{
 		result->filename = s.substr(temp + 1, abs(end - temp));
