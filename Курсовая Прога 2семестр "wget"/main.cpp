@@ -220,8 +220,8 @@ int main (int argc, char* argv[])
     FILE * recvSocketFd = fdopen(socketFd, "rb+");
     struct recvBuf
     {
-    	char * recvPtr;
-    	size_t  recvSize;
+    	char * recvPtr = 0;
+    	size_t  recvSize = 0;
 	};
 	log("recvSocketFd opened");
 	recvBuf recvBuf;
