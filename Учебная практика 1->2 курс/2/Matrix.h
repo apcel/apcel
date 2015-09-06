@@ -10,7 +10,7 @@
 template<typename __Type>
 class MyMatrix: public std::vector<__Type> {
   private:
-    std::vector<__Type> temp;
+    std::vector<std::vector<__Type>> temp;
     int sizeM, sizeN;
     __Type container[2][2];
   public:
