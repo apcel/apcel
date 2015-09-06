@@ -83,7 +83,7 @@ int main (int argc, char* argv[])
     	log("he->ai_socktype = " + std::to_string(he->ai_socktype));
 #    	endif
 
-    	he = he->ai_next;
+  //  	he = he->ai_next;
     } while (he->ai_socktype != SOCK_DGRAM && temporaryPointer != &he);
  	/*if (he == NULL)
     {
