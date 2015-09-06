@@ -242,6 +242,7 @@ int main (int argc, char* argv[])
 	while(recv(socketFd, &server_reply_buf, 1, 0) != 0) {
 		log("beginning of while loop");
 		server_reply.push_back(server_reply_buf);
+		log(server_reply);
 		//printf("%s\n", server_reply_buf);
 	}
 	return 0;
