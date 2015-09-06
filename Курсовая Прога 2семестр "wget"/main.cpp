@@ -81,8 +81,10 @@ int main (int argc, char* argv[])
 #	ifdef DEBUG
     log ("getaddrinfo done: " + std::to_string(temporaryInteger));
 #	endif
-    if(temporaryInteger != 0)
+    if(temporaryInteger != 0) {
     	return temporaryInteger;
+    	//temporaryInteger = getaddrinfo(a)
+    }
 
     log("SOCK_DGRAM = " + std::to_string(SOCK_DGRAM));
 
