@@ -122,12 +122,18 @@ int gethost(char* address, link * result) {
 	if (temp != s.npos)
 	{
 		begin = temp + 2;
+		result->protocol = s.substr(0, temp - 1);
 	} else {
 		temp = 0;
+		result->protocol = "http";
 	}
 	temp = s.find("/", begin + 1);
 	if (temp != s.npos)
+	{
 		end = temp;
+		result->hostname = s.substr(begin, abs(end - begin));
+		result->relative = s.substr(end + 1);
+	}
 
 	s = s.substr(begin, abs(end - begin));
 #	ifdef DEBUG_GETHOST
