@@ -241,8 +241,9 @@ int main (int argc, char* argv[])
 	std::string server_reply;
 	char * server_reply_buf;
 	log("char server_reply_buf;");
-	while(recv(socketFd, server_reply_buf, sizeof(char), 0) != 0 && server_reply.find("\r\n\r\n") == server_reply.npos) {
+	while(server_reply.find("\r\n\r\n") == server_reply.npos) {
 		//log("beginning of while loop");
+		recv(socketFd, server_reply_buf, sizeof(char), 0);
 		server_reply.push_back(*server_reply_buf);
 		//log(server_reply);
 		//printf("%s\n", server_reply_buf);
