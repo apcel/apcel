@@ -136,7 +136,7 @@ int main (int argc, char* argv[])
     }*/
 #	ifdef DEBUG
 	log("he->ai_socktype = " + std::to_string(he->ai_socktype));
-    log ("resolved to " + std::string(he->ai_addr->sa_data));
+    //log ("resolved to " + std::string(he->ai_addr->sa_data));
 #	endif
     delete  temporaryPointer;
     ////////////////////////////////////////////////////
