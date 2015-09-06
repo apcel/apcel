@@ -9,6 +9,7 @@
 
 #define DEBUG
 //#define DEBUG_FUCKN
+#define DEBUG_GETHOST
 struct linkStruct
 {
 	std::string protocol;
@@ -219,7 +220,7 @@ void show_help(char* cmdname) {
 }
 
 
-//#define DEBUG_GETHOST
+
 
 int gethost(char* address, linkStruct * result) {
 	int begin = 0;
