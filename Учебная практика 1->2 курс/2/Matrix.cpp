@@ -26,6 +26,7 @@ MyMatrix<__Type> & MyMatrix<__Type>::operator + (const MyMatrix<__Type> &m)
 template<typename __Type>
 void MyMatrix<__Type>::transpone()
 {
+	this->sizeN = sizeCol;
 	for (int i = 0; i <= sizeN; ++i)
 		for (int j = i; j <= sizeM; ++j)
 		//	std::swap(container[i][j], container[j][i]);
