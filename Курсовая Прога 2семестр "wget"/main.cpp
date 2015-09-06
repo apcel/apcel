@@ -236,10 +236,12 @@ int main (int argc, char* argv[])
     //	fprintf(stdout, "%c\n", *recvBuf.recvPtr[i]);
 */
 	log("starting recv in a loop");
+	std::string server_reply;
 	char server_reply_buf;
 	log("char server_reply_buf;");
 	while(recv(socketFd, &server_reply_buf, 1, 0) != 0) {
 		log("beginning of while loop");
+
 		//printf("%s\n", server_reply_buf);
 	}
 	return 0;
