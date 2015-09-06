@@ -237,6 +237,7 @@ int main (int argc, char* argv[])
 */
 	char* server_reply_buf;
 	while(recv(socketFd, server_reply_buf, 1, 0))
+		printf("%c\n", server_reply_buf);
 	return 0;
 }
 
