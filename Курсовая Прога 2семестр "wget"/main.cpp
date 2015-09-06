@@ -85,7 +85,7 @@ int main (int argc, char* argv[])
 
 
 
-    addrinfo ** temporaryPointer = &he;
+    struct addrinfo * temporaryPointer = he;
     {
 #		ifdef DEBUG
     	log("he->ai_socktype = " + std::to_string(he->ai_socktype));
@@ -131,7 +131,7 @@ int main (int argc, char* argv[])
 	log("he->ai_socktype = " + std::to_string(he->ai_socktype));
     log ("resolved to " + std::string(he->ai_addr->sa_data));
 #	endif
-    delete * temporaryPointer;
+    delete  temporaryPointer;
     ////////////////////////////////////////////////////
     //So we have host adress from link.
     int socketFd;
