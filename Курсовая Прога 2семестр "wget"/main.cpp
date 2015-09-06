@@ -251,8 +251,10 @@ int main (int argc, char* argv[])
 		server_reply[i] = std::toupper(server_reply[i]);
 	log(server_reply);
 
+	int temp = 0;
+	int temp2 = 0;
+	temp = server_reply.find("CONTENT-LENGTH:");
 
-	server_reply.find("CONTENT-LENGTH:");
 	while(recv(socketFd, &server_reply_buf, 1, 0) != 0 && true)
 	return 0;
 }
