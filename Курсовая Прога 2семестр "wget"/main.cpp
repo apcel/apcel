@@ -104,7 +104,9 @@ int main (int argc, char* argv[])
 
     bind(socketFd, he->ai_addr, he->ai_addrlen);
 
-
+#	ifdef DEBUG
+    log("Binded socketFd = " + std::to_string(socketFd));
+#	endif
 
 	return 0;
 }
