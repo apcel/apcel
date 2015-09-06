@@ -22,7 +22,7 @@ struct requestSkeleton
 	std::string method = "GET";
 	char SP = char(32);
 	std::string httpVer = "HTTP/1.1";
-	std::string requestHeader = "\r\nAccept: */*\r\nAccept-Charset: utf-8\r\nkeep-alive: yes\r\n";
+	std::string requestHeader = "\r\nAccept: */*\r\nAccept-Charset: utf-8\r\nConnection: Keep-Alive\r\n";
 	std::string CRLF = "\r\n\r\n";
 	int flags = 0;
 };
