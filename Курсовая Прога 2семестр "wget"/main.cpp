@@ -7,10 +7,17 @@
 
 #define DEBUG
 
+struct link
+{
+	std::string protocol;
+	std::string hostname;
+	std::string relative;
+};
 
 void show_help(char* cmdname);
-std::string gethost(char* address, int *begin, int *end);
+int gethost(char* address, int *begin, int *end, link *result);
 void log(std::string message);
+
 
 int main (int argc, char* argv[])
 {
@@ -19,8 +26,8 @@ int main (int argc, char* argv[])
 
 		fprintf(stderr, "%i : %s\n", argc, argv[argc - 1]);
 		show_help(argv[0]);
-		argv[1] = "google.com";
-		//return -1;
+		//argv[1] = "google.com";
+		return -1;
 	}
 
 	int temporaryInteger = 1;
@@ -42,13 +49,19 @@ int main (int argc, char* argv[])
 	fprintf(stdout, "found link-like %s\n", argv[temporaryInteger]);
 #	endif
 
-	std::string hostname = gethost(argv[temporaryInteger], &beginOfHostPosition, &endOfHostPosition);
+	link addr;
+	
+	temporaryInteger = gethost(argv[temporaryInteger], &beginOfHostPosition, &endOfHostPosition, &addr);
+	
+	
+	if(temporaryInteger != 0)
+		return temporaryInteger;
 
 
 
 	struct addrinfo * he;
 
-    getaddrinfo (hostname.c_str(), NULL, NULL,&he);
+    getaddrinfo (addr.hostname.c_str(), NULL, NULL,&he);
  	if (he == NULL)
     {
         switch (h_errno)
@@ -91,13 +104,15 @@ int main (int argc, char* argv[])
 
 
 
-
 void show_help(char* cmdname) {
 	fprintf(stdout, "A simple wget implementation\n" );
 	fprintf(stdout, "Usage: %s ADDRESS\n", cmdname );
 }
+
+
 #define DEBUG_GETHOST
-std::string gethost(char* address, int *begin, int *end) {
+
+int gethost(char* address, int *begin, int *end, link * result) {
 	*begin = 0;
 	std::string s = address;
 	*end = s.size() / sizeof(char) + 1;
@@ -121,7 +136,8 @@ std::string gethost(char* address, int *begin, int *end) {
 	log("ukhm, host may be the \'" + s + "\'");
 #	endif
 
-	return s;
+//	return s;
+	return 0;
 }
 
 void log(std::string  message) {
