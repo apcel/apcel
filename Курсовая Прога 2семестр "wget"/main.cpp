@@ -117,12 +117,12 @@ int main (int argc, char* argv[])
     log("Binding socketFd = " + std::to_string(socketFd));
 #	endif
 
-    temporaryInteger = bind(socketFd, he->ai_addr, he->ai_addrlen);
+   /* temporaryInteger = bind(socketFd, he->ai_addr, he->ai_addrlen);
     if(temporaryInteger != 0) {
     	log("Bind error: " + temporaryInteger);
     	return temporaryInteger;
 
-    }
+    }*/
 
 #	ifdef DEBUG
     log("Binded socketFd = " + std::to_string(socketFd));
@@ -133,7 +133,7 @@ int main (int argc, char* argv[])
     	log("protocol егор");
     	return 15;
     }
-
+    temporaryInteger = connect(socketFd, he->ai_addr, he->ai_addrlen);
 
 
 	return 0;
