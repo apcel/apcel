@@ -223,13 +223,14 @@ int main (int argc, char* argv[])
     	char * recvPtr = 0;
     	size_t  recvSize = 0;
 	};
-	log("recvSocketFd opened");
+	//log("recvSocketFd opened");
 	recvBuf recvBuf;
-	log("recvBuf recvBuf");
+	//log("recvBuf recvBuf");
+    {
     getline(&recvBuf.recvPtr, &recvBuf.recvSize, recvSocketFd);
-    log("getline");
+    //log("getline");
     printf("%s\n", recvBuf.recvPtr);
-
+	} while(recvBuf.recvPtr != "\r\n");
 
   //  for(int i = 0; i < *recvBuf.recvSize; ++i)
     //	fprintf(stdout, "%c\n", *recvBuf.recvPtr[i]);
