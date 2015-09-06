@@ -62,7 +62,8 @@ int main (int argc, char* argv[])
 
 	struct addrinfo * he;
 
-    getaddrinfo (addr.hostname.c_str(), NULL, NULL,&he);
+    temporaryInteger = getaddrinfo (addr.hostname.c_str(), NULL, NULL,&he);
+    
 #	ifdef DEBUG
     log ("getaddrinfo done");
 #	endif
