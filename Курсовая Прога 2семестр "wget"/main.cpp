@@ -104,9 +104,12 @@ int main (int argc, char* argv[])
     if(temporaryInteger != 0) {
         temporaryInteger = getaddrinfo(addr.hostname.c_str(), "80", NULL, &he);
         log(stderr, "getaddrinfo done[+1]: " + std::to_string(temporaryInteger));
+        log(stderr, "This may mean that server doesn't use http (forced https, for example)\n");
 #       ifndef DEBUG
-        if((!ignoreErrors) && (!ignoreAllErrors))
+        if((!ignoreErrors) && (!ignoreAllErrors)) {
+            log(stderr, "Consider using -i if you know what yuo're doing");
             return 25;
+        }
 #       endif
     }
 
