@@ -263,6 +263,7 @@ int main (int argc, char* argv[])
         recvd = recv(socketFd, server_reply_buf, sizeof(char), 0);
         fprintf(localFd, "%c" , *server_reply_buf);
     }
+    log(stdout, "The file \'" + addr.filename + "\' was written. Bye.");
     return 0;
 }
 
