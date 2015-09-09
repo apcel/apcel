@@ -65,7 +65,7 @@ int main (int argc, char* argv[])
         std::string s = argv[i];
         if(s == "-o") {
             addr.filename = argv[i + 1];
-            i += 2;
+            i += 1;
         } else if (s == "-i") {
             ignoreErrors = true;
         } else if(s == "--ignore-all") {
