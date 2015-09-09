@@ -36,7 +36,7 @@ struct requestSkeleton
 };
 
 void show_help(char* cmdname);
-int gethost(char* address, linkStruct *result);
+int parceHost(char* address, linkStruct *result);
 void log(std::string message);
 void log(FILE * fd, std::string message);
 
@@ -75,11 +75,13 @@ int main (int argc, char* argv[])
 
 
 
-    temporaryInteger = gethost(argv[temporaryInteger], &addr);
+    temporaryInteger = parceHost(argv[temporaryInteger], &addr);
 
 
-    if(temporaryInteger != 0)
+    if(temporaryInteger != 0) {
+        log(stderr, "Parsing function returned non-zero value :(");
         return temporaryInteger;
+    }
 
 
 
@@ -236,7 +238,7 @@ void show_help(char* cmdname) {
 
 
 
-int gethost(char* address, linkStruct * result) {
+int parceHost(char* address, linkStruct * result) {
     int begin = 0;
     std::string s = address;
     int end = s.size() / sizeof(char);
@@ -272,7 +274,7 @@ int gethost(char* address, linkStruct * result) {
     }
 
 #   ifdef DEBUG_GETHOST
-        log("gethost returns:");
+        log("parceHost returns:");
         log("begin = " + std::to_string(begin));
         log("end   = " + std::to_string(end));
         //log("ukhm, host may be the \'" + s + "\'");
