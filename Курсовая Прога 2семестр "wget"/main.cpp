@@ -9,7 +9,7 @@
 #include <sys/socket.h>
 
 
-#define DEBUG
+//#define DEBUG
 #ifdef DEBUG
 
 #define DEBUG_FUCKN
@@ -45,7 +45,7 @@ int main (int argc, char* argv[])
 
     if (argc < 2) {
 
-        fprintf(stderr, "%i : %s\n", argc, argv[argc - 1]);
+        log("Sry, no arguments: "  + std::to_string(argc) + " : " + std::string(argv[argc - 1]));
         show_help(argv[0]);
 #        ifdef DEBUG
             argv[1] = (char *)"https://pp.vk.me/c623120/v623120157/465ee/c5fCboWQibg.jpg";
@@ -58,12 +58,18 @@ int main (int argc, char* argv[])
     int temporaryInteger = 1;
 
     linkStruct addr;
+    bool ignoreErrors = false;
+    bool ignoreAllErrors = false;
 
     for (int i = 1; i < argc; i++) {
         std::string s = argv[i];
         if(s == "-o") {
             addr.filename = argv[i + 1];
             i += 2;
+        } else if (s == "-i") {
+            ignoreErrors = true;
+        } else if(s == "--ignore-all") {
+            ignoreAllErrors = true;
         } else if (s.find("/") != s.npos) {
             //fprintf(stdout, "found link-like argument \"%s\"\n", argv[i] );
             temporaryInteger = i;
@@ -80,7 +86,8 @@ int main (int argc, char* argv[])
 
     if(temporaryInteger != 0) {
         log(stderr, "Parsing function returned non-zero value :(");
-        return temporaryInteger;
+        if((!ignoreErrors) && (!ignoreAllErrors))
+            return temporaryInteger;
     }
 
 
@@ -95,15 +102,18 @@ int main (int argc, char* argv[])
     log ("getaddrinfo done: " + std::to_string(temporaryInteger));
 
     if(temporaryInteger != 0) {
-        //return temporaryInteger;
         temporaryInteger = getaddrinfo(addr.hostname.c_str(), "80", NULL, &he);
         log(stderr, "getaddrinfo done[+1]: " + std::to_string(temporaryInteger));
+#       ifndef DEBUG
+        if((!ignoreErrors) && (!ignoreAllErrors))
+            return 25;
+#       endif
     }
 
     log("SOCK_DGRAM = " + std::to_string(SOCK_DGRAM));
     log("SOCK_STREAM = " + std::to_string(SOCK_STREAM));
 
-#    ifdef DEBUG_FUCKN
+#   ifdef DEBUG_FUCKN
         struct addrinfo * temporaryPointer = he;
 
 
@@ -113,11 +123,11 @@ int main (int argc, char* argv[])
 
         log("struct addrinfo {"\
             "\nint     ai_flags;            " + std::to_string(he->ai_flags) +\
-               "\nint     ai_family;            " + std::to_string(he->ai_family) +\
-            "\nint     ai_socktype;            " + std::to_string(he->ai_socktype) +\
-            "\nint     ai_protocol;            " + std::to_string(he->ai_protocol) +\
-            "\nsize_t  ai_addrlen;            " + std::to_string(he->ai_addrlen) +\
-            "\nstruct  sockaddr *ai_addr;    " + std::to_string(he->ai_addr->sa_family) + "  " + inet_ntoa(tempinadr->sin_addr));
+            "\nint     ai_family;           " + std::to_string(he->ai_family) +\
+            "\nint     ai_socktype;         " + std::to_string(he->ai_socktype) +\
+            "\nint     ai_protocol;         " + std::to_string(he->ai_protocol) +\
+            "\nsize_t  ai_addrlen;          " + std::to_string(he->ai_addrlen) +\
+            "\nstruct  sockaddr *ai_addr;   " + std::to_string(he->ai_addr->sa_family) + "  " + inet_ntoa(tempinadr->sin_addr));
 
         log("char    *ai_canonname;     /* canonical name */" \
             "\nstruct  addrinfo *ai_next; /* this struct can form a linked list */" /*+ std::to_string(he->ai_next) +*/\
@@ -140,14 +150,17 @@ int main (int argc, char* argv[])
     if(socketFd < 0)
     {
         log(stderr, "Error opening socketFd: " + std::to_string(socketFd));
-        return 2;
+        if(!ignoreAllErrors)
+            return 2;
     }
 
 
 
     if (addr.protocol != "http") {
-        log("protocol егор!");
-        //return 15;
+        log(stderr, "You\'re trying to use non-http protocol. I don\'t know what it will end.");
+        log(stdout, "Use -i option to ignore errors.");
+        if((!ignoreErrors) && (!ignoreAllErrors))
+            return 15;
     }
 
 
@@ -155,8 +168,9 @@ int main (int argc, char* argv[])
     temporaryInteger = connect(socketFd, he->ai_addr, he->ai_addrlen);
     log("connected; return value: " + std::to_string(temporaryInteger));
     if (temporaryInteger != 0) {
-        log (stderr, "connection error, exitting");
-        return 50;
+        log (stderr, "connection error");
+        if(!ignoreAllErrors)
+            return 50;
     }
 
 
@@ -175,7 +189,8 @@ int main (int argc, char* argv[])
 
     if (localFd == NULL) {
         fprintf(stderr, "%s\n", "Error opening localFd");
-        return 100;
+        if(!ignoreAllErrors)
+            return 100;
     }
     log("Success.");
 
@@ -204,25 +219,45 @@ int main (int argc, char* argv[])
     int temp2 = 0;
 
     temp = server_reply.find("200 OK");
-    if(temp == server_reply.npos)
+    if(temp == server_reply.npos) {
         fprintf(stderr, "Could not find \'200 OK\' in the header.\n");
+        if((!ignoreErrors) && (!ignoreAllErrors))
+            return 2;
+    }
 
 
 
     temp = server_reply.find("CONTENT-LENGTH:");
+    if(temp == server_reply.npos) {
+        log(stderr, "Could not find content-length option in http header, sry.");
+        if((!ignoreErrors) && (!ignoreAllErrors))
+            return 116;
+    }
     temp = server_reply.find(":", temp);
     temp += 2;
-    temp2 = server_reply.find("\r\n", temp);
+    temp2 = server_reply.find_first_not_of("0123456789", temp);
+    if(temp2 == server_reply.npos) {
+        log(stderr, "WTF? Could not find content-length value");
+        if((!ignoreErrors) && (!ignoreAllErrors))
+            return 115;
+    }
+
 
     int contentLength = stoi(server_reply.substr(temp, abs(temp2-temp)), NULL, 10);
     log(std::to_string(contentLength) + " bytes");
 
-    contentLength = (contentLength / sizeof(char) );
+    contentLength = (contentLength / sizeof(char) ); // okay, lets divide by 1.
+    if((contentLength % sizeof(char)) != 0) {
+        log(stderr, "Something is wrong: contentLength % sizeof(char) returned non-zero value");
+        if(!ignoreAllErrors)
+            return 250;
+    }
     log(std::to_string(contentLength) + " chars");
 
     int i = 0;
-    while(++i < contentLength) {
-        recv(socketFd, server_reply_buf, sizeof(char), 0);
+    int recvd = 1;
+    while((++i < contentLength) && (recvd != 0)) {
+        recvd = recv(socketFd, server_reply_buf, sizeof(char), 0);
         fprintf(localFd, "%c" , *server_reply_buf);
     }
     return 0;
@@ -232,8 +267,12 @@ int main (int argc, char* argv[])
 
 
 void show_help(char* cmdname) {
-    fprintf(stdout, "A simple wget implementation\n" );
-    fprintf(stdout, "Usage: %s ADDRESS\n", cmdname );
+    fprintf(stdout, "A simple wget implementation\n");
+    fprintf(stdout, "Usage: %s [-i][-o FILENAME][--ignore-all] ADDRESS\n", cmdname);
+    fprintf(stdout, "\t\t-i\n\t ignore some errors such as no '200 HTTP' message\n");
+    fprintf(stdout, "\t\t-o FILENAME\n\t manually select output filename\n");
+    fprintf(stdout, "\t\t--ignore-all\n\t ignore terrible errors such as opening output file descriptor error.\n");
+    fprintf(stdout, "\tThis option is not recommended and was implemented only for testing purpose.\n");
 }
 
 
