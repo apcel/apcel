@@ -107,7 +107,7 @@ int main (int argc, char* argv[])
         log(stderr, "This may mean that server doesn't use http (forced https, for example)\n");
 #       ifndef DEBUG
         if((!ignoreErrors) && (!ignoreAllErrors)) {
-            log(stderr, "Consider using -i if you know what yuo're doing");
+            log(stderr, "Consider using -i if you know what you're doing");
             return 25;
         }
 #       endif
