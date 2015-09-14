@@ -58,14 +58,10 @@ int main(int argc, char const *argv[])
 				int n;
 				std::cout << "Введите размер вектора: ";
 				std::cin >> n;
-				if (n < v.size())
-				{
-
-					std::cout << "Заглушка. Научите дурака укорачивать себе вектор.\n";
-				} else {
+				v.clear();
 				//MyVector<int> v;
 				v.fillWithRandomNumbers(n);
-				}
+
 				break;
 			}
 			case '3':
