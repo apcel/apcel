@@ -20,4 +20,4 @@ grid on;
 axis ( [xmin xmax ymin ymax])
 set(gca,'FontName','Arial Cyr');
 xlabel('X', 'Fontsize', 16); ylabel('Y', 'Fontsize', 16);
-title('Функции', 'Fontsize', 16);
+title('Functions', 'Fontsize', 16);
