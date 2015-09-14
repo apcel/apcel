@@ -1,35 +1,35 @@
-function MyVector()    
+function MyVector()
 	beep off
 	k = 0;
 	while (k ~= 8)
 		k = input('1) Вывод вектора на экран\n2) Заполнение вектора с помощью датчика случайных чисел \n3) Сортировка методом \"Пузырька\" \n4) Сортировка методом вставок \n5) Сортировка подсчётом \n6) Бинарный поиск элемента вектора \n7) Интерполяционный поиск элемента вектора \nВведите \"8\"" для выхода\n//Enter \"8\"" to exit\n');
         tic
-        switch k        	
+        switch k
         case 1%Вывод вектора на экран
             vect
         case 2%Заполнение вектора с помощью датчика случайных чисел
 	    	n = input('Введите размер вектора: ');
-	 		vect = round(rand(1, n) * 1000);           
-        case 3%Сортировка методом "Пузырька" 
-            vect = sortBubble(vect);                     
-        case 4% Сортировка методом вставок            
-        	vect = sortInsertion(vect);           
-        case 5%Сортировка подсчётом 
-           vect = sortCount(vect);          
-        case 6%Бинарный поиск элемента вектора 
+	 		vect = round(rand(1, n) * 1000);
+        case 3%Сортировка методом "Пузырька"
+            vect = sortBubble(vect);
+        case 4% Сортировка методом вставок
+        	vect = sortInsertion(vect);
+        case 5%Сортировка подсчётом
+           vect = sortCount(vect);
+        case 6%Бинарный поиск элемента вектора
         	key = input('Enter search key: ');
         	tic
-        	index = findBinary(vect, key);            
-        case 7%Интерполяционный поиск элемента вектора 
+        	index = findBinary(vect, key);
+        case 7%Интерполяционный поиск элемента вектора
         	key = input('Enter search key: ');
-        	tic            
-        	index = findInterpolation(vect, key);            
+        	tic
+        	index = findInterpolation(vect, key);
         case 8
             break;
-        otherwise 
+        otherwise
 			disp('Sorry, your input "'); k
 		 	disp('" was not recognized.');
-		 	disp('Press any key to continue');        	
+		 	disp('Press any key to continue');
  	        %pause();
         end
         toc
@@ -51,10 +51,10 @@ function vect = sortBubble(vect)
     			vect([j j+1]) = vect([j+1 j]);
     			flag = 1;
     		end
-    	end    	
-    end    
+    	end
+    end
     nswap
-end 
+end
 
 function vect = sortInsertion(vect)
  	nswap = 0;
@@ -68,11 +68,11 @@ function vect = sortInsertion(vect)
     	end
     end
     nswap
-end 
+end
 
 function vect = sortCount(vect)
  	nswap_ = 0;
- 	size = numel(vect); 
+ 	size = numel(vect);
  	countMin = min(vect);
  	countMax = max(vect);
  	tempVector=zeros(1,countMax-countMin+1);
