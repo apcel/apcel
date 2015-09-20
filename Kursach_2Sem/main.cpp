@@ -82,7 +82,10 @@ int main (int argc, char* argv[])
         } else if (s == "-d") {
             log("Debugging enabled");
             debug_enabled = true;
-        } else if (s.find("/") != s.npos) {
+        } else if (s == "-h") {
+            show_help(argv[0]);
+            return 0;
+        }  else if (s.find("/") != s.npos) {
             log("found link-like argument" + std::string(argv[i]));
             temporaryInteger = i;
         }
@@ -201,9 +204,9 @@ int main (int argc, char* argv[])
 
     temporaryInteger = send(socketFd, message.c_str(), message.size(), 0);
     log("Sent data: " + std::to_string(temporaryInteger));
+
     log("Trying to open file: " + std::string("./" + addr.filename) + "\n...");
     FILE * localFd = fopen(std::string("./" + addr.filename).c_str(), "wb+");
-
     if (localFd == NULL) {
         fprintf(stderr, "%s\n", "Error opening localFd");
         if(!ignoreAllErrors)
@@ -225,6 +228,8 @@ int main (int argc, char* argv[])
     log(server_reply);
     if(server_reply.find('\0') != server_reply.npos) {
         log(stderr, "Ughm, could parse response header illegally, sry.");
+        debug_enabled = true;
+        log("Turning debugging on.");
     }
 
     server_reply.push_back('\0');
@@ -296,7 +301,7 @@ void show_help(char* cmdname) {
     fprintf(stdout, "\t\t-i\n\t ignore some errors such as no '200 HTTP' message\n");
     fprintf(stdout, "\t\t-o FILENAME\n\t manually select output filename\n");
     fprintf(stdout, "\t\t--ignore-all\n\t ignore terrible errors such as opening output file descriptor error.\n");
-    fprintf(stdout, "\tThis option is not recommended and was implemented only for testing purpose.\n");
+    fprintf(stdout, "\tThis option is not recommended and was implemented only for testing purposes.\n");
 }
 
 
