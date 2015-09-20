@@ -298,7 +298,7 @@ void show_help(char* cmdname) {
     fprintf(stdout, "Usage: %s [-id][-o FILENAME][--ignore-all] ADDRESS\n", cmdname);
     fprintf(stdout, "%s [-h][--help]\n", cmdname);
 
-    fprintf(stdout, "\t\t-h\n\t show this help message\n");
+    fprintf(stdout, "\t\t-h  --help\n\t show this help message\n");
     fprintf(stdout, "\t\t-d\n\t enable debugging\n");
     fprintf(stdout, "\t\t-i\n\t ignore some errors such as no '200 HTTP' message\n");
     fprintf(stdout, "\t\t-o FILENAME\n\t manually select output filename\n");
