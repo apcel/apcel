@@ -16,9 +16,9 @@ bool debug_debug    = false;
 #define DEBUG_FUCKN
 #define DEBUG_GETHOST
 
-#include <arpa/inet.h>
-#endif
 
+#endif
+#include <arpa/inet.h> //debugging
 
 
 struct linkStruct
@@ -141,8 +141,8 @@ int main (int argc, char* argv[])
     log("SOCK_DGRAM = " + std::to_string(SOCK_DGRAM));
     log("SOCK_STREAM = " + std::to_string(SOCK_STREAM));
 
-#   ifdef DEBUG_FUCKN
-    if(debug_debug)
+
+    if(debug_debug) {
         struct addrinfo * temporaryPointer = he;
 
 
@@ -162,7 +162,8 @@ int main (int argc, char* argv[])
             "\nstruct  addrinfo *ai_next; /* this struct can form a linked list */" /*+ std::to_string(he->ai_next) +*/\
             "\n}");
         delete  temporaryPointer;
-#   endif
+    } //if(debug_debug)
+
 
 
 
