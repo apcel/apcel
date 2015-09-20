@@ -3,12 +3,12 @@
 //#include <sys/types.h>
 #include <unistd.h>
 //#include <sys/sendfile.h>
-
+#include <string.h>
 #include <netdb.h>
 #include <iostream>
 #include <sys/socket.h>
 
-
+bool debug_enabled = false;
 //#define DEBUG
 #ifdef DEBUG
 
@@ -17,6 +17,8 @@
 
 #include <arpa/inet.h>
 #endif
+
+
 
 struct linkStruct
 {
@@ -42,6 +44,10 @@ void log(FILE * fd, std::string message);
 
 int main (int argc, char* argv[])
 {
+#   ifdef DEBUG
+        debug_enabled = true;
+#   endif
+
 
     if (argc < 2) {
 
@@ -64,14 +70,20 @@ int main (int argc, char* argv[])
     for (int i = 1; i < argc; i++) {
         std::string s = argv[i];
         if(s == "-o") {
+            log("Output filename will be " + std::string(argv[i + 1]));
             addr.filename = argv[i + 1];
             i += 1;
         } else if (s == "-i") {
             ignoreErrors = true;
+            log("Some errors will be ignored");
         } else if(s == "--ignore-all") {
             ignoreAllErrors = true;
+            log("Ignoring everything. :C");
+        } else if (s == "-d") {
+            log("Debugging enabled");
+            debug_enabled = true;
         } else if (s.find("/") != s.npos) {
-            //fprintf(stdout, "found link-like argument \"%s\"\n", argv[i] );
+            log("found link-like argument" + std::string(argv[i]));
             temporaryInteger = i;
         }
     }
@@ -80,12 +92,13 @@ int main (int argc, char* argv[])
 
 
 
-
+    int linkNum = temporaryInteger;
     temporaryInteger = parceHost(argv[temporaryInteger], &addr);
 
 
     if(temporaryInteger != 0) {
         log(stderr, "Parsing function returned non-zero value :(");
+        log(stderr, "Link seemed to be" + std::string(argv[linkNum]));
         if((!ignoreErrors) && (!ignoreAllErrors))
             return temporaryInteger;
     }
@@ -93,13 +106,14 @@ int main (int argc, char* argv[])
 
 
     struct addrinfo *he = new struct addrinfo;
-
+    memset(he, 0, sizeof *he);
     he->ai_socktype = SOCK_STREAM;
     he->ai_family = AF_INET;
+    //he->ai_flags = AF_UNSPEC;
 
     temporaryInteger = getaddrinfo (addr.hostname.c_str(), "80", he, &he);
 
-    log ("getaddrinfo done: " + std::to_string(temporaryInteger));
+    log ("getaddrinfo done: " + std::to_string(temporaryInteger) + " : " + gai_strerror(temporaryInteger));
 
     if(temporaryInteger != 0) {
         temporaryInteger = getaddrinfo(addr.hostname.c_str(), "80", NULL, &he);
@@ -264,7 +278,7 @@ int main (int argc, char* argv[])
         fprintf(localFd, "%c" , *server_reply_buf);
     }
     log(stdout, "The file \'" + addr.filename + "\' was written. Bye.");
-    
+
     fclose(localFd);
     close(socketFd);
     return 0;
@@ -279,6 +293,7 @@ void show_help(char* cmdname) {
     fprintf(stdout, "\t\t-i\n\t ignore some errors such as no '200 HTTP' message\n");
     fprintf(stdout, "\t\t-o FILENAME\n\t manually select output filename\n");
     fprintf(stdout, "\t\t--ignore-all\n\t ignore terrible errors such as opening output file descriptor error.\n");
+    fprintf(stdout, "\t\t-d\n\t enable debugging\n");
     fprintf(stdout, "\tThis option is not recommended and was implemented only for testing purpose.\n");
 }
 
@@ -333,9 +348,8 @@ int parceHost(char* address, linkStruct * result) {
 }
 
 void log(std::string  message) {
-#   ifdef DEBUG
+    if (debug_enabled)
         log(stdout, message);
-#   endif
 }
 void log( FILE * fd, std::string message) {
     fprintf(fd, "%s\n", message.c_str());
