@@ -8,17 +8,16 @@
 #include <iostream>
 #include <sys/socket.h>
 
-bool debug_enabled  = false;
-bool debug_debug    = false;
+bool debug_enabled = false;
 //#define DEBUG
 #ifdef DEBUG
 
 #define DEBUG_FUCKN
 #define DEBUG_GETHOST
 
-
+#include <arpa/inet.h>
 #endif
-#include <arpa/inet.h> //debugging
+
 
 
 struct linkStruct
@@ -47,9 +46,6 @@ int main (int argc, char* argv[])
 {
 #   ifdef DEBUG
         debug_enabled = true;
-#   endif
-#   ifdef DEBUG_FUCKN
-        debug_debug = true;
 #   endif
 
 
@@ -86,10 +82,6 @@ int main (int argc, char* argv[])
         } else if (s == "-d") {
             debug_enabled = true;
             log("Debugging enabled");
-        } else if (s == "-dd") {
-            debug_enabled = true;
-            debug_debug = true;
-            log("Insane debugging enabled");
         } else if (s == "-h" || s == "--help") {
             show_help(argv[0]);
             return 0;
@@ -141,8 +133,7 @@ int main (int argc, char* argv[])
     log("SOCK_DGRAM = " + std::to_string(SOCK_DGRAM));
     log("SOCK_STREAM = " + std::to_string(SOCK_STREAM));
 
-
-    if(debug_debug) {
+#   ifdef DEBUG_FUCKN
         struct addrinfo * temporaryPointer = he;
 
 
@@ -161,9 +152,8 @@ int main (int argc, char* argv[])
         log("char    *ai_canonname;     /* canonical name */" \
             "\nstruct  addrinfo *ai_next; /* this struct can form a linked list */" /*+ std::to_string(he->ai_next) +*/\
             "\n}");
-        //delete  temporaryPointer;
-    } //if(debug_debug)
-
+        delete  temporaryPointer;
+#   endif
 
 
 
