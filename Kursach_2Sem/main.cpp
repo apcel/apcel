@@ -88,6 +88,8 @@ int main (int argc, char* argv[])
         }  else if (s.find("/") != s.npos) {
             log("found link-like argument" + std::string(argv[i]));
             temporaryInteger = i;
+        } else {
+            log(stderr, "Option \'" + std::string(argv[i]) + "\'' was not recognized, sorry. Ignoring.");
         }
     }
 
