@@ -264,6 +264,7 @@ int main (int argc, char* argv[])
         fprintf(localFd, "%c" , *server_reply_buf);
     }
     log(stdout, "The file \'" + addr.filename + "\' was written. Bye.");
+    fclose(localFd);
     return 0;
 }
 
