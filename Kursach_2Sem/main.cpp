@@ -290,7 +290,7 @@ int main (int argc, char* argv[])
 
 void show_help(char* cmdname) {
     fprintf(stdout, "A simple wget implementation\n");
-    fprintf(stdout, "Usage: %s [-i][-o FILENAME][--ignore-all] ADDRESS\n", cmdname);
+    fprintf(stdout, "Usage: %s [-id][-o FILENAME][--ignore-all] ADDRESS\n", cmdname);
 
     fprintf(stdout, "\t\t-d\n\t enable debugging\n");
     fprintf(stdout, "\t\t-i\n\t ignore some errors such as no '200 HTTP' message\n");
