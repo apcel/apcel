@@ -295,8 +295,8 @@ int main (int argc, char* argv[])
 
 void show_help(char* cmdname) {
     log(stdout, "A simple wget implementation");
-    log(stdout, "Usage:\t%s [-id][-o FILENAME][--ignore-all] ADDRESS" + std::string(cmdname));
-    log(stdout, "\t%s [-h][--help] \n" + std::string(cmdname));
+    log(stdout, "Usage:\t" + std::string(cmdname) + " [-id][-o FILENAME][--ignore-all] ADDRESS" );
+    log(stdout, "\t" + std::string(cmdname) + " [-h][--help] \n");
 
     log(stdout, "\t\t-h  --help\n\t show this help message");
     log(stdout, "\t\t-d\n\t enable debugging");
