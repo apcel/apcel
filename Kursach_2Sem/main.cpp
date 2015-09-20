@@ -82,7 +82,7 @@ int main (int argc, char* argv[])
         } else if (s == "-d") {
             log("Debugging enabled");
             debug_enabled = true;
-        } else if (s == "-h") {
+        } else if (s == "-h" || s == "--help") {
             show_help(argv[0]);
             return 0;
         }  else if (s.find("/") != s.npos) {
@@ -296,7 +296,9 @@ int main (int argc, char* argv[])
 void show_help(char* cmdname) {
     fprintf(stdout, "A simple wget implementation\n");
     fprintf(stdout, "Usage: %s [-id][-o FILENAME][--ignore-all] ADDRESS\n", cmdname);
+    fprintf(stdout, "%s [-h][--help]\n", cmdname);
 
+    fprintf(stdout, "\t\t-h\n\t show this help message\n");
     fprintf(stdout, "\t\t-d\n\t enable debugging\n");
     fprintf(stdout, "\t\t-i\n\t ignore some errors such as no '200 HTTP' message\n");
     fprintf(stdout, "\t\t-o FILENAME\n\t manually select output filename\n");
