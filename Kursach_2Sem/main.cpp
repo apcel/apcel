@@ -103,7 +103,7 @@ int main (int argc, char* argv[])
 
     if(temporaryInteger != 0) {
         log(stderr, "Parsing function returned non-zero value :(");
-        log(stderr, "Link seemed to be" + std::string(argv[linkNum]));
+        log(stderr, "Link seemed to be " + std::string(argv[linkNum]));
         if((!ignoreErrors) && (!ignoreAllErrors))
             return temporaryInteger;
     }
@@ -339,8 +339,8 @@ int parceHost(char* address, linkStruct * result) {
             if(end == s.npos - 1)
                 result->filename = s.substr(temp + 1);
 
-            if (end < temp) // We're trying to cut string from TEMP pos to left. This is not normal as TEMP pos is the beginning of filename.
-                return -3;
+            //if (end < temp) // We're trying to cut string from TEMP pos to left. This is not normal as TEMP pos is the beginning of filename.
+            //    return -3;
 
             result->filename = s.substr(temp + 1, end - temp);
         } else {
