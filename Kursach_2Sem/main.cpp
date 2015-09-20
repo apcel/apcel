@@ -339,9 +339,9 @@ int parceHost(char* address, linkStruct * result) {
             if(end == s.npos - 1)
                 result->filename = s.substr(temp + 1);
 
-            if (end < temp)
+            if (end < temp) // We're trying to cut string from TEMP pos to left. This is not normal as TEMP pos is the beginning of filename.
                 return -3;
-            
+
             result->filename = s.substr(temp + 1, end - temp);
         } else {
             return -2;
