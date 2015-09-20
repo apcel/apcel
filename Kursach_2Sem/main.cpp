@@ -8,7 +8,8 @@
 #include <iostream>
 #include <sys/socket.h>
 
-bool debug_enabled = false;
+bool debug_enabled  = false;
+bool debug_debug    = false;
 //#define DEBUG
 #ifdef DEBUG
 
@@ -46,6 +47,9 @@ int main (int argc, char* argv[])
 {
 #   ifdef DEBUG
         debug_enabled = true;
+#   endif
+#   ifdef DEBUG_FUCKN
+        debug_debug = true;
 #   endif
 
 
@@ -134,6 +138,7 @@ int main (int argc, char* argv[])
     log("SOCK_STREAM = " + std::to_string(SOCK_STREAM));
 
 #   ifdef DEBUG_FUCKN
+    if(debug_debug)
         struct addrinfo * temporaryPointer = he;
 
 
