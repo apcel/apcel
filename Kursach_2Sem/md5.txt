@@ -1,2 +1,0 @@
-638db2731f2e2d52bb49d18f406d48d9  devmanual_gentoo_org_tar.bz2
-638db2731f2e2d52bb49d18f406d48d9  devmanual_gentoo_org.tar.bz2
