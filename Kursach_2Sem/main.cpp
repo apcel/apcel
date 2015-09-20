@@ -208,7 +208,7 @@ int main (int argc, char* argv[])
     log("Trying to open file: " + std::string("./" + addr.filename) + "\n...");
     FILE * localFd = fopen(std::string("./" + addr.filename).c_str(), "wb+");
     if (localFd == NULL) {
-        fprintf(stderr, "%s\n", "Error opening localFd");
+        log(stderr, "Error opening localFd");
         if(!ignoreAllErrors)
             return 100;
     }
@@ -242,7 +242,7 @@ int main (int argc, char* argv[])
 
     temp = server_reply.find("200 OK");
     if(temp == server_reply.npos) {
-        fprintf(stderr, "Could not find \'200 OK\' in the header.\n");
+        log(stderr, "Could not find \'200 OK\' in the header.\n");
         if((!ignoreErrors) && (!ignoreAllErrors))
             return 2;
     }
