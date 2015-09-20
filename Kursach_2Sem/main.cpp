@@ -161,7 +161,7 @@ int main (int argc, char* argv[])
         log("char    *ai_canonname;     /* canonical name */" \
             "\nstruct  addrinfo *ai_next; /* this struct can form a linked list */" /*+ std::to_string(he->ai_next) +*/\
             "\n}");
-        delete  temporaryPointer;
+        //delete  temporaryPointer;
     } //if(debug_debug)
 
 
