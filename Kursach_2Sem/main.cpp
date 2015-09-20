@@ -339,7 +339,7 @@ int parceHost(char* address, linkStruct * result) {
             if(end == s.npos - 1)
                 result->filename = s.substr(temp + 1);
 
-            result->filename = s.substr(temp + 1, abs(end - temp));
+            result->filename = s.substr(temp + 1, end - temp);
         } else {
             return -2;
         }
