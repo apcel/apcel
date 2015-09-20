@@ -1,7 +1,7 @@
 //#include <stdio.h>
 
 //#include <sys/types.h>
-//#include <unistd.h>
+#include <unistd.h>
 //#include <sys/sendfile.h>
 
 #include <netdb.h>
@@ -264,7 +264,9 @@ int main (int argc, char* argv[])
         fprintf(localFd, "%c" , *server_reply_buf);
     }
     log(stdout, "The file \'" + addr.filename + "\' was written. Bye.");
+    
     fclose(localFd);
+    close(socketFd);
     return 0;
 }
 
