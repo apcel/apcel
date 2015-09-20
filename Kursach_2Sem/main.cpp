@@ -294,16 +294,16 @@ int main (int argc, char* argv[])
 
 
 void show_help(char* cmdname) {
-    fprintf(stdout, "A simple wget implementation\n");
-    fprintf(stdout, "Usage:\t%s [-id][-o FILENAME][--ignore-all] ADDRESS\n", cmdname);
-    fprintf(stdout, "\t%s [-h][--help] \n\n", cmdname);
+    log(stdout, "A simple wget implementation");
+    log(stdout, "Usage:\t%s [-id][-o FILENAME][--ignore-all] ADDRESS" + std::string(cmdname));
+    log(stdout, "\t%s [-h][--help] \n" + std::string(cmdname));
 
-    fprintf(stdout, "\t\t-h  --help\n\t show this help message\n");
-    fprintf(stdout, "\t\t-d\n\t enable debugging\n");
-    fprintf(stdout, "\t\t-i\n\t ignore some errors such as no '200 HTTP' message in server response\n");
-    fprintf(stdout, "\t\t-o FILENAME\n\t manually select output filename\n");
-    fprintf(stdout, "\t\t--ignore-all\n\t ignore terrible errors such as opening output file descriptor error.\n");
-    fprintf(stdout, "\tThis option is not recommended and was implemented only for testing purposes.\n");
+    log(stdout, "\t\t-h  --help\n\t show this help message");
+    log(stdout, "\t\t-d\n\t enable debugging");
+    log(stdout, "\t\t-i\n\t ignore some errors such as no '200 HTTP' message in server response");
+    log(stdout, "\t\t-o FILENAME\n\t manually select output filename");
+    log(stdout, "\t\t--ignore-all\n\t ignore terrible errors such as opening output file descriptor error.");
+    log(stdout, "\tThis option is not recommended and was implemented only for testing purposes.");
 }
 
 
