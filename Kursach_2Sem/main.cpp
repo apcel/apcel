@@ -84,8 +84,13 @@ int main (int argc, char* argv[])
             ignoreAllErrors = true;
             log("Ignoring everything. :C");
         } else if (s == "-d") {
-            log("Debugging enabled");
             debug_enabled = true;
+            log("Debugging enabled");            
+        } else if (s == "-dd") {
+            debug_enabled = true;
+            debug_debug = true;
+            log("Insane debugging enabled");
+            
         } else if (s == "-h" || s == "--help") {
             show_help(argv[0]);
             return 0;
