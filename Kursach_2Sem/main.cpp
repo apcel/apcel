@@ -279,6 +279,7 @@ int main (int argc, char* argv[])
     }
     log(stdout, "The file \'" + addr.filename + "\' was written. Bye.");
 
+    fflush(localFd);
     fclose(localFd);
     close(socketFd);
     return 0;
