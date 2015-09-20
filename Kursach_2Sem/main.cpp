@@ -294,8 +294,9 @@ void show_help(char* cmdname) {
     fprintf(stdout, "\t\t-i\n\t ignore some errors such as no '200 HTTP' message\n");
     fprintf(stdout, "\t\t-o FILENAME\n\t manually select output filename\n");
     fprintf(stdout, "\t\t--ignore-all\n\t ignore terrible errors such as opening output file descriptor error.\n");
-    fprintf(stdout, "\t\t-d\n\t enable debugging\n");
     fprintf(stdout, "\tThis option is not recommended and was implemented only for testing purpose.\n");
+    fprintf(stdout, "\t\t-d\n\t enable debugging\n");
+    
 }
 
 
