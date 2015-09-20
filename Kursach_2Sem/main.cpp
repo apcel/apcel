@@ -334,7 +334,7 @@ int parceHost(char* address, linkStruct * result) {
 
     if(result->filename == "") {
         temp = s.rfind("/");
-        end = s.find("?", temp) - 5;
+        end = s.find("?", temp + 1) - 1;
         if(temp != s.npos) {
             if(end == s.npos - 1)
                 result->filename = s.substr(temp + 1);
