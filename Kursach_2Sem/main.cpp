@@ -116,11 +116,11 @@ int main (int argc, char* argv[])
 
     temporaryInteger = getaddrinfo (addr.hostname.c_str(), "80", he, &he);
 
-    log ("getaddrinfo done: " + std::to_string(temporaryInteger) + " : " + gai_strerror(temporaryInteger));
+    log ("getaddrinfo done: " + std::to_string(temporaryInteger) + ": " + gai_strerror(temporaryInteger));
 
     if(temporaryInteger != 0) {
         temporaryInteger = getaddrinfo(addr.hostname.c_str(), "80", NULL, &he);
-        log(stderr, "getaddrinfo done[+1]: " + std::to_string(temporaryInteger));
+        log(stderr, "getaddrinfo done[+1]: " + std::to_string(temporaryInteger) + ": " + gai_strerror(temporaryInteger));
         log(stderr, "This may mean that server doesn't use http (forced https, for example)\n");
 #       ifndef DEBUG
         if((!ignoreErrors) && (!ignoreAllErrors)) {
