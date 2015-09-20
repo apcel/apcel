@@ -295,7 +295,7 @@ int main (int argc, char* argv[])
 
 void show_help(char* cmdname) {
     fprintf(stdout, "A simple wget implementation\n");
-    fprintf(stdout, "Usage: %s [-id][-o FILENAME][--ignore-all] ADDRESS\n", cmdname);
+    fprintf(stdout, "Usage:\t%s [-id][-o FILENAME][--ignore-all] ADDRESS\n", cmdname);
     fprintf(stdout, "\t%s [-h][--help]\n", cmdname);
 
     fprintf(stdout, "\t\t-h  --help\n\t show this help message\n");
