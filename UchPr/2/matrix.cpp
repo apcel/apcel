@@ -14,10 +14,9 @@ void Matrix<_Type>::loadFromFile(std::string file) //загрузка матри
         if (c == ' ') len++;
     s.seekg(0);
 
-    while (!s.eof())
-    {
+    while (!s.eof()) {
         MatrixLine line;
-        for (int i = 0; i < len; i++){
+        for (int i = 0; i < len; i++) {
             _Type h;
             s >> h;
             line.push_back(h);
@@ -31,9 +30,8 @@ template<typename _Type>
 void Matrix<_Type>::saveToFile(std::string file) //запись матрицы в файл
 {
     std::ofstream s(file);
-    for  (auto line : _value)
-    {
-        for (int i = 0; i < getColCount(); i++){
+    for  (auto line : _value) {
+        for (int i = 0; i < getColCount(); i++) {
             s << line[i];
             if (i != getColCount() - 1)
                 s << ' ';
@@ -76,7 +74,7 @@ void Matrix<_Type>::clear(int rows, int cols, _Type def) //очистка пам
 template<typename _Type>
 Matrix<_Type> Matrix<_Type>::operator+(const Matrix &that) // оператор сложения матриц
 {
-    if (getRowCount() != that.getRowCount() ||
+    if  (getRowCount() != that.getRowCount() ||
         getColCount() != that.getColCount()) {
         return *this;
     }
@@ -137,15 +135,7 @@ Matrix<_Type> Matrix<_Type>::operator*(const Matrix &that) //оператор п
     }
     return result;
 }
-
-
-
-
-
-
-
 /////////////////////////////////////////////////////////////////
-
 template<typename _Type>
 int Matrix<_Type>::getRowCount() const // получить количество строк
 {
@@ -169,7 +159,6 @@ Matrix<_Type> Matrix<_Type>::transponse() //транспонирование м�
             mtx.put(j, i, get(i, j));
         }
     }
-    //_value = mtx;
     return mtx;
 }
 
@@ -189,7 +178,7 @@ _Type Matrix<_Type>::get(int row, int col) const // получить значе�
 template<typename _Type>
 void Matrix<_Type>::put(int row, int col, _Type value) // присвоить значение элементу матрицы
 {
-    if (row < _value.size()){
+    if (row < _value.size()) {
         auto line = _value[row];
         if (col < line.size())
             _value[row][col] = value;
@@ -202,8 +191,7 @@ int Matrix<_Type>::individualFind()
     std::cout << '\n' << getRowCount() << " x "<< getColCount() << '\n';
     int max = 0;
     for (int i = 0; i < getRowCount(); ++i) {
-        for (int j = 0; j < getColCount(); ++j)
-        {
+        for (int j = 0; j < getColCount(); ++j) {
             for (int k = 1; isCorrect(i, j, k - 1) == true; ++k)
                 if (max < k)
                     max = k;
@@ -216,18 +204,14 @@ int Matrix<_Type>::individualFind()
 template<typename _Type>
 bool Matrix<_Type>::isCorrect(int rowFirst, int colFirst, int sizeS)
 {
-    //std::cout << rowFirst + 1 << ' ' << colFirst + 1 << ' ' << sizeS << '\t';
     if (((rowFirst + sizeS) > getRowCount()) || ((colFirst + sizeS) > getColCount())) {
-        //std::cout << "Size error!\n\n";
         return false;
     }
 
     for (int i = 0; i <= sizeS; ++i)
         if ((get(rowFirst + sizeS, colFirst + i) != 0) || (get(rowFirst + i, colFirst + sizeS) != 0)) {
-            //std::cout << "Failed at i == " << i << '\n';
             return false;
         }
-    //std::cout << "True!"<< "\n";
     return true;
 }
 

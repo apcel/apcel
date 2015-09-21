@@ -5,7 +5,6 @@
 #include "matrix.cpp"
 using namespace std;
 
-
 void //сложение матриц
 __test_operatorPlus()
 {
@@ -113,7 +112,6 @@ main(int argc, char **argv)
         {
         case '1':
             //cout << "\nВаша матрица: \n" << Matrix<int>::readFromKeyboard() << endl;
-
             m.loadFromFile("matrix2.txt");
             cout << m;
             break;
@@ -143,22 +141,8 @@ main(int argc, char **argv)
             __test_podmatrix();
             break;
         }
-        //system("pause");
-        //system("cls");
         cout << "\n\n\tМеню:\n1)ввод матрицы с клавиатуры\n2)сложение матриц\n3)вычитание матриц\n4)умножение матриц\n5)транспонирование матрицы\n6)Индивидуальное задание(вариант №13):\n'q' для выхода\n";
         cin >> key;
     }
-
-    //__test_isSymmetric();
-    //__test_operatorPlus();
-    //__test_operatorMinus();
-    //__test_determinant();
-    //__test_isMinor();
-    //__test_operatorUMN();
-    //__test_equality();
-    //__test_transposition();
-    //__test_minCol();
-    //__test_LoadByFile();
-    //__test_SaveFile();
     return EXIT_SUCCESS;
 }

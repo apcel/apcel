@@ -37,7 +37,7 @@ function MyVector()
 end
 
 
-function vect = sortBubble(vect)
+function vect = sortBubble(vect) %Сортировка поплавком
     nswap = 0;
     size = numel(vect);
     flag = logical(1);
@@ -56,7 +56,7 @@ function vect = sortBubble(vect)
     nswap
 end
 
-function vect = sortInsertion(vect)
+function vect = sortInsertion(vect) %Сортировка вставками
      nswap = 0;
      size = numel(vect);
     for i = (1:size-1)
@@ -70,7 +70,7 @@ function vect = sortInsertion(vect)
     nswap
 end
 
-function vect = sortCount(vect)
+function vect = sortCount(vect) %сортировка подсчётом
      nswap_ = 0;
      size = numel(vect);
      countMin = min(vect);
@@ -90,7 +90,7 @@ function vect = sortCount(vect)
      nswap_
 end
 
-function index = findBinary(vect, key)
+function index = findBinary(vect, key) %бинарный поиск
     index = -1;
     nview = 0;
     left = 1;
@@ -113,7 +113,7 @@ function index = findBinary(vect, key)
     end
     disp('Искомый элемент не найден.');
 end
-function index = findInterpolation(vect, key)
+function index = findInterpolation(vect, key) %Интерполяционный поиск
     index = -1;
     nview = 0;
     left = 1;

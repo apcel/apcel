@@ -10,16 +10,12 @@
 #include <ctime>
 #include <cstring>
 #include <fstream>
-//using namespace std;
 
 template<typename _Type>
-//#define _Type int
 class Matrix {
 private:
     typedef std::vector<_Type>      MatrixLine;
     typedef std::vector<MatrixLine> MatrixValue;
-    //typedef Matrix Matrix;
-
     MatrixValue _value;
 public:
     Matrix(int rows, int cols, _Type def)  // конструктор
@@ -37,7 +33,6 @@ public:
     Matrix operator-(const Matrix &that); //оператор вычитания матриц
     Matrix operator*(_Type number); // оператор умножения матрицы на число
     Matrix operator*(const Matrix &that); //оператор перемножения матриц
-
 
     int getRowCount() const; // получить количество строк
     int getColCount() const; //получить количество столбцов

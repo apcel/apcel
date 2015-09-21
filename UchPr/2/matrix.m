@@ -136,11 +136,6 @@ function c = individualFind(m)
             end
         end
     end
-
-
-
-
-
     c = max;
 end
 
@@ -159,18 +154,3 @@ function c = isCorrect (m, rowFirst, colFirst, sizeS)
     end
     c = true;
 end
-%function c = minCol(c, n, m)
-%    jmin = min(min(c))
-%    i = 1;
-%    k = 1;
-%    t = 0;
-%    for k=1:k<m-1
-%        for i=1:i<=n-i-1
-%            if c(i,jmin) > c(i+1,jmin)
-%                t=c(i,:);
-%                c(i,:)=c(i+1,:);
-%                c(i+1,:)=t;
-%            end
-%        end
-%    end
-%end
