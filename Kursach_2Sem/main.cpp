@@ -1,8 +1,4 @@
-//#include <stdio.h>
-
-//#include <sys/types.h>
 #include <unistd.h>
-//#include <sys/sendfile.h>
 #include <string.h>
 #include <netdb.h>
 #include <iostream>
@@ -11,11 +7,10 @@
 bool debug_enabled = false;
 //#define DEBUG
 #ifdef DEBUG
+    #define DEBUG_FUCKN
+    #define DEBUG_GETHOST
 
-#define DEBUG_FUCKN
-#define DEBUG_GETHOST
-
-#include <arpa/inet.h>
+    #include <arpa/inet.h>
 #endif
 
 
