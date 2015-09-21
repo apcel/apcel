@@ -1,7 +1,5 @@
 #pragma once
-
 #include <vector>
-//#include <algorithm>
 #define apcel_RAND_MIN -1000
 #define apcel_RAND_MAX 1000
 
@@ -14,8 +12,6 @@ class MyVector: public std::vector<__Type> {
     void sortCount();     //Сортиовка подсчётом       +
     int findBinary();    //Бинарный поиск             +
     int findInterpolation();//Интерполяционный поиск  +
-    //void sortBubble();
-
 
     __Type countMin;
     __Type countMax;
@@ -28,8 +24,6 @@ class MyVector: public std::vector<__Type> {
     void fillWithRandomNumbers(int n);
     unsigned long int nswap; // количество перестановок элементов
     unsigned long int nview; // Количество просмотренных элементов
-
-
 
     enum SortType {// Тип сортировки
         Bubble,
@@ -45,5 +39,5 @@ class MyVector: public std::vector<__Type> {
     int find(FindType type, __Type keyIn);
 };
 
- template<typename __Type>
+template<typename __Type>
 std::ostream &operator << (std::ostream &output, const MyVector<__Type> &v);//вывод вектора
