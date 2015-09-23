@@ -112,7 +112,7 @@ main(int argc, char **argv)
         {
         case '1':
             //cout << "\nВаша матрица: \n" << Matrix<int>::readFromKeyboard() << endl;
-            m.loadFromFile("matrix2.txt");
+            __test_LoadByFile();
             cout << m;
             break;
         case '2':

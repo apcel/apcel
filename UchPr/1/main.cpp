@@ -49,19 +49,21 @@ int main(int argc, char const *argv[])
                 v.clear();
                 //MyVector<int> v;
                 v.fillWithRandomNumbers(n);
-
+                std::cout << v << std::endl;
                 break;
             }
             case '3':
             {    //Сортировка методом "Пузырька"
                 v.sort(MyVector<int>::Bubble);
                 std::cout<<"Обменов: " << v.nswap << std::endl;
+                std::cout << v << std::endl;
                 break;
             }
             case '4':
             {    // Сортировка методом вставок
                 v.sort(MyVector<int>::Insertion);
                 std::cout<<"Обменов: " << v.nswap << std::endl;
+                std::cout << v << std::endl;
                 break;
             }
             case '5':
@@ -69,6 +71,7 @@ int main(int argc, char const *argv[])
                 v.sort(MyVector<int>::Count);
                 std::cout<<"Присваиваний: " << v.nswap
                     << "\nПримечание: одна операция обмена == три операции присваивания" << std::endl;
+                std::cout << v << std::endl;
                 break;
             }
             case '6':
