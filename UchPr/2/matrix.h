@@ -33,6 +33,7 @@ public:
     Matrix operator-(const Matrix &that); //оператор вычитания матриц
     Matrix operator*(_Type number); // оператор умножения матрицы на число
     Matrix operator*(const Matrix &that); //оператор перемножения матриц
+    void operator=(const Matrix &that); //оператор присваивания
 
     int getRowCount() const; // получить количество строк
     int getColCount() const; //получить количество столбцов
