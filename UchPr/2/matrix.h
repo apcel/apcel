@@ -46,9 +46,10 @@ public:
 
     int individualFind();//Индивидуальный вариант
 
+    void oneM(int sizeS); //единичная матрица
 private:
     template<typename U> friend std::ostream& operator<<(std::ostream& os, const Matrix<U>& m);
-    bool isCorrect(int colFirst, int rowFirst, int sizeS);
+    bool isCorrect(int colFirst, int rowFirst, int sizeS); //проверка несодержания минором ненулевых элементов
 };
 
 

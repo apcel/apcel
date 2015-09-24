@@ -43,11 +43,15 @@ __test_transposition()
 void //перемножение матриц
 __test_operatorUMN()
 {
-    Matrix<int> a(3, 3, 2);
-    Matrix<int> b(2, 2, 3);
+    Matrix<int> a(3, 4, 2);
+    Matrix<int> b(4, 3, 3);
+    Matrix<int> ed(0, 0, 0);
+    ed.oneM(4);
+
     std::cout << "Матрица A:" << std::endl << a;
     std::cout << "Матрица B:" << std::endl << b;
     std::cout << "Матрица A*B:" << std::endl << a*b << std::endl;
+    std::cout << "Матрица А*E" << std::endl << a*ed << std::endl;
 }
 
 
@@ -55,14 +59,27 @@ void //загрузка матрицы из файка
 __test_LoadByFile()
 {
     Matrix <int> m(3, 3, 0);
-    m.loadFromFile("matrix2.txt");
+    m.loadFromFile("matrix1.txt");
+    std::cout << "Загружена матрица \n" << m << endl;
 }
 
 void //запись матрицы в файл
 __test_SaveFile()
 {
-    Matrix <int> m(3, 3, 0);
-    m.saveToFile("matrix2.txt");
+    Matrix<int> m(8, 8, 1);
+    for (int i = 1; i < m.getRowCount() - 1; i++)
+    {
+        for (int j = 1; j < m.getColCount() - 1; j++)
+        {
+            m.put(i, j, 0);
+        }
+    }
+    m.put(3, 2, 1);
+    std::cout << "Матрица: \n" << m << endl;
+    //m.saveToFile("matrix1.txt");
+    ofstream f("matrix1.txt");
+    f << m;
+    std::cout << "Сохранено.\n";
 }
 
 void // В матрице, состоящей из нулей и единиц, найдите квадрат (квадратная подматрица) наибольшего размера, состоящая только из нулей.
@@ -134,11 +151,7 @@ main(int argc, char **argv)
             cout << m;
             break;
         case '1':
-            //cout << "\nВаша матрица: \n" << Matrix<int>::readFromKeyboard() << endl;
-            //cout << "Here";
-            //__test_LoadByFile();
             m.readFromKeyboard();
-            //cout << m;
             break;
         case '2':
             __test_operatorPlus();

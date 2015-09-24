@@ -10,16 +10,32 @@ void Matrix<_Type>::loadFromFile(std::string file) //загрузка матри
     std::string in;
     int len = 1;
     getline(s, in);
-    for  (char c : in)
-        if (c == ' ') len++;
-    s.seekg(0);
+    bool flag = false;
+    for  (char c : in) {
+        if (c == ' ' && (c + 1) != ' ' && (c + 1) != 0) {
+            len++;
+            flag = true;
+        } else {
+            flag = false;
+        }
+    }
+    if(flag)
+        len--;
 
+    s.seekg(0);
+    MatrixLine line;
     while (!s.eof()) {
-        MatrixLine line;
+        line.clear();
         for (int i = 0; i < len; i++) {
-            _Type h;
-            s >> h;
-            line.push_back(h);
+
+
+            _Type * h = new _Type;
+            s >> *h;
+            if(s.eof() && (i < (len - 1)))
+                break;
+            // std::cout << h;
+            line.push_back(*h);
+            delete h;
         }
         _value.push_back(line);
     }
@@ -207,6 +223,18 @@ void Matrix<_Type>::put(int row, int col, _Type value) // присвоить з�
             _value[row][col] = value;
     }
 }
+
+template<typename _Type>
+void Matrix<_Type>::oneM(int sizeS) {
+    _value.clear();
+    Matrix<_Type> temp(sizeS, sizeS, 0);
+    *this = temp;
+    for (int i = 0; i < sizeS; ++i)
+    {
+        put(i, i, 1);
+    }
+}
+
 
 template<typename _Type>
 int Matrix<_Type>::individualFind()
