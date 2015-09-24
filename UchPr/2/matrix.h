@@ -44,7 +44,7 @@ public:
     void put(int row, int col, _Type value); // присвоить значение элементу матрицы
 
 
-    int individualFind();
+    int individualFind();//Индивидуальный вариант
 
 private:
     template<typename U> friend std::ostream& operator<<(std::ostream& os, const Matrix<U>& m);
