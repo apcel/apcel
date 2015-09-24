@@ -2,7 +2,7 @@ function MyVector()
     beep off
     k = 0;
     while (k ~= 8)
-        k = input('1) Вывод вектора на экран\n2) Заполнение вектора с помощью датчика случайных чисел \n3) Сортировка методом \"Пузырька\" \n4) Сортировка методом вставок \n5) Сортировка подсчётом \n6) Бинарный поиск элемента вектора \n7) Интерполяционный поиск элемента вектора \nВведите \"8\"" для выхода\n//Enter \"8\"" to exit\n');
+        k = input('1) Вывод вектора на экран\n2) Заполнение вектора с помощью датчика случайных чисел \n3) Сортировка методом \"Пузырька\" \n4) Сортировка методом вставок \n5) Сортировка подсчётом \n6) Бинарный поиск элемента вектора \n7) Интерполяционный поиск элемента вектора \nВведите \"8\"" для выхода\n//Enter \"8\"" to exit\n<<<< ');
         tic
         switch k
         case 1%Вывод вектора на экран
@@ -34,8 +34,21 @@ function MyVector()
         end
         toc
     end
+    % vect = round(rand(1, 25) * 1000);
+    % k = insaneSearch(vect);
 end
 
+% function k = insaneSearch(vect) %Перебор всех вариантов для бинарного поиска
+%     vect = sortCount(vect);
+%     size = numel(vect);
+%     for i = 1:size
+%         k = findBinary(vect, vect(i))
+%         if (k == -1)
+%             disp('error');
+%             exit
+%         end
+%     end
+% end
 
 function vect = sortBubble(vect) %Сортировка поплавком
     nswap = 0;
@@ -45,7 +58,7 @@ function vect = sortBubble(vect) %Сортировка поплавком
     while ((i < (size - 1)) && flag)
         flag = 0;
         i = i + 1;
-        for j = (1:size-i-1)
+        for j = (1:size-i)
             if vect([j+1]) < vect([j])
                 nswap = nswap + 1;
                 vect([j j+1]) = vect([j+1 j]);
@@ -54,40 +67,48 @@ function vect = sortBubble(vect) %Сортировка поплавком
         end
     end
     nswap
+    vect
 end
 
 function vect = sortInsertion(vect) %Сортировка вставками
-     nswap = 0;
-     size = numel(vect);
-    for i = (1:size-1)
-        j = i;
-        while (j > 1) && ( vect(j) > vect(j+1) )
+    size = numel(vect);
+    nswap = 0;
+    for i=2:size
+        x=vect(i);
+        j=i-1;
+        while j>0 & x<vect(j);
             nswap = nswap + 1;
-            vect([j j-1]) = vect([j-1 j]);
-            j = j-1;
+            vect(j+1)=vect(j);
+            j=j-1;
+            vect(j+1)=x;
+        end
+        for i=1:1:size
+            vect(i);
         end
     end
     nswap
+    vect
 end
 
 function vect = sortCount(vect) %сортировка подсчётом
-     nswap_ = 0;
+     nswap = 0;
      size = numel(vect);
      countMin = min(vect);
      countMax = max(vect);
      tempVector=zeros(1,countMax-countMin+1);
      for i = (1:size)
          tempVector(vect(i) - countMin + 1) = tempVector(vect(i) - countMin + 1) + 1;
-         nswap_ = nswap_ + 1;
+         nswap = nswap + 1;
      end
-     temp = nswap_;
+     temp = nswap;
      for i = (countMin:countMax)
          for j = (1:tempVector([i - countMin + 1]))
-             nswap_ = nswap_ + 1;
-             vect([nswap_ - temp]) = i;
+             nswap = nswap + 1;
+             vect([nswap - temp]) = i;
          end
      end
-     nswap_
+     nswap
+     vect
 end
 
 function index = findBinary(vect, key) %бинарный поиск
@@ -95,7 +116,7 @@ function index = findBinary(vect, key) %бинарный поиск
     nview = 0;
     left = 1;
     right = numel(vect);
-    while (left < right)
+    while (left <= right)
         nview = nview + 1;
         mid = round(mean([left right]));
         if (key < vect([mid]))
@@ -106,6 +127,8 @@ function index = findBinary(vect, key) %бинарный поиск
             else
                 disp('Искомый элемент: ');
                 index = mid
+                disp('Чимсло просмотров: ');
+                nview
                 return;
             end
         end
@@ -131,12 +154,16 @@ function index = findInterpolation(vect, key) %Интерполяционный 
             else
                 disp('Искомый элемент: ');
                 index = mid
+                disp('Чимсло просмотров: ');
+                nview
                 return;
             end
         end
         if (vect([left]) == key)
             disp('Искомый элемент: ');
             index = mid
+            disp('Чимсло просмотров: ');
+            nview
             return;
         end
     end
