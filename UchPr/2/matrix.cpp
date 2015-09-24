@@ -40,21 +40,51 @@ void Matrix<_Type>::saveToFile(std::string file) //запись матрицы �
     }
     s.close();
 }
-
 template<typename _Type>
-void Matrix<_Type>::readFromKeyboard() //чтение матрицы с клавиатуры
+void Matrix<_Type>::readFromKeyboard() //загрузка матрицы из файла
 {
     int x, y;
     std::cout << "Введите размер м-ци:  (2 числа через пробел)\n";
     std::cin >> x >> y;
-    Matrix m(x, y, 0);
+    _value.clear();
+    //std::ifstream s(file);
+    std::string in;
+    // int len = 1;
+    // getline(std::cin, in);
+    MatrixLine line;
+    // for  (char c : in) {
+    //     if (c == ' ') len++;
+    //         _Type h;
+    //         std::cin >> h;
+    //         line.push_back(h);
+    // }
+    //std::cin.seekg(0);
+
     for (int i = 0; i < x; i++) {
         std::cout << "Введите " << i + 1 << "строку (" << y << " чисел через пробел):\n";
-        for (int j = 0; j < y; j++)
-            std::cin >> m._value[i][j];
+        for (int j = 0; j < y; j++) {
+            _Type h;
+            std::cin >> h;
+            line.push_back(h);
+        }
+        _value.push_back(line);
     }
-    _value = m;
+    //s.close();
 }
+// template<typename _Type>
+// Matrix<_Type> Matrix<_Type>::readFromKeyboard() //чтение матрицы с клавиатуры
+// {
+//     int x, y;
+//     std::cout << "Введите размер м-ци:  (2 числа через пробел)\n";
+//     std::cin >> x >> y;
+//     Matrix m(x, y, 0);
+//     for (int i = 0; i < x; i++) {
+//         std::cout << "Введите " << i + 1 << "строку (" << y << " чисел через пробел):\n";
+//         for (int j = 0; j < y; j++)
+//             std::cin >> m._value[i][j];
+//     }
+//     return m;
+// }
 
 template<typename _Type>
 void Matrix<_Type>::clear(int rows, int cols, _Type def) //очистка памяти матрицы
@@ -222,6 +252,7 @@ std::ostream &operator<<(std::ostream &output, const Matrix<_Type> &m) // опе
 {
     if (m.getRowCount()) {
         for  (auto line : m._value) {
+            std::cout << "for\n" << m._value;
             for  (auto item : line)
                 std::cout << item << ' ';
             std::cout << std::endl;
