@@ -34,8 +34,8 @@
 #ifndef DISABLE_NANORC
 
 static const rcoption rcopts[] = {
-    {"boldtext", BOLD_TEXT},
-#ifndef DISABLE_JUSTIFY
+    {"boldtext", BOLD_TEXT},ifdef
+#ifndef DISABLE_JUSTIFYifdefifdef
     {"brackets", 0},
 #endif
     {"const", CONST_UPDATE},

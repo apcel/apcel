@@ -9,7 +9,8 @@ BOOST=`pkg-config ./boost.pc --cflags --libs`
 
 LIBS=$(BOOST)
 
-OBJS=obj/main.o
+OBJS=obj/main.o\
+	#obj/rcfile.o
 DIRS=obj\
 	bin
 #######################################################################
