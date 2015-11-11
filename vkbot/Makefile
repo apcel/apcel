@@ -24,6 +24,8 @@ $(VKFS): $(OBJS)
 
 obj/main.o: main-new.cpp
 	$(CXX) $(CXXFLAGS) $(LIBS) -w -c $< -o $@
+obj/rcfile.o: rcfile.c
+	$(CXX) $(CXXFLAGS) $(LIBS) -w -c $< -o $@
 #######################################################################
 folders: $(DIRS)
 $(DIRS):
