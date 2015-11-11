@@ -1,5 +1,5 @@
 
-CXX=time g++
+CXX=time -p g++
 CXXFLAGS= -g -O2
 
 VKFS=bin/main
