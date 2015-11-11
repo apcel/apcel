@@ -5,9 +5,10 @@ CXXFLAGS= -g -O2
 VKFS=bin/main
 
 BOOST=`pkg-config ./boost.pc --cflags --libs`
+GLIB=`pkg-config glib-2.0 --cflags --libs`
 
-
-LIBS=$(BOOST)
+LIBS=$(BOOST)\
+	$(GLIB)
 
 OBJS=obj/main.o\
 	#obj/rcfile.o
