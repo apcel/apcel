@@ -11,7 +11,7 @@
 
 #include <iostream>
 #include <iterator>
-using namespace std;
+#include <glib.h>
 
 int main(int ac, char* av[])
 {
