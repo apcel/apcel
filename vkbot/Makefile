@@ -2,7 +2,7 @@
 CXX=g++
 CXXFLAGS= -g -O2
 
-VKFS=main
+VKFS=bin/main
 
 BOOST=`pkg-config ./boost.pc --cflags --libs`
 
