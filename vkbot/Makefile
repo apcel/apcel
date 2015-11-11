@@ -21,7 +21,7 @@ all: folders $(VKFS)
 	git commit . -m 'Autobuild (make) by Sublime Text'
 
 $(VKFS): $(OBJS)
-	$(CXX) $(CXXFLAGS) -w $(OBJS) -o $(VKFS) -I/usr/local/boost/include -L/usr/local/boost/lib -lboost_system 
+	$(CXX) $(CXXFLAGS) -w $(OBJS) -o $(VKFS) $(LIBS)
 
 obj/main.o: main-new.cpp
 	$(CXX) $(CXXFLAGS) $(LIBS) -w -c $< -o $@
