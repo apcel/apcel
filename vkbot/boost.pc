@@ -7,4 +7,4 @@ Name: boost
 Description: my boost pc file
 Version: 1.57.0
 Cflags: -I${includedir}
-Libs: -L${libdir} -lboost_system 
+Libs: -L${libdir} -lboost_system -lboost_program_options
