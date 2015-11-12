@@ -2,7 +2,7 @@
 vkapi::vkapi(){
     readTokenFromFile();
     // fprintf(stdout, "%s\n", token.c_str());
-    
+    httpsObject = new https;
 }
 vkapi::~vkapi(){
 
