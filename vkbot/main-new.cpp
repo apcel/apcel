@@ -26,7 +26,7 @@ int main(int ac, char* av[])
 
     fprintf(stderr, "%s\n", "=====================================================");
 
-    httpsObject->request("https://example.com", "");
+    httpsObject->request("https://example.com");
     httpsObject->getResponse();
     httpsObject->~https();
 

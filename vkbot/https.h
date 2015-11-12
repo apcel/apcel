@@ -8,7 +8,7 @@ class https
 public:
     https();
     ~https();
-    int request(std::string, std::string);
+    int request(std::string);
     char * getResponse();
 private:
     void setup();

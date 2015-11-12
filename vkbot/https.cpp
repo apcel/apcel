@@ -13,7 +13,7 @@ https::~https() {
     curl_global_cleanup();
     fprintf(stdout, "%s\n", "destructor");
 }
-int https::request(std::string method, std::string response) {
+int https::request(std::string method) {
     this->method = method;
     setup();
 
