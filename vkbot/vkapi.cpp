@@ -49,7 +49,7 @@ void vkapi::groupsGetById(vk group_ids, vk fields) {
 }
 
 void vkapi::groupsGetMembers(vk group_id, vk offset) {
-    groupsGetMembers(group_id, "", offset, "", "", "");
+    groupsGetMembers(group_id, "", offset, std::to_string(1000), "", "");
 }
 
 void vkapi::groupsGetMembers(vk group_id, vk sort, vk offset, vk count, vk fields, vk filter) {
