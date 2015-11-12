@@ -46,6 +46,7 @@ size_t https::WriteMemoryCallback(char *ptr, size_t size, size_t nmemb, void *da
     return realsize;
 }
 char * https::getResponse(std::string filename) {
+    fprintf(stderr, "%s\n", "getResponse" );
     FILE * fp;
     fp = fopen( filename.c_str(), "w");
     if ( !fp )
