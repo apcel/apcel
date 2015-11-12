@@ -12,7 +12,8 @@ LIBS=$(BOOST)\
 	$(CURL)
 
 OBJS=obj/main.o\
-	obj/https.o
+	obj/https.o\
+	obj/vkapi.o
 	#obj/rcfile.o
 DIRS=obj\
 	bin
@@ -32,6 +33,9 @@ obj/main.o: main-new.cpp
 # 	$(CXX) $(CXXFLAGS) $(LIBS) -w -c $< -o $@
 
 obj/https.o: https.cpp
+	$(CXX) $(CXXFLAGS) $(LIBS) -w -c $< -o $@
+
+obj/vkapi.o: vkapi.cpp
 	$(CXX) $(CXXFLAGS) $(LIBS) -w -c $< -o $@
 
 #######################################################################
