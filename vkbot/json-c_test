@@ -2,6 +2,7 @@
 #include <regex>
 #include "vkapi.h"
 void test(vkapi * vkapiObject) {
+    fprintf(stderr, "%s\n", "TEST");
     char * lastResponse = vkapiObject->lastresponse;
     int i = 0;
     srting response = lastResponse;
