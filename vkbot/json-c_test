@@ -4,7 +4,10 @@
 void test(vkapi * vkapiObject) {
     char * lastResponse = vkapiObject->lastresponse;
     int i = 0;
+    srting response = lastResponse;
     std::srting s_response("{\"response\":");
     std::regex r_response(s_response);
-    while
+    while (lastResponse != '\0') {
+
+    }
 }
