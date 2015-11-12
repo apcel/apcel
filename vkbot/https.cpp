@@ -34,6 +34,7 @@ void https::setup() {
 
 size_t https::WriteMemoryCallback(char *ptr, size_t size, size_t nmemb, void *data)
 {
+    fprintf(stderr, "%s\n", "WriteMemoryCallback");
     size_t realsize = size * nmemb;
     struct BufferStruct * mem = (struct BufferStruct *) data;
     mem->buffer = (char*)realloc(mem->buffer, mem->size + realsize + 1);
