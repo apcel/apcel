@@ -10,12 +10,7 @@
 // #include <boost/asio/ssl.hpp>
 int main(int ac, char* av[])
 {
-    std::string tokenFileName = "./token";
-    std::ifstream tokenFile;
-    tokenFile.open(tokenFileName);
 
-    char tokenFileContents[100];
-    tokenFile.getline(tokenFileContents, 100);
     // std::cout << tokenFileContents << std::endl;
 //////////////////////////////////////////////////////////////////
     //Теперь у нас есть токен из файла. Нда.
