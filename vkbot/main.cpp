@@ -11,7 +11,7 @@
 // #include <boost/asio/ssl.hpp>
 int main(int ac, char* av[])
 {
-    // https * httpsObject = new https;
+    https * httpsObject = new https;
     std::string method, parameters, token;
     // httpsObject->request("https://api.vk.com/method/" + method + "?" + parameters + "&access_token=" + token);
     
