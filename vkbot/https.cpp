@@ -53,6 +53,9 @@ size_t https::WriteMemoryCallback(char *ptr, size_t size, size_t nmemb, void *da
     }
     return realsize;
 }
+char * https::getResponse(){
+
+}
 
 // class https
 // {
