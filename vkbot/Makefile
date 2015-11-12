@@ -1,6 +1,6 @@
 
 CXX=g++
-CXXFLAGS= -g -O2
+CXXFLAGS= -g -O2 -std=c++11
 
 VKFS=bin/main
 
