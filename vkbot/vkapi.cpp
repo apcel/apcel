@@ -26,17 +26,25 @@ void vkapi::readTokenFromFile() {
 void vkapi::request(vk method, vk parameters) {
     // fprintf(stderr, "%s\n", "request");
     httpsObject->request("https://api.vk.com/method/" + method + "?" + parameters + "&access_token=" + token);
+    lastresponse = httpsObject->getResponse();
 }
 //////////////////////////////////////////////////////////////////////////////
 void vkapi::save() {
     save("example.json");
 }
 void vkapi::save(std::string filename) {
-    httpsObject->getResponse(filename);
+    fprintf(stderr, "%s\n", "getResponse" );
+    FILE * fp;
+    fp = fopen( filename.c_str(), "w");
+    if ( !fp )
+        return;
+    fprintf(fp, lastresponse );
+    fclose( fp );
+    // lastresponse = httpsObject->getResponse(filename);
 }
 //////////////////////////////////////////////////////////////////////////////
 void vkapi::execute(vk code) {
-    request("execute", "code="+code);
+    request("execute", "code=" + code);
 }
 void vkapi::groupsGetById(vk group_ids) {
     groupsGetById(group_ids, "");
@@ -57,12 +65,12 @@ void vkapi::usersGet(vk user_ids) {
     usersGet(user_ids, "", "nom");
 }
 void vkapi::usersGet(vk user_ids, vk fields, vk name_case) {
-    request("users.get", "user_ids="+user_ids+"&fields="+fields+"&name_case="+name_case);
+    request("users.get", "user_ids=" + user_ids + "&fields=" + fields + "&name_case=" + name_case);
 }
 
 void vkapi::groupsGet(vk user_id, vk offset) {
     groupsGet(user_id, "1", "", "", offset, std::to_string(1000));
 }
-void vkapi::groupsGet(vk user_id, vk extended, vk filter, vk fields, vk offset, vk count){
-    request("groups.get", "user_id="+user_id+"&extended="+extended+"&filter="+filter+"&fields="+fields+"&offset="+offset+"&count="+count);
+void vkapi::groupsGet(vk user_id, vk extended, vk filter, vk fields, vk offset, vk count) {
+    request("groups.get", "user_id=" + user_id + "&extended=" + extended + "&filter=" + filter + "&fields=" + fields + "&offset=" + offset + "&count=" + count);
 }

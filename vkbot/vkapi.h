@@ -31,6 +31,6 @@ private:
     void readTokenFromFile();
     https * httpsObject;
     std::string token;
-
+    char * lastresponse;
 
 };
