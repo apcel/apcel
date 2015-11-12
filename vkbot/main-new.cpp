@@ -10,7 +10,7 @@ int main(int ac, char* av[])
     GKeyFile * my_key_file = g_key_file_new();
 
 
-
+    my_key_file=g_key_file_ref(my_key_file);
 
 
 
