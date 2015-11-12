@@ -35,6 +35,9 @@ void vkapi::save(std::string filename) {
     httpsObject->getResponse(filename);
 }
 //////////////////////////////////////////////////////////////////////////////
+void vkapi::execute(vk code) {
+    request("execute", "code="+code);
+}
 void vkapi::groupsGetById(vk group_ids) {
     groupsGetById(group_ids, "");
 }
