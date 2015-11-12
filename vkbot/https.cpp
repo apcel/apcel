@@ -1,7 +1,6 @@
 #include "https.h"
 https::https() {
-     CURL *curl;
-  CURLcode res;
+
 
   curl_global_init(CURL_GLOBAL_DEFAULT);
 

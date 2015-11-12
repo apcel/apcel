@@ -23,9 +23,11 @@ private:
         std::string method = "";
         std::string filename = "";
     };
-    struct addrinfo *he;
-    requestSkeleton requestSkeletonEntity;
-    linkStruct linkStructEntity;
-    int socketFd;
-    int tempInt;
+    // struct addrinfo *he;
+    // requestSkeleton requestSkeletonEntity;
+    // linkStruct linkStructEntity;
+    // int socketFd;
+    // int tempInt;
+    CURL *curl;
+    CURLcode res;
 };
