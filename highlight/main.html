@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Source file</title>
+<style type="text/css">
+body.hl	{ background-color:#ffffff; }
+pre.hl	{ color:#000000; background-color:#ffffff; font-size:12pt; font-family:'Courier New';}
+.hl.num { color:#000000; }
+.hl.esc { color:#000000; }
+.hl.str { color:#800000; }
+.hl.pps { color:#800000; }
+.hl.slc { color:#000000; }
+.hl.com { color:#000000; }
+.hl.ppc { color:#733710; }
+.hl.opt { color:#000000; }
+.hl.ipl { color:#000000; }
+.hl.lin { color:#808080; }
+.hl.kwa { color:#0000ff; }
+.hl.kwb { color:#000000; }
+.hl.kwc { color:#0000ff; }
+.hl.kwd { color:#000000; }
+</style>
+</head>
+<body class="hl">
+<pre class="hl"><span class="hl lin">001 </span><span class="hl slc">//#include &lt;stdio.h&gt;</span>
+<span class="hl lin">002 </span>
+<span class="hl lin">003 </span><span class="hl slc">//#include &lt;sys/types.h&gt;</span>
+<span class="hl lin">004 </span><span class="hl slc">//#include &lt;unistd.h&gt;</span>
+<span class="hl lin">005 </span><span class="hl slc">//#include &lt;sys/sendfile.h&gt;</span>
+<span class="hl lin">006 </span>
+<span class="hl lin">007 </span><span class="hl ppc">#include &lt;netdb.h&gt;</span>
+<span class="hl lin">008 </span><span class="hl ppc">#include &lt;iostream&gt;</span>
+<span class="hl lin">009 </span><span class="hl ppc">#include &lt;sys/socket.h&gt;</span>
+<span class="hl lin">010 </span>
+<span class="hl lin">011 </span>
+<span class="hl lin">012 </span><span class="hl slc">//#define DEBUG</span>
+<span class="hl lin">013 </span><span class="hl ppc">#ifdef DEBUG</span>
+<span class="hl lin">014 </span>
+<span class="hl lin">015 </span><span class="hl ppc">#define DEBUG_FUCKN</span>
+<span class="hl lin">016 </span><span class="hl ppc">#define DEBUG_GETHOST</span>
+<span class="hl lin">017 </span>
+<span class="hl lin">018 </span><span class="hl ppc">#include &lt;arpa/inet.h&gt;</span>
+<span class="hl lin">019 </span><span class="hl ppc">#endif</span>
+<span class="hl lin">020 </span>
+<span class="hl lin">021 </span><span class="hl kwb">struct</span> linkStruct
+<span class="hl lin">022 </span><span class="hl opt">{</span>
+<span class="hl lin">023 </span>    std<span class="hl opt">::</span>string protocol <span class="hl opt">=</span> <span class="hl str">&quot;&quot;</span><span class="hl opt">;</span>
+<span class="hl lin">024 </span>    std<span class="hl opt">::</span>string hostname <span class="hl opt">=</span> <span class="hl str">&quot;&quot;</span><span class="hl opt">;</span>
+<span class="hl lin">025 </span>    std<span class="hl opt">::</span>string relative <span class="hl opt">=</span> <span class="hl str">&quot;&quot;</span><span class="hl opt">;</span>
+<span class="hl lin">026 </span>    std<span class="hl opt">::</span>string filename <span class="hl opt">=</span> <span class="hl str">&quot;&quot;</span><span class="hl opt">;</span>
+<span class="hl lin">027 </span><span class="hl opt">};</span>
+<span class="hl lin">028 </span><span class="hl kwb">struct</span> requestSkeleton
+<span class="hl lin">029 </span><span class="hl opt">{</span>
+<span class="hl lin">030 </span>    std<span class="hl opt">::</span>string method <span class="hl opt">=</span> <span class="hl str">&quot;GET&quot;</span><span class="hl opt">;</span>
+<span class="hl lin">031 </span>    <span class="hl kwb">char</span> SP <span class="hl opt">=</span> <span class="hl kwb">char</span><span class="hl opt">(</span><span class="hl num">32</span><span class="hl opt">);</span>
+<span class="hl lin">032 </span>    std<span class="hl opt">::</span>string httpVer <span class="hl opt">=</span> <span class="hl str">&quot;HTTP/1.1&quot;</span><span class="hl opt">;</span>
+<span class="hl lin">033 </span>    std<span class="hl opt">::</span>string requestHeader <span class="hl opt">=</span> <span class="hl str">&quot;</span><span class="hl esc">\r\n</span><span class="hl str">Accept: */*</span><span class="hl esc">\r\n</span><span class="hl str">Accept-Charset: utf-8</span><span class="hl esc">\r\n</span><span class="hl str">Connection: Keep-Alive</span><span class="hl esc">\r\n</span><span class="hl str">&quot;</span><span class="hl opt">;</span>
+<span class="hl lin">034 </span>    std<span class="hl opt">::</span>string CRLF <span class="hl opt">=</span> <span class="hl str">&quot;</span><span class="hl esc">\r\n\r\n</span><span class="hl str">&quot;</span><span class="hl opt">;</span>
+<span class="hl lin">035 </span>    <span class="hl kwb">int</span> flags <span class="hl opt">=</span> <span class="hl num">0</span><span class="hl opt">;</span>
+<span class="hl lin">036 </span><span class="hl opt">};</span>
+<span class="hl lin">037 </span>
+<span class="hl lin">038 </span><span class="hl kwb">void</span> <span class="hl kwd">show_help</span><span class="hl opt">(</span><span class="hl kwb">char</span><span class="hl opt">*</span> cmdname<span class="hl opt">);</span>
+<span class="hl lin">039 </span><span class="hl kwb">int</span> <span class="hl kwd">parceHost</span><span class="hl opt">(</span><span class="hl kwb">char</span><span class="hl opt">*</span> address<span class="hl opt">,</span> linkStruct <span class="hl opt">*</span>result<span class="hl opt">);</span>
+<span class="hl lin">040 </span><span class="hl kwb">void</span> <span class="hl kwd">log</span><span class="hl opt">(</span>std<span class="hl opt">::</span>string message<span class="hl opt">);</span>
+<span class="hl lin">041 </span><span class="hl kwb">void</span> <span class="hl kwd">log</span><span class="hl opt">(</span><span class="hl kwb">FILE</span> <span class="hl opt">*</span> fd<span class="hl opt">,</span> std<span class="hl opt">::</span>string message<span class="hl opt">);</span>
+<span class="hl lin">042 </span>
+<span class="hl lin">043 </span><span class="hl kwb">int</span> <span class="hl kwd">main</span> <span class="hl opt">(</span><span class="hl kwb">int</span> argc<span class="hl opt">,</span> <span class="hl kwb">char</span><span class="hl opt">*</span> argv<span class="hl opt">[])</span>
+<span class="hl lin">044 </span><span class="hl opt">{</span>
+<span class="hl lin">045 </span>
+<span class="hl lin">046 </span>    <span class="hl kwa">if</span> <span class="hl opt">(</span>argc <span class="hl opt">&lt;</span> <span class="hl num">2</span><span class="hl opt">) {</span>
+<span class="hl lin">047 </span>
+<span class="hl lin">048 </span>        <span class="hl kwd">log</span><span class="hl opt">(</span><span class="hl str">&quot;Sry, no arguments: &quot;</span>  <span class="hl opt">+</span> std<span class="hl opt">::</span><span class="hl kwd">to_string</span><span class="hl opt">(</span>argc<span class="hl opt">) +</span> <span class="hl str">&quot; : &quot;</span> <span class="hl opt">+</span> std<span class="hl opt">::</span><span class="hl kwd">string</span><span class="hl opt">(</span>argv<span class="hl opt">[</span>argc <span class="hl opt">-</span> <span class="hl num">1</span><span class="hl opt">]));</span>
+<span class="hl lin">049 </span>        <span class="hl kwd">show_help</span><span class="hl opt">(</span>argv<span class="hl opt">[</span><span class="hl num">0</span><span class="hl opt">]);</span>
+<span class="hl lin">050 </span><span class="hl ppc">#        ifdef DEBUG</span>
+<span class="hl lin">051 </span>            argv<span class="hl opt">[</span><span class="hl num">1</span><span class="hl opt">] = (</span><span class="hl kwb">char</span> <span class="hl opt">*)</span><span class="hl str">&quot;https://pp.vk.me/c623120/v623120157/465ee/c5fCboWQibg.jpg&quot;</span><span class="hl opt">;</span>
+<span class="hl lin">052 </span>            argc <span class="hl opt">+=</span> <span class="hl num">1</span><span class="hl opt">;</span>
+<span class="hl lin">053 </span><span class="hl ppc">#        else</span>
+<span class="hl lin">054 </span>            <span class="hl kwa">return</span> <span class="hl opt">-</span><span class="hl num">1</span><span class="hl opt">;</span>
+<span class="hl lin">055 </span><span class="hl ppc">#        endif</span>
+<span class="hl lin">056 </span>    <span class="hl opt">}</span>
+<span class="hl lin">057 </span>
+<span class="hl lin">058 </span>    <span class="hl kwb">int</span> temporaryInteger <span class="hl opt">=</span> <span class="hl num">1</span><span class="hl opt">;</span>
+<span class="hl lin">059 </span>
+<span class="hl lin">060 </span>    linkStruct addr<span class="hl opt">;</span>
+<span class="hl lin">061 </span>    <span class="hl kwb">bool</span> ignoreErrors <span class="hl opt">=</span> <span class="hl kwa">false</span><span class="hl opt">;</span>
+<span class="hl lin">062 </span>    <span class="hl kwb">bool</span> ignoreAllErrors <span class="hl opt">=</span> <span class="hl kwa">false</span><span class="hl opt">;</span>
+<span class="hl lin">063 </span>
+<span class="hl lin">064 </span>    <span class="hl kwa">for</span> <span class="hl opt">(</span><span class="hl kwb">int</span> i <span class="hl opt">=</span> <span class="hl num">1</span><span class="hl opt">;</span> i <span class="hl opt">&lt;</span> argc<span class="hl opt">;</span> i<span class="hl opt">++) {</span>
+<span class="hl lin">065 </span>        std<span class="hl opt">::</span>string s <span class="hl opt">=</span> argv<span class="hl opt">[</span>i<span class="hl opt">];</span>
+<span class="hl lin">066 </span>        <span class="hl kwa">if</span><span class="hl opt">(</span>s <span class="hl opt">==</span> <span class="hl str">&quot;-o&quot;</span><span class="hl opt">) {</span>
+<span class="hl lin">067 </span>            addr<span class="hl opt">.</span>filename <span class="hl opt">=</span> argv<span class="hl opt">[</span>i <span class="hl opt">+</span> <span class="hl num">1</span><span class="hl opt">];</span>
+<span class="hl lin">068 </span>            i <span class="hl opt">+=</span> <span class="hl num">1</span><span class="hl opt">;</span>
+<span class="hl lin">069 </span>        <span class="hl opt">}</span> <span class="hl kwa">else if</span> <span class="hl opt">(</span>s <span class="hl opt">==</span> <span class="hl str">&quot;-i&quot;</span><span class="hl opt">) {</span>
+<span class="hl lin">070 </span>            ignoreErrors <span class="hl opt">=</span> <span class="hl kwa">true</span><span class="hl opt">;</span>
+<span class="hl lin">071 </span>        <span class="hl opt">}</span> <span class="hl kwa">else if</span><span class="hl opt">(</span>s <span class="hl opt">==</span> <span class="hl str">&quot;--ignore-all&quot;</span><span class="hl opt">) {</span>
+<span class="hl lin">072 </span>            ignoreAllErrors <span class="hl opt">=</span> <span class="hl kwa">true</span><span class="hl opt">;</span>
+<span class="hl lin">073 </span>        <span class="hl opt">}</span> <span class="hl kwa">else if</span> <span class="hl opt">(</span>s<span class="hl opt">.</span><span class="hl kwd">find</span><span class="hl opt">(</span><span class="hl str">&quot;/&quot;</span><span class="hl opt">) !=</span> s<span class="hl opt">.</span>npos<span class="hl opt">) {</span>
+<span class="hl lin">074 </span>            <span class="hl slc">//fprintf(stdout, &quot;found link-like argument \&quot;%s\&quot;\n&quot;, argv[i] );</span>
+<span class="hl lin">075 </span>            temporaryInteger <span class="hl opt">=</span> i<span class="hl opt">;</span>
+<span class="hl lin">076 </span>        <span class="hl opt">}</span>
+<span class="hl lin">077 </span>    <span class="hl opt">}</span>
+<span class="hl lin">078 </span>
+<span class="hl lin">079 </span>    <span class="hl kwd">log</span><span class="hl opt">(</span><span class="hl str">&quot;found link-like &quot;</span> <span class="hl opt">+</span> std<span class="hl opt">::</span><span class="hl kwd">string</span><span class="hl opt">(</span>argv<span class="hl opt">[</span>temporaryInteger<span class="hl opt">]));</span>
+<span class="hl lin">080 </span>
+<span class="hl lin">081 </span>
+<span class="hl lin">082 </span>
+<span class="hl lin">083 </span>
+<span class="hl lin">084 </span>    temporaryInteger <span class="hl opt">=</span> <span class="hl kwd">parceHost</span><span class="hl opt">(</span>argv<span class="hl opt">[</span>temporaryInteger<span class="hl opt">], &amp;</span>addr<span class="hl opt">);</span>
+<span class="hl lin">085 </span>
+<span class="hl lin">086 </span>
+<span class="hl lin">087 </span>    <span class="hl kwa">if</span><span class="hl opt">(</span>temporaryInteger <span class="hl opt">!=</span> <span class="hl num">0</span><span class="hl opt">) {</span>
+<span class="hl lin">088 </span>        <span class="hl kwd">log</span><span class="hl opt">(</span>stderr<span class="hl opt">,</span> <span class="hl str">&quot;Parsing function returned non-zero value :(&quot;</span><span class="hl opt">);</span>
+<span class="hl lin">089 </span>        <span class="hl kwa">if</span><span class="hl opt">((!</span>ignoreErrors<span class="hl opt">) &amp;&amp; (!</span>ignoreAllErrors<span class="hl opt">))</span>
+<span class="hl lin">090 </span>            <span class="hl kwa">return</span> temporaryInteger<span class="hl opt">;</span>
+<span class="hl lin">091 </span>    <span class="hl opt">}</span>
+<span class="hl lin">092 </span>
+<span class="hl lin">093 </span>
+<span class="hl lin">094 </span>
+<span class="hl lin">095 </span>    <span class="hl kwb">struct</span> addrinfo <span class="hl opt">*</span>he <span class="hl opt">=</span> <span class="hl kwa">new</span> <span class="hl kwb">struct</span> addrinfo<span class="hl opt">;</span>
+<span class="hl lin">096 </span>
+<span class="hl lin">097 </span>    he<span class="hl opt">-&gt;</span>ai_socktype <span class="hl opt">=</span> SOCK_STREAM<span class="hl opt">;</span>
+<span class="hl lin">098 </span>    he<span class="hl opt">-&gt;</span>ai_family <span class="hl opt">=</span> AF_INET<span class="hl opt">;</span>
+<span class="hl lin">099 </span>
+<span class="hl lin">100 </span>    temporaryInteger <span class="hl opt">=</span> <span class="hl kwd">getaddrinfo</span> <span class="hl opt">(</span>addr<span class="hl opt">.</span>hostname<span class="hl opt">.</span><span class="hl kwd">c_str</span><span class="hl opt">(),</span> <span class="hl str">&quot;80&quot;</span><span class="hl opt">,</span> he<span class="hl opt">, &amp;</span>he<span class="hl opt">);</span>
+<span class="hl lin">101 </span>
+<span class="hl lin">102 </span>    <span class="hl kwd">log</span> <span class="hl opt">(</span><span class="hl str">&quot;getaddrinfo done: &quot;</span> <span class="hl opt">+</span> std<span class="hl opt">::</span><span class="hl kwd">to_string</span><span class="hl opt">(</span>temporaryInteger<span class="hl opt">));</span>
+<span class="hl lin">103 </span>
+<span class="hl lin">104 </span>    <span class="hl kwa">if</span><span class="hl opt">(</span>temporaryInteger <span class="hl opt">!=</span> <span class="hl num">0</span><span class="hl opt">) {</span>
+<span class="hl lin">105 </span>        temporaryInteger <span class="hl opt">=</span> <span class="hl kwd">getaddrinfo</span><span class="hl opt">(</span>addr<span class="hl opt">.</span>hostname<span class="hl opt">.</span><span class="hl kwd">c_str</span><span class="hl opt">(),</span> <span class="hl str">&quot;80&quot;</span><span class="hl opt">,</span> NULL<span class="hl opt">, &amp;</span>he<span class="hl opt">);</span>
+<span class="hl lin">106 </span>        <span class="hl kwd">log</span><span class="hl opt">(</span>stderr<span class="hl opt">,</span> <span class="hl str">&quot;getaddrinfo done[+1]: &quot;</span> <span class="hl opt">+</span> std<span class="hl opt">::</span><span class="hl kwd">to_string</span><span class="hl opt">(</span>temporaryInteger<span class="hl opt">));</span>
+<span class="hl lin">107 </span>        <span class="hl kwd">log</span><span class="hl opt">(</span>stderr<span class="hl opt">,</span> <span class="hl str">&quot;This may mean that server doesn't use http (forced https, for example)</span><span class="hl esc">\n</span><span class="hl str">&quot;</span><span class="hl opt">);</span>
+<span class="hl lin">108 </span><span class="hl ppc">#       ifndef DEBUG</span>
+<span class="hl lin">109 </span>        <span class="hl kwa">if</span><span class="hl opt">((!</span>ignoreErrors<span class="hl opt">) &amp;&amp; (!</span>ignoreAllErrors<span class="hl opt">)) {</span>
+<span class="hl lin">110 </span>            <span class="hl kwd">log</span><span class="hl opt">(</span>stderr<span class="hl opt">,</span> <span class="hl str">&quot;Consider using -i if you know what you're doing&quot;</span><span class="hl opt">);</span>
+<span class="hl lin">111 </span>            <span class="hl kwa">return</span> <span class="hl num">25</span><span class="hl opt">;</span>
+<span class="hl lin">112 </span>        <span class="hl opt">}</span>
+<span class="hl lin">113 </span><span class="hl ppc">#       endif</span>
+<span class="hl lin">114 </span>    <span class="hl opt">}</span>
+<span class="hl lin">115 </span>
+<span class="hl lin">116 </span>    <span class="hl kwd">log</span><span class="hl opt">(</span><span class="hl str">&quot;SOCK_DGRAM = &quot;</span> <span class="hl opt">+</span> std<span class="hl opt">::</span><span class="hl kwd">to_string</span><span class="hl opt">(</span>SOCK_DGRAM<span class="hl opt">));</span>
+<span class="hl lin">117 </span>    <span class="hl kwd">log</span><span class="hl opt">(</span><span class="hl str">&quot;SOCK_STREAM = &quot;</span> <span class="hl opt">+</span> std<span class="hl opt">::</span><span class="hl kwd">to_string</span><span class="hl opt">(</span>SOCK_STREAM<span class="hl opt">));</span>
+<span class="hl lin">118 </span>
+<span class="hl lin">119 </span><span class="hl ppc">#   ifdef DEBUG_FUCKN</span>
+<span class="hl lin">120 </span>        <span class="hl kwb">struct</span> addrinfo <span class="hl opt">*</span> temporaryPointer <span class="hl opt">=</span> he<span class="hl opt">;</span>
+<span class="hl lin">121 </span>
+<span class="hl lin">122 </span>
+<span class="hl lin">123 </span>        <span class="hl kwd">log</span><span class="hl opt">(</span><span class="hl str">&quot;he-&gt;ai_socktype = &quot;</span> <span class="hl opt">+</span> std<span class="hl opt">::</span><span class="hl kwd">to_string</span><span class="hl opt">(</span>he<span class="hl opt">-&gt;</span>ai_socktype<span class="hl opt">));</span>
+<span class="hl lin">124 </span>
+<span class="hl lin">125 </span>        <span class="hl kwb">struct</span> sockaddr_in <span class="hl opt">*</span>tempinadr <span class="hl opt">=  (</span><span class="hl kwb">struct</span> sockaddr_in <span class="hl opt">*)</span>he<span class="hl opt">-&gt;</span>ai_addr<span class="hl opt">;</span>
+<span class="hl lin">126 </span>
+<span class="hl lin">127 </span>        <span class="hl kwd">log</span><span class="hl opt">(</span><span class="hl str">&quot;struct addrinfo {&quot;</span>\
+<span class="hl lin">128 </span>            <span class="hl str">&quot;</span><span class="hl esc">\n</span><span class="hl str">int     ai_flags;            &quot;</span> <span class="hl opt">+</span> std<span class="hl opt">::</span><span class="hl kwd">to_string</span><span class="hl opt">(</span>he<span class="hl opt">-&gt;</span>ai_flags<span class="hl opt">) +</span>\
+<span class="hl lin">129 </span>            <span class="hl str">&quot;</span><span class="hl esc">\n</span><span class="hl str">int     ai_family;           &quot;</span> <span class="hl opt">+</span> std<span class="hl opt">::</span><span class="hl kwd">to_string</span><span class="hl opt">(</span>he<span class="hl opt">-&gt;</span>ai_family<span class="hl opt">) +</span>\
+<span class="hl lin">130 </span>            <span class="hl str">&quot;</span><span class="hl esc">\n</span><span class="hl str">int     ai_socktype;         &quot;</span> <span class="hl opt">+</span> std<span class="hl opt">::</span><span class="hl kwd">to_string</span><span class="hl opt">(</span>he<span class="hl opt">-&gt;</span>ai_socktype<span class="hl opt">) +</span>\
+<span class="hl lin">131 </span>            <span class="hl str">&quot;</span><span class="hl esc">\n</span><span class="hl str">int     ai_protocol;         &quot;</span> <span class="hl opt">+</span> std<span class="hl opt">::</span><span class="hl kwd">to_string</span><span class="hl opt">(</span>he<span class="hl opt">-&gt;</span>ai_protocol<span class="hl opt">) +</span>\
+<span class="hl lin">132 </span>            <span class="hl str">&quot;</span><span class="hl esc">\n</span><span class="hl str">size_t  ai_addrlen;          &quot;</span> <span class="hl opt">+</span> std<span class="hl opt">::</span><span class="hl kwd">to_string</span><span class="hl opt">(</span>he<span class="hl opt">-&gt;</span>ai_addrlen<span class="hl opt">) +</span>\
+<span class="hl lin">133 </span>            <span class="hl str">&quot;</span><span class="hl esc">\n</span><span class="hl str">struct  sockaddr *ai_addr;   &quot;</span> <span class="hl opt">+</span> std<span class="hl opt">::</span><span class="hl kwd">to_string</span><span class="hl opt">(</span>he<span class="hl opt">-&gt;</span>ai_addr<span class="hl opt">-&gt;</span>sa_family<span class="hl opt">) +</span> <span class="hl str">&quot;  &quot;</span> <span class="hl opt">+</span> <span class="hl kwd">inet_ntoa</span><span class="hl opt">(</span>tempinadr<span class="hl opt">-&gt;</span>sin_addr<span class="hl opt">));</span>
+<span class="hl lin">134 </span>
+<span class="hl lin">135 </span>        <span class="hl kwd">log</span><span class="hl opt">(</span><span class="hl str">&quot;char    *ai_canonname;     /* canonical name */&quot;</span> \
+<span class="hl lin">136 </span>            <span class="hl str">&quot;</span><span class="hl esc">\n</span><span class="hl str">struct  addrinfo *ai_next; /* this struct can form a linked list */&quot;</span> <span class="hl com">/*+ std::to_string(he-&gt;ai_next) +*/</span>\
+<span class="hl lin">137 </span>            <span class="hl str">&quot;</span><span class="hl esc">\n</span><span class="hl str">}&quot;</span><span class="hl opt">);</span>
+<span class="hl lin">138 </span>        <span class="hl kwa">delete</span>  temporaryPointer<span class="hl opt">;</span>
+<span class="hl lin">139 </span><span class="hl ppc">#   endif</span>
+<span class="hl lin">140 </span>
+<span class="hl lin">141 </span>
+<span class="hl lin">142 </span>
+<span class="hl lin">143 </span>    <span class="hl kwd">log</span><span class="hl opt">(</span><span class="hl str">&quot;he-&gt;ai_socktype = &quot;</span> <span class="hl opt">+</span> std<span class="hl opt">::</span><span class="hl kwd">to_string</span><span class="hl opt">(</span>he<span class="hl opt">-&gt;</span>ai_socktype<span class="hl opt">));</span>
+<span class="hl lin">144 </span>
+<span class="hl lin">145 </span>
+<span class="hl lin">146 </span>
+<span class="hl lin">147 </span>    <span class="hl slc">////////////////////////////////////////////////////</span>
+<span class="hl lin">148 </span>    <span class="hl slc">//So we have host adress from link.</span>
+<span class="hl lin">149 </span>    <span class="hl kwb">int</span> socketFd<span class="hl opt">;</span>
+<span class="hl lin">150 </span>    socketFd <span class="hl opt">=</span> <span class="hl kwd">socket</span><span class="hl opt">(</span>he<span class="hl opt">-&gt;</span>ai_family<span class="hl opt">,</span> he<span class="hl opt">-&gt;</span>ai_socktype<span class="hl opt">,</span> he<span class="hl opt">-&gt;</span>ai_protocol<span class="hl opt">);</span>
+<span class="hl lin">151 </span>
+<span class="hl lin">152 </span>    <span class="hl kwd">log</span><span class="hl opt">(</span><span class="hl str">&quot;socketFd = &quot;</span> <span class="hl opt">+</span> std<span class="hl opt">::</span><span class="hl kwd">to_string</span><span class="hl opt">(</span>socketFd<span class="hl opt">));</span>
+<span class="hl lin">153 </span>    <span class="hl kwa">if</span><span class="hl opt">(</span>socketFd <span class="hl opt">&lt;</span> <span class="hl num">0</span><span class="hl opt">)</span>
+<span class="hl lin">154 </span>    <span class="hl opt">{</span>
+<span class="hl lin">155 </span>        <span class="hl kwd">log</span><span class="hl opt">(</span>stderr<span class="hl opt">,</span> <span class="hl str">&quot;Error opening socketFd: &quot;</span> <span class="hl opt">+</span> std<span class="hl opt">::</span><span class="hl kwd">to_string</span><span class="hl opt">(</span>socketFd<span class="hl opt">));</span>
+<span class="hl lin">156 </span>        <span class="hl kwa">if</span><span class="hl opt">(!</span>ignoreAllErrors<span class="hl opt">)</span>
+<span class="hl lin">157 </span>            <span class="hl kwa">return</span> <span class="hl num">2</span><span class="hl opt">;</span>
+<span class="hl lin">158 </span>    <span class="hl opt">}</span>
+<span class="hl lin">159 </span>
+<span class="hl lin">160 </span>
+<span class="hl lin">161 </span>
+<span class="hl lin">162 </span>    <span class="hl kwa">if</span> <span class="hl opt">(</span>addr<span class="hl opt">.</span>protocol <span class="hl opt">!=</span> <span class="hl str">&quot;http&quot;</span><span class="hl opt">) {</span>
+<span class="hl lin">163 </span>        <span class="hl kwd">log</span><span class="hl opt">(</span>stderr<span class="hl opt">,</span> <span class="hl str">&quot;You</span><span class="hl esc">\'</span><span class="hl str">re trying to use non-http protocol. I don</span><span class="hl esc">\'</span><span class="hl str">t know what it will end.&quot;</span><span class="hl opt">);</span>
+<span class="hl lin">164 </span>        <span class="hl kwd">log</span><span class="hl opt">(</span>stdout<span class="hl opt">,</span> <span class="hl str">&quot;Use -i option to ignore errors.&quot;</span><span class="hl opt">);</span>
+<span class="hl lin">165 </span>        <span class="hl kwa">if</span><span class="hl opt">((!</span>ignoreErrors<span class="hl opt">) &amp;&amp; (!</span>ignoreAllErrors<span class="hl opt">))</span>
+<span class="hl lin">166 </span>            <span class="hl kwa">return</span> <span class="hl num">15</span><span class="hl opt">;</span>
+<span class="hl lin">167 </span>    <span class="hl opt">}</span>
+<span class="hl lin">168 </span>
+<span class="hl lin">169 </span>
+<span class="hl lin">170 </span>    <span class="hl kwd">log</span><span class="hl opt">(</span><span class="hl str">&quot;Trying to connect..&quot;</span><span class="hl opt">);</span>
+<span class="hl lin">171 </span>    temporaryInteger <span class="hl opt">=</span> <span class="hl kwd">connect</span><span class="hl opt">(</span>socketFd<span class="hl opt">,</span> he<span class="hl opt">-&gt;</span>ai_addr<span class="hl opt">,</span> he<span class="hl opt">-&gt;</span>ai_addrlen<span class="hl opt">);</span>
+<span class="hl lin">172 </span>    <span class="hl kwd">log</span><span class="hl opt">(</span><span class="hl str">&quot;connected; return value: &quot;</span> <span class="hl opt">+</span> std<span class="hl opt">::</span><span class="hl kwd">to_string</span><span class="hl opt">(</span>temporaryInteger<span class="hl opt">));</span>
+<span class="hl lin">173 </span>    <span class="hl kwa">if</span> <span class="hl opt">(</span>temporaryInteger <span class="hl opt">!=</span> <span class="hl num">0</span><span class="hl opt">) {</span>
+<span class="hl lin">174 </span>        <span class="hl kwd">log</span> <span class="hl opt">(</span>stderr<span class="hl opt">,</span> <span class="hl str">&quot;connection error&quot;</span><span class="hl opt">);</span>
+<span class="hl lin">175 </span>        <span class="hl kwa">if</span><span class="hl opt">(!</span>ignoreAllErrors<span class="hl opt">)</span>
+<span class="hl lin">176 </span>            <span class="hl kwa">return</span> <span class="hl num">50</span><span class="hl opt">;</span>
+<span class="hl lin">177 </span>    <span class="hl opt">}</span>
+<span class="hl lin">178 </span>
+<span class="hl lin">179 </span>
+<span class="hl lin">180 </span>    <span class="hl slc">//////////////////////////////////////////////////</span>
+<span class="hl lin">181 </span>    <span class="hl slc">//Connection established. It's time to send data! ^.^</span>
+<span class="hl lin">182 </span>    std<span class="hl opt">::</span>string message <span class="hl opt">=</span> <span class="hl str">&quot;&quot;</span><span class="hl opt">;</span>
+<span class="hl lin">183 </span>    requestSkeleton requestSkeleton<span class="hl opt">;</span>
+<span class="hl lin">184 </span>    message <span class="hl opt">=</span> requestSkeleton<span class="hl opt">.</span>method <span class="hl opt">+</span> requestSkeleton<span class="hl opt">.</span>SP <span class="hl opt">+</span> addr<span class="hl opt">.</span>relative <span class="hl opt">+</span> requestSkeleton<span class="hl opt">.</span>SP <span class="hl opt">+</span> requestSkeleton<span class="hl opt">.</span>httpVer
+<span class="hl lin">185 </span>        <span class="hl opt">+</span> requestSkeleton<span class="hl opt">.</span>SP <span class="hl opt">+</span> requestSkeleton<span class="hl opt">.</span>requestHeader <span class="hl opt">+</span> <span class="hl str">&quot;Host:&quot;</span> <span class="hl opt">+</span> addr<span class="hl opt">.</span>hostname <span class="hl opt">+</span> requestSkeleton<span class="hl opt">.</span>CRLF<span class="hl opt">;</span>
+<span class="hl lin">186 </span>    <span class="hl kwd">log</span><span class="hl opt">(</span>message<span class="hl opt">);</span>
+<span class="hl lin">187 </span>
+<span class="hl lin">188 </span>    temporaryInteger <span class="hl opt">=</span> <span class="hl kwd">send</span><span class="hl opt">(</span>socketFd<span class="hl opt">,</span> message<span class="hl opt">.</span><span class="hl kwd">c_str</span><span class="hl opt">(),</span> message<span class="hl opt">.</span><span class="hl kwd">size</span><span class="hl opt">(),</span> <span class="hl num">0</span><span class="hl opt">);</span>
+<span class="hl lin">189 </span>    <span class="hl kwd">log</span><span class="hl opt">(</span><span class="hl str">&quot;Sent data: &quot;</span> <span class="hl opt">+</span> std<span class="hl opt">::</span><span class="hl kwd">to_string</span><span class="hl opt">(</span>temporaryInteger<span class="hl opt">));</span>
+<span class="hl lin">190 </span>    <span class="hl kwd">log</span><span class="hl opt">(</span><span class="hl str">&quot;Trying to open file: &quot;</span> <span class="hl opt">+</span> std<span class="hl opt">::</span><span class="hl kwd">string</span><span class="hl opt">(</span><span class="hl str">&quot;./&quot;</span> <span class="hl opt">+</span> addr<span class="hl opt">.</span>filename<span class="hl opt">) +</span> <span class="hl str">&quot;</span><span class="hl esc">\n</span><span class="hl str">...&quot;</span><span class="hl opt">);</span>
+<span class="hl lin">191 </span>    <span class="hl kwb">FILE</span> <span class="hl opt">*</span> localFd <span class="hl opt">=</span> <span class="hl kwd">fopen</span><span class="hl opt">(</span>std<span class="hl opt">::</span><span class="hl kwd">string</span><span class="hl opt">(</span><span class="hl str">&quot;./&quot;</span> <span class="hl opt">+</span> addr<span class="hl opt">.</span>filename<span class="hl opt">).</span><span class="hl kwd">c_str</span><span class="hl opt">(),</span> <span class="hl str">&quot;wb+&quot;</span><span class="hl opt">);</span>
+<span class="hl lin">192 </span>
+<span class="hl lin">193 </span>    <span class="hl kwa">if</span> <span class="hl opt">(</span>localFd <span class="hl opt">==</span> NULL<span class="hl opt">) {</span>
+<span class="hl lin">194 </span>        <span class="hl kwd">fprintf</span><span class="hl opt">(</span>stderr<span class="hl opt">,</span> <span class="hl str">&quot;%s</span><span class="hl esc">\n</span><span class="hl str">&quot;</span><span class="hl opt">,</span> <span class="hl str">&quot;Error opening localFd&quot;</span><span class="hl opt">);</span>
+<span class="hl lin">195 </span>        <span class="hl kwa">if</span><span class="hl opt">(!</span>ignoreAllErrors<span class="hl opt">)</span>
+<span class="hl lin">196 </span>            <span class="hl kwa">return</span> <span class="hl num">100</span><span class="hl opt">;</span>
+<span class="hl lin">197 </span>    <span class="hl opt">}</span>
+<span class="hl lin">198 </span>    <span class="hl kwd">log</span><span class="hl opt">(</span><span class="hl str">&quot;Success.&quot;</span><span class="hl opt">);</span>
+<span class="hl lin">199 </span>
+<span class="hl lin">200 </span>
+<span class="hl lin">201 </span>    <span class="hl slc">////////////////////////////////////////</span>
+<span class="hl lin">202 </span>    <span class="hl kwd">log</span><span class="hl opt">(</span><span class="hl str">&quot;starting recv in a loop&quot;</span><span class="hl opt">);</span>
+<span class="hl lin">203 </span>    std<span class="hl opt">::</span>string server_reply<span class="hl opt">;</span>
+<span class="hl lin">204 </span>    <span class="hl kwb">char</span> <span class="hl opt">*</span> server_reply_buf<span class="hl opt">;</span>
+<span class="hl lin">205 </span>
+<span class="hl lin">206 </span>    <span class="hl kwa">while</span><span class="hl opt">(</span>server_reply<span class="hl opt">.</span><span class="hl kwd">find</span><span class="hl opt">(</span><span class="hl str">&quot;</span><span class="hl esc">\r\n\r\n</span><span class="hl str">&quot;</span><span class="hl opt">) ==</span> server_reply<span class="hl opt">.</span>npos<span class="hl opt">) {</span>
+<span class="hl lin">207 </span>        <span class="hl kwd">recv</span><span class="hl opt">(</span>socketFd<span class="hl opt">,</span> server_reply_buf<span class="hl opt">,</span> <span class="hl kwa">sizeof</span><span class="hl opt">(</span><span class="hl kwb">char</span><span class="hl opt">),</span> <span class="hl num">0</span><span class="hl opt">);</span>
+<span class="hl lin">208 </span>        server_reply<span class="hl opt">.</span><span class="hl kwd">push_back</span><span class="hl opt">(*</span>server_reply_buf<span class="hl opt">);</span>
+<span class="hl lin">209 </span>    <span class="hl opt">}</span>
+<span class="hl lin">210 </span>
+<span class="hl lin">211 </span>    <span class="hl kwd">log</span><span class="hl opt">(</span>server_reply<span class="hl opt">);</span>
+<span class="hl lin">212 </span>    <span class="hl kwa">if</span><span class="hl opt">(</span>server_reply<span class="hl opt">.</span><span class="hl kwd">find</span><span class="hl opt">(</span><span class="hl str">'\0'</span><span class="hl opt">) !=</span> server_reply<span class="hl opt">.</span>npos<span class="hl opt">) {</span>
+<span class="hl lin">213 </span>        <span class="hl kwd">log</span><span class="hl opt">(</span>stderr<span class="hl opt">,</span> <span class="hl str">&quot;Ughm, could parse response header illegally, sry.&quot;</span><span class="hl opt">);</span>
+<span class="hl lin">214 </span>    <span class="hl opt">}</span>
+<span class="hl lin">215 </span>
+<span class="hl lin">216 </span>    server_reply<span class="hl opt">.</span><span class="hl kwd">push_back</span><span class="hl opt">(</span><span class="hl str">'\0'</span><span class="hl opt">);</span>
+<span class="hl lin">217 </span>    <span class="hl kwa">for</span><span class="hl opt">(</span><span class="hl kwb">int</span> i <span class="hl opt">=</span> <span class="hl num">0</span><span class="hl opt">;</span> server_reply<span class="hl opt">[</span>i<span class="hl opt">] !=</span> <span class="hl str">'\0'</span><span class="hl opt">; ++</span>i<span class="hl opt">)</span>
+<span class="hl lin">218 </span>        server_reply<span class="hl opt">[</span>i<span class="hl opt">] =</span> std<span class="hl opt">::</span><span class="hl kwd">toupper</span><span class="hl opt">(</span>server_reply<span class="hl opt">[</span>i<span class="hl opt">]);</span>
+<span class="hl lin">219 </span>    <span class="hl slc">//log(server_reply);</span>
+<span class="hl lin">220 </span>
+<span class="hl lin">221 </span>    <span class="hl kwb">int</span> temp <span class="hl opt">=</span> <span class="hl num">0</span><span class="hl opt">;</span>
+<span class="hl lin">222 </span>    <span class="hl kwb">int</span> temp2 <span class="hl opt">=</span> <span class="hl num">0</span><span class="hl opt">;</span>
+<span class="hl lin">223 </span>
+<span class="hl lin">224 </span>    temp <span class="hl opt">=</span> server_reply<span class="hl opt">.</span><span class="hl kwd">find</span><span class="hl opt">(</span><span class="hl str">&quot;200 OK&quot;</span><span class="hl opt">);</span>
+<span class="hl lin">225 </span>    <span class="hl kwa">if</span><span class="hl opt">(</span>temp <span class="hl opt">==</span> server_reply<span class="hl opt">.</span>npos<span class="hl opt">) {</span>
+<span class="hl lin">226 </span>        <span class="hl kwd">fprintf</span><span class="hl opt">(</span>stderr<span class="hl opt">,</span> <span class="hl str">&quot;Could not find</span> <span class="hl esc">\'</span><span class="hl str">200 OK</span><span class="hl esc">\'</span> <span class="hl str">in the header.</span><span class="hl esc">\n</span><span class="hl str">&quot;</span><span class="hl opt">);</span>
+<span class="hl lin">227 </span>        <span class="hl kwa">if</span><span class="hl opt">((!</span>ignoreErrors<span class="hl opt">) &amp;&amp; (!</span>ignoreAllErrors<span class="hl opt">))</span>
+<span class="hl lin">228 </span>            <span class="hl kwa">return</span> <span class="hl num">2</span><span class="hl opt">;</span>
+<span class="hl lin">229 </span>    <span class="hl opt">}</span>
+<span class="hl lin">230 </span>
+<span class="hl lin">231 </span>
+<span class="hl lin">232 </span>
+<span class="hl lin">233 </span>    temp <span class="hl opt">=</span> server_reply<span class="hl opt">.</span><span class="hl kwd">find</span><span class="hl opt">(</span><span class="hl str">&quot;CONTENT-LENGTH:&quot;</span><span class="hl opt">);</span>
+<span class="hl lin">234 </span>    <span class="hl kwa">if</span><span class="hl opt">(</span>temp <span class="hl opt">==</span> server_reply<span class="hl opt">.</span>npos<span class="hl opt">) {</span>
+<span class="hl lin">235 </span>        <span class="hl kwd">log</span><span class="hl opt">(</span>stderr<span class="hl opt">,</span> <span class="hl str">&quot;Could not find content-length option in http header, sry.&quot;</span><span class="hl opt">);</span>
+<span class="hl lin">236 </span>        <span class="hl kwa">if</span><span class="hl opt">((!</span>ignoreErrors<span class="hl opt">) &amp;&amp; (!</span>ignoreAllErrors<span class="hl opt">))</span>
+<span class="hl lin">237 </span>            <span class="hl kwa">return</span> <span class="hl num">116</span><span class="hl opt">;</span>
+<span class="hl lin">238 </span>    <span class="hl opt">}</span>
+<span class="hl lin">239 </span>    temp <span class="hl opt">=</span> server_reply<span class="hl opt">.</span><span class="hl kwd">find</span><span class="hl opt">(</span><span class="hl str">&quot;:&quot;</span><span class="hl opt">,</span> temp<span class="hl opt">);</span>
+<span class="hl lin">240 </span>    temp <span class="hl opt">+=</span> <span class="hl num">2</span><span class="hl opt">;</span>
+<span class="hl lin">241 </span>    temp2 <span class="hl opt">=</span> server_reply<span class="hl opt">.</span><span class="hl kwd">find_first_not_of</span><span class="hl opt">(</span><span class="hl str">&quot;0123456789&quot;</span><span class="hl opt">,</span> temp<span class="hl opt">);</span>
+<span class="hl lin">242 </span>    <span class="hl kwa">if</span><span class="hl opt">(</span>temp2 <span class="hl opt">==</span> server_reply<span class="hl opt">.</span>npos<span class="hl opt">) {</span>
+<span class="hl lin">243 </span>        <span class="hl kwd">log</span><span class="hl opt">(</span>stderr<span class="hl opt">,</span> <span class="hl str">&quot;WTF? Could not find content-length value&quot;</span><span class="hl opt">);</span>
+<span class="hl lin">244 </span>        <span class="hl kwa">if</span><span class="hl opt">((!</span>ignoreErrors<span class="hl opt">) &amp;&amp; (!</span>ignoreAllErrors<span class="hl opt">))</span>
+<span class="hl lin">245 </span>            <span class="hl kwa">return</span> <span class="hl num">115</span><span class="hl opt">;</span>
+<span class="hl lin">246 </span>    <span class="hl opt">}</span>
+<span class="hl lin">247 </span>
+<span class="hl lin">248 </span>
+<span class="hl lin">249 </span>    <span class="hl kwb">int</span> contentLength <span class="hl opt">=</span> <span class="hl kwd">stoi</span><span class="hl opt">(</span>server_reply<span class="hl opt">.</span><span class="hl kwd">substr</span><span class="hl opt">(</span>temp<span class="hl opt">,</span> <span class="hl kwd">abs</span><span class="hl opt">(</span>temp2<span class="hl opt">-</span>temp<span class="hl opt">)),</span> NULL<span class="hl opt">,</span> <span class="hl num">10</span><span class="hl opt">);</span>
+<span class="hl lin">250 </span>    <span class="hl kwd">log</span><span class="hl opt">(</span>std<span class="hl opt">::</span><span class="hl kwd">to_string</span><span class="hl opt">(</span>contentLength<span class="hl opt">) +</span> <span class="hl str">&quot; bytes&quot;</span><span class="hl opt">);</span>
+<span class="hl lin">251 </span>
+<span class="hl lin">252 </span>    contentLength <span class="hl opt">= (</span>contentLength <span class="hl opt">/</span> <span class="hl kwa">sizeof</span><span class="hl opt">(</span><span class="hl kwb">char</span><span class="hl opt">) );</span> <span class="hl slc">// okay, lets divide by 1.</span>
+<span class="hl lin">253 </span>    <span class="hl kwa">if</span><span class="hl opt">((</span>contentLength <span class="hl opt">%</span> <span class="hl kwa">sizeof</span><span class="hl opt">(</span><span class="hl kwb">char</span><span class="hl opt">)) !=</span> <span class="hl num">0</span><span class="hl opt">) {</span>
+<span class="hl lin">254 </span>        <span class="hl kwd">log</span><span class="hl opt">(</span>stderr<span class="hl opt">,</span> <span class="hl str">&quot;Something is wrong: contentLength % sizeof(char) returned non-zero value&quot;</span><span class="hl opt">);</span>
+<span class="hl lin">255 </span>        <span class="hl kwa">if</span><span class="hl opt">(!</span>ignoreAllErrors<span class="hl opt">)</span>
+<span class="hl lin">256 </span>            <span class="hl kwa">return</span> <span class="hl num">250</span><span class="hl opt">;</span>
+<span class="hl lin">257 </span>    <span class="hl opt">}</span>
+<span class="hl lin">258 </span>    <span class="hl kwd">log</span><span class="hl opt">(</span>std<span class="hl opt">::</span><span class="hl kwd">to_string</span><span class="hl opt">(</span>contentLength<span class="hl opt">) +</span> <span class="hl str">&quot; chars&quot;</span><span class="hl opt">);</span>
+<span class="hl lin">259 </span>
+<span class="hl lin">260 </span>    <span class="hl kwb">int</span> i <span class="hl opt">=</span> <span class="hl num">0</span><span class="hl opt">;</span>
+<span class="hl lin">261 </span>    <span class="hl kwb">int</span> recvd <span class="hl opt">=</span> <span class="hl num">1</span><span class="hl opt">;</span>
+<span class="hl lin">262 </span>    <span class="hl kwa">while</span><span class="hl opt">((++</span>i <span class="hl opt">&lt;</span> contentLength<span class="hl opt">) &amp;&amp; (</span>recvd <span class="hl opt">!=</span> <span class="hl num">0</span><span class="hl opt">)) {</span>
+<span class="hl lin">263 </span>        recvd <span class="hl opt">=</span> <span class="hl kwd">recv</span><span class="hl opt">(</span>socketFd<span class="hl opt">,</span> server_reply_buf<span class="hl opt">,</span> <span class="hl kwa">sizeof</span><span class="hl opt">(</span><span class="hl kwb">char</span><span class="hl opt">),</span> <span class="hl num">0</span><span class="hl opt">);</span>
+<span class="hl lin">264 </span>        <span class="hl kwd">fprintf</span><span class="hl opt">(</span>localFd<span class="hl opt">,</span> <span class="hl str">&quot;%c&quot;</span> <span class="hl opt">, *</span>server_reply_buf<span class="hl opt">);</span>
+<span class="hl lin">265 </span>    <span class="hl opt">}</span>
+<span class="hl lin">266 </span>    <span class="hl kwd">log</span><span class="hl opt">(</span>stdout<span class="hl opt">,</span> <span class="hl str">&quot;The file</span> <span class="hl esc">\'</span><span class="hl str">&quot;</span> <span class="hl opt">+</span> addr<span class="hl opt">.</span>filename <span class="hl opt">+</span> <span class="hl str">&quot;</span><span class="hl esc">\'</span> <span class="hl str">was written. Bye.&quot;</span><span class="hl opt">);</span>
+<span class="hl lin">267 </span>    <span class="hl kwa">return</span> <span class="hl num">0</span><span class="hl opt">;</span>
+<span class="hl lin">268 </span><span class="hl opt">}</span>
+<span class="hl lin">269 </span>
+<span class="hl lin">270 </span>
+<span class="hl lin">271 </span>
+<span class="hl lin">272 </span>
+<span class="hl lin">273 </span><span class="hl kwb">void</span> <span class="hl kwd">show_help</span><span class="hl opt">(</span><span class="hl kwb">char</span><span class="hl opt">*</span> cmdname<span class="hl opt">) {</span>
+<span class="hl lin">274 </span>    <span class="hl kwd">fprintf</span><span class="hl opt">(</span>stdout<span class="hl opt">,</span> <span class="hl str">&quot;A simple wget implementation</span><span class="hl esc">\n</span><span class="hl str">&quot;</span><span class="hl opt">);</span>
+<span class="hl lin">275 </span>    <span class="hl kwd">fprintf</span><span class="hl opt">(</span>stdout<span class="hl opt">,</span> <span class="hl str">&quot;Usage: %s [-i][-o FILENAME][--ignore-all] ADDRESS</span><span class="hl esc">\n</span><span class="hl str">&quot;</span><span class="hl opt">,</span> cmdname<span class="hl opt">);</span>
+<span class="hl lin">276 </span>    <span class="hl kwd">fprintf</span><span class="hl opt">(</span>stdout<span class="hl opt">,</span> <span class="hl str">&quot;</span><span class="hl esc">\t\t</span><span class="hl str">-i</span><span class="hl esc">\n\t</span> <span class="hl str">ignore some errors such as no '200 HTTP' message</span><span class="hl esc">\n</span><span class="hl str">&quot;</span><span class="hl opt">);</span>
+<span class="hl lin">277 </span>    <span class="hl kwd">fprintf</span><span class="hl opt">(</span>stdout<span class="hl opt">,</span> <span class="hl str">&quot;</span><span class="hl esc">\t\t</span><span class="hl str">-o FILENAME</span><span class="hl esc">\n\t</span> <span class="hl str">manually select output filename</span><span class="hl esc">\n</span><span class="hl str">&quot;</span><span class="hl opt">);</span>
+<span class="hl lin">278 </span>    <span class="hl kwd">fprintf</span><span class="hl opt">(</span>stdout<span class="hl opt">,</span> <span class="hl str">&quot;</span><span class="hl esc">\t\t</span><span class="hl str">--ignore-all</span><span class="hl esc">\n\t</span> <span class="hl str">ignore terrible errors such as opening output file descriptor error.</span><span class="hl esc">\n</span><span class="hl str">&quot;</span><span class="hl opt">);</span>
+<span class="hl lin">279 </span>    <span class="hl kwd">fprintf</span><span class="hl opt">(</span>stdout<span class="hl opt">,</span> <span class="hl str">&quot;</span><span class="hl esc">\t</span><span class="hl str">This option is not recommended and was implemented only for testing purpose.</span><span class="hl esc">\n</span><span class="hl str">&quot;</span><span class="hl opt">);</span>
+<span class="hl lin">280 </span><span class="hl opt">}</span>
+<span class="hl lin">281 </span>
+<span class="hl lin">282 </span>
+<span class="hl lin">283 </span>
+<span class="hl lin">284 </span><span class="hl kwb">int</span> <span class="hl kwd">parceHost</span><span class="hl opt">(</span><span class="hl kwb">char</span><span class="hl opt">*</span> address<span class="hl opt">,</span> linkStruct <span class="hl opt">*</span> result<span class="hl opt">) {</span>
+<span class="hl lin">285 </span>    <span class="hl kwb">int</span> begin <span class="hl opt">=</span> <span class="hl num">0</span><span class="hl opt">;</span>
+<span class="hl lin">286 </span>    std<span class="hl opt">::</span>string s <span class="hl opt">=</span> address<span class="hl opt">;</span>
+<span class="hl lin">287 </span>    <span class="hl kwb">int</span> end <span class="hl opt">=</span> s<span class="hl opt">.</span><span class="hl kwd">size</span><span class="hl opt">() /</span> <span class="hl kwa">sizeof</span><span class="hl opt">(</span><span class="hl kwb">char</span><span class="hl opt">);</span>
+<span class="hl lin">288 </span>    <span class="hl kwb">int</span> temp <span class="hl opt">=</span> <span class="hl num">0</span><span class="hl opt">;</span>
+<span class="hl lin">289 </span>    temp <span class="hl opt">=</span> s<span class="hl opt">.</span><span class="hl kwd">find</span><span class="hl opt">(</span><span class="hl str">&quot;//&quot;</span><span class="hl opt">,</span> <span class="hl num">1</span><span class="hl opt">);</span>
+<span class="hl lin">290 </span>    <span class="hl kwa">if</span> <span class="hl opt">(</span>temp <span class="hl opt">!=</span> s<span class="hl opt">.</span>npos<span class="hl opt">)</span>
+<span class="hl lin">291 </span>    <span class="hl opt">{</span>
+<span class="hl lin">292 </span>        begin <span class="hl opt">=</span> temp <span class="hl opt">+</span> <span class="hl num">2</span><span class="hl opt">;</span>
+<span class="hl lin">293 </span>        result<span class="hl opt">-&gt;</span>protocol <span class="hl opt">=</span> s<span class="hl opt">.</span><span class="hl kwd">substr</span><span class="hl opt">(</span><span class="hl num">0</span><span class="hl opt">,</span> temp <span class="hl opt">-</span> <span class="hl num">1</span><span class="hl opt">);</span>
+<span class="hl lin">294 </span>    <span class="hl opt">}</span> <span class="hl kwa">else</span> <span class="hl opt">{</span>
+<span class="hl lin">295 </span>        temp <span class="hl opt">=</span> <span class="hl num">0</span><span class="hl opt">;</span>
+<span class="hl lin">296 </span>        result<span class="hl opt">-&gt;</span>protocol <span class="hl opt">=</span> <span class="hl str">&quot;http&quot;</span><span class="hl opt">;</span>
+<span class="hl lin">297 </span>    <span class="hl opt">}</span>
+<span class="hl lin">298 </span>
+<span class="hl lin">299 </span>    temp <span class="hl opt">=</span> s<span class="hl opt">.</span><span class="hl kwd">find</span><span class="hl opt">(</span><span class="hl str">&quot;/&quot;</span><span class="hl opt">,</span> begin <span class="hl opt">+</span> <span class="hl num">1</span><span class="hl opt">);</span>
+<span class="hl lin">300 </span>    <span class="hl kwa">if</span> <span class="hl opt">(</span>temp <span class="hl opt">!=</span> s<span class="hl opt">.</span>npos<span class="hl opt">) {</span>
+<span class="hl lin">301 </span>        end <span class="hl opt">=</span> temp<span class="hl opt">;</span>
+<span class="hl lin">302 </span>        result<span class="hl opt">-&gt;</span>hostname <span class="hl opt">=</span> s<span class="hl opt">.</span><span class="hl kwd">substr</span><span class="hl opt">(</span>begin<span class="hl opt">,</span> <span class="hl kwd">abs</span><span class="hl opt">(</span>end <span class="hl opt">-</span> begin<span class="hl opt">));</span>
+<span class="hl lin">303 </span>        result<span class="hl opt">-&gt;</span>relative <span class="hl opt">=</span> s<span class="hl opt">.</span><span class="hl kwd">substr</span><span class="hl opt">(</span>end<span class="hl opt">);</span>
+<span class="hl lin">304 </span>    <span class="hl opt">}</span>
+<span class="hl lin">305 </span>
+<span class="hl lin">306 </span>    <span class="hl kwa">if</span><span class="hl opt">(</span>result<span class="hl opt">-&gt;</span>filename <span class="hl opt">==</span> <span class="hl str">&quot;&quot;</span><span class="hl opt">) {</span>
+<span class="hl lin">307 </span>        temp <span class="hl opt">=</span> s<span class="hl opt">.</span><span class="hl kwd">rfind</span><span class="hl opt">(</span><span class="hl str">&quot;/&quot;</span><span class="hl opt">);</span>
+<span class="hl lin">308 </span>        end <span class="hl opt">=</span> s<span class="hl opt">.</span><span class="hl kwd">find</span><span class="hl opt">(</span><span class="hl str">&quot;?&quot;</span><span class="hl opt">,</span> temp<span class="hl opt">) -</span> <span class="hl num">1</span><span class="hl opt">;</span>
+<span class="hl lin">309 </span>        <span class="hl kwa">if</span><span class="hl opt">(</span>temp <span class="hl opt">!=</span> s<span class="hl opt">.</span>npos<span class="hl opt">) {</span>
+<span class="hl lin">310 </span>            <span class="hl kwa">if</span><span class="hl opt">(</span>end <span class="hl opt">==</span> s<span class="hl opt">.</span>npos <span class="hl opt">-</span> <span class="hl num">1</span><span class="hl opt">)</span>
+<span class="hl lin">311 </span>                result<span class="hl opt">-&gt;</span>filename <span class="hl opt">=</span> s<span class="hl opt">.</span><span class="hl kwd">substr</span><span class="hl opt">(</span>temp <span class="hl opt">+</span> <span class="hl num">1</span><span class="hl opt">);</span>
+<span class="hl lin">312 </span>
+<span class="hl lin">313 </span>            result<span class="hl opt">-&gt;</span>filename <span class="hl opt">=</span> s<span class="hl opt">.</span><span class="hl kwd">substr</span><span class="hl opt">(</span>temp <span class="hl opt">+</span> <span class="hl num">1</span><span class="hl opt">,</span> <span class="hl kwd">abs</span><span class="hl opt">(</span>end <span class="hl opt">-</span> temp<span class="hl opt">));</span>
+<span class="hl lin">314 </span>        <span class="hl opt">}</span> <span class="hl kwa">else</span> <span class="hl opt">{</span>
+<span class="hl lin">315 </span>            <span class="hl kwa">return</span> <span class="hl opt">-</span><span class="hl num">2</span><span class="hl opt">;</span>
+<span class="hl lin">316 </span>        <span class="hl opt">}</span>
+<span class="hl lin">317 </span>    <span class="hl opt">}</span>
+<span class="hl lin">318 </span>
+<span class="hl lin">319 </span><span class="hl ppc">#   ifdef DEBUG_GETHOST</span>
+<span class="hl lin">320 </span>        <span class="hl kwd">log</span><span class="hl opt">(</span><span class="hl str">&quot;parceHost returns:&quot;</span><span class="hl opt">);</span>
+<span class="hl lin">321 </span>        <span class="hl kwd">log</span><span class="hl opt">(</span><span class="hl str">&quot;begin = &quot;</span> <span class="hl opt">+</span> std<span class="hl opt">::</span><span class="hl kwd">to_string</span><span class="hl opt">(</span>begin<span class="hl opt">));</span>
+<span class="hl lin">322 </span>        <span class="hl kwd">log</span><span class="hl opt">(</span><span class="hl str">&quot;end   = &quot;</span> <span class="hl opt">+</span> std<span class="hl opt">::</span><span class="hl kwd">to_string</span><span class="hl opt">(</span>end<span class="hl opt">));</span>
+<span class="hl lin">323 </span>        <span class="hl slc">//log(&quot;ukhm, host may be the \'&quot; + s + &quot;\'&quot;);</span>
+<span class="hl lin">324 </span>        <span class="hl kwd">log</span><span class="hl opt">(</span><span class="hl str">&quot;result-&gt;protocol = &quot;</span> <span class="hl opt">+</span> result<span class="hl opt">-&gt;</span>protocol<span class="hl opt">);</span>
+<span class="hl lin">325 </span>        <span class="hl kwd">log</span><span class="hl opt">(</span><span class="hl str">&quot;result-&gt;hostname = &quot;</span> <span class="hl opt">+</span> result<span class="hl opt">-&gt;</span>hostname<span class="hl opt">);</span>
+<span class="hl lin">326 </span>        <span class="hl kwd">log</span><span class="hl opt">(</span><span class="hl str">&quot;result-&gt;relative = &quot;</span> <span class="hl opt">+</span> result<span class="hl opt">-&gt;</span>relative<span class="hl opt">);</span>
+<span class="hl lin">327 </span>        <span class="hl kwd">log</span><span class="hl opt">(</span><span class="hl str">&quot;result-&gt;filename = &quot;</span> <span class="hl opt">+</span> result<span class="hl opt">-&gt;</span>filename<span class="hl opt">);</span>
+<span class="hl lin">328 </span><span class="hl ppc">#   endif</span>
+<span class="hl lin">329 </span>    <span class="hl kwa">return</span> <span class="hl num">0</span><span class="hl opt">;</span>
+<span class="hl lin">330 </span><span class="hl opt">}</span>
+<span class="hl lin">331 </span>
+<span class="hl lin">332 </span><span class="hl kwb">void</span> <span class="hl kwd">log</span><span class="hl opt">(</span>std<span class="hl opt">::</span>string  message<span class="hl opt">) {</span>
+<span class="hl lin">333 </span><span class="hl ppc">#   ifdef DEBUG</span>
+<span class="hl lin">334 </span>        <span class="hl kwd">log</span><span class="hl opt">(</span>stdout<span class="hl opt">,</span> message<span class="hl opt">);</span>
+<span class="hl lin">335 </span><span class="hl ppc">#   endif</span>
+<span class="hl lin">336 </span><span class="hl opt">}</span>
+<span class="hl lin">337 </span><span class="hl kwb">void</span> <span class="hl kwd">log</span><span class="hl opt">(</span> <span class="hl kwb">FILE</span> <span class="hl opt">*</span> fd<span class="hl opt">,</span> std<span class="hl opt">::</span>string message<span class="hl opt">) {</span>
+<span class="hl lin">338 </span>    <span class="hl kwd">fprintf</span><span class="hl opt">(</span>fd<span class="hl opt">,</span> <span class="hl str">&quot;%s</span><span class="hl esc">\n</span><span class="hl str">&quot;</span><span class="hl opt">,</span> message<span class="hl opt">.</span><span class="hl kwd">c_str</span><span class="hl opt">());</span>
+<span class="hl lin">339 </span><span class="hl opt">}</span>
+</pre>
+</body>
+</html>
+<!--HTML generated by highlight 3.18, http://www.andre-simon.de/-->
