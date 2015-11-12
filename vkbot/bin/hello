@@ -1,1 +1,1 @@
-{"response":[{"uid":53749245,"first_name":"Алексей","last_name":"Максимов"}]}
+{"error":{"error_code":100,"error_msg":"One of the parameters specified was missing or invalid: user_id not integer","request_params":[{"key":"oauth","value":"1"},{"key":"method","value":"groups.get"},{"key":"user_id","value":"apcel"},{"key":"extended","value":"1"},{"key":"filter","value":""},{"key":"fields","value":""},{"key":"offset","value":"0"},{"key":"count","value":"1000"}]}}

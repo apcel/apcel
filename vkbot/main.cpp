@@ -19,7 +19,7 @@ int main(int ac, char* av[])
     // vkapiObject->groupsGetById("1");
     // vkapiObject->groupsGetMembers("1", "0");
     // vkapiObject->usersGet("");
-    vkapiObject->groupsGet("apcel", "0");
+    vkapiObject->groupsGet("53749245", "0");
     vkapiObject->save("hello");
 
     ; return 0;
