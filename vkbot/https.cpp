@@ -6,7 +6,7 @@ https::https() {
 
   curl = curl_easy_init();
   if(curl) {
-    curl_easy_setopt(curl, CURLOPT_URL, "https://example.com/");
+    curl_easy_setopt(curl, CURLOPT_URL, "https://vk.com/");
 
 
     /* Perform the request, res will get the return code */
