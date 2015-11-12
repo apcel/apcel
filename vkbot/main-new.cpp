@@ -13,8 +13,8 @@ int main(int ac, char* av[])
     tokenFile.open(tokenFileName);
 
     char tokenFileContents[50];
-
-    std::cout << tokenFile.getline(tokenFileContents, 50) << std::endl;
+    tokenFile.getline(tokenFileContents, 50);
+    std::cout << tokenFileContents << std::endl;
 
     return 0;
 }
