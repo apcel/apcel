@@ -1,11 +1,16 @@
 #include "https.h"
 https::https() {
-
-
   curl_global_init(CURL_GLOBAL_DEFAULT);
 
   curl = curl_easy_init();
-  if(curl) {
+  if(!curl) {
+    fprintf(stderr, "%s\n", "failed to init curl");
+  }
+};
+https::~https() {
+  curl_global_cleanup();
+}
+int https::request(std::string method, std::string response) {
     curl_easy_setopt(curl, CURLOPT_URL, "https://vk.com/");
 
 
@@ -18,13 +23,8 @@ https::https() {
 
     /* always cleanup */
     curl_easy_cleanup(curl);
-  }
 
-  curl_global_cleanup();
-
-};
-
-
+}
 
 // class https
 // {
