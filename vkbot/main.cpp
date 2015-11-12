@@ -16,7 +16,8 @@ int main(int ac, char* av[])
     // httpsObject->request("https://api.vk.com/method/" + method + "?" + parameters + "&access_token=" + token);
 
     vkapi * vkapiObject = new vkapi(httpsObject);
-    vkapiObject->groupsGetById("1");
+    // vkapiObject->groupsGetById("1");
+    vkapiObject->groupsGetMembers("1", "0");
     vkapiObject->save("hello");
 
     ; return 0;

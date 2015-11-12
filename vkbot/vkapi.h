@@ -12,6 +12,7 @@ public:
     void groupsGetById(vk);
     void groupsGetById(vk, vk);
     void groupsGetMembers(vk, vk, vk, vk, vk, vk);
+    void groupsGetMembers(vk, vk);
 
 
 
