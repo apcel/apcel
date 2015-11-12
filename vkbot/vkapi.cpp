@@ -33,7 +33,7 @@ void vkapi::save() {
     save("example.json");
 }
 void vkapi::save(std::string filename) {
-    fprintf(stderr, "%s\n", "save" );
+    // fprintf(stderr, "%s\n", "save" );
     FILE * fp;
     fp = fopen( filename.c_str(), "w");
     if ( !fp )

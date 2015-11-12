@@ -3,7 +3,7 @@
 #include <iostream>
 #include "vkapi.h"
 void test(vkapi * vkapiObject) {
-    fprintf(stderr, "%s\n", "TEST");
+    // fprintf(stderr, "%s\n", "TEST");
     // char * lastResponse = 
     int i = 0;
     std::string response = vkapiObject->lastresponse;
