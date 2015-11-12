@@ -51,7 +51,7 @@ void vkapi::groupsGetMembers(vk group_id, vk sort, vk offset, vk count, vk field
 }
 
 void vkapi::usersGet(vk user_ids) {
-    usersGet(user_ids, "", "");
+    usersGet(user_ids, "", "nom");
 }
 void vkapi::usersGet(vk user_ids, vk fields, vk name_case) {
     request("users.get", "user_ids="+user_ids+"&fields="+fields+"&name_case="+name_case);
