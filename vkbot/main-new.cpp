@@ -12,7 +12,9 @@ int main(int ac, char* av[])
     std::ifstream tokenFile;
     tokenFile.open(tokenFileName);
 
-    std::cout << tokenFile.getline(NULL, 1) << std::endl;
+    char tokenFileContents[50];
+
+    std::cout << tokenFile.getline(tokenFileContents, 50) << std::endl;
 
     return 0;
 }
