@@ -16,7 +16,7 @@ int main(int ac, char* av[])
         configFileName,
         gkff,
         &error);
-    std::cout<<my_key_file;
+    std::cout << g_key_file_to_data (my_key_file, NULL, NULL);
 
 
 
