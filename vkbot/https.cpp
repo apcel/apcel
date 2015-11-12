@@ -50,5 +50,5 @@ char * https::getResponse() {
         return "1";
     fprintf(fp, output.buffer );
     fclose( fp );
-    return output.buffer;
+    // return output.buffer;
 }
