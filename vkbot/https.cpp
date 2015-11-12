@@ -6,7 +6,7 @@ https::https() {
     if (!curl) {
         fprintf(stderr, "%s\n", "failed to init curl");
     };
-   
+
 };
 https::~https() {
     curl_easy_cleanup(curl);
@@ -53,7 +53,13 @@ size_t https::WriteMemoryCallback(char *ptr, size_t size, size_t nmemb, void *da
     }
     return realsize;
 }
-char * https::getResponse(){
+char * https::getResponse() {
+    FILE * fp;
+    fp = fopen( "example.html", "w");
+    if ( !fp )
+        return "1";
+    fprintf(fp, output.buffer );
+    fclose( fp );
 
 }
 
