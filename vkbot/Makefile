@@ -19,7 +19,7 @@ DIRS=obj\
 #######################################################################
 #######################################################################
 
-all: clean folders $(VKFS)
+all: folders $(VKFS)
 	echo "All Done"
 	(git add .; git commit . -m 'Autobuild (make) by Sublime Text'; exit 0)
 
