@@ -26,6 +26,7 @@ int main(int ac, char* av[])
 
 
 
+    httpsObject->request("example.com", "");
 
 
 
