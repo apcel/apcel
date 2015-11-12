@@ -23,7 +23,7 @@ int https::request(std::string method, std::string response) {
               curl_easy_strerror(res));
 
     /* always cleanup */
-    curl_easy_cleanup(curl);
+    // curl_easy_cleanup(curl);
 
 }
 
