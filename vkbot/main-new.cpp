@@ -22,7 +22,7 @@ int main(int ac, char* av[])
 //////////////////////////////////////////////////////////////////
     https * httpsObject = new https;
     httpsObject->request("example.com", "");
-    httpsObject->request("vk.com", "");
+    // httpsObject->request("vk.com", "");
 
 
 
