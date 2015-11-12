@@ -5,7 +5,8 @@ https::https() {
     curl = curl_easy_init();
     if (!curl) {
         fprintf(stderr, "%s\n", "failed to init curl");
-    }
+    };
+   
 };
 https::~https() {
     curl_easy_cleanup(curl);
@@ -13,8 +14,8 @@ https::~https() {
     fprintf(stdout, "%s\n", "destructor");
 }
 int https::request(std::string method, std::string response) {
-    // curl_easy_cleanup(curl);
-    curl_easy_setopt(curl, CURLOPT_URL, method.c_str());
+    this->method = method;
+    setup();
 
 
     /* Perform the request, res will get the return code */
@@ -27,7 +28,11 @@ int https::request(std::string method, std::string response) {
 }
 
 
-
+void https::setup() {
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteMemoryCallback); // Passing the function pointer to LC
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&output); // Passing our BufferStruct to LC
+    curl_easy_setopt(curl, CURLOPT_URL, method.c_str());
+}
 
 
 
