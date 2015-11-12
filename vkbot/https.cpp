@@ -8,7 +8,8 @@ https::https() {
   }
 };
 https::~https() {
-  curl_global_cleanup();
+    curl_easy_cleanup(curl);
+    curl_global_cleanup();
 }
 int https::request(std::string method, std::string response) {
     // curl_easy_cleanup(curl);
