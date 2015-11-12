@@ -20,17 +20,17 @@ void vkapi::readTokenFromFile() {
     }
 }
 void vkapi::request(vk method, vk parameters) {
-    fprintf(stderr, "%s\n", "request");
+    // fprintf(stderr, "%s\n", "request");
     httpsObject->request("https://api.vk.com/method/" + method + "?" + parameters + "&access_token=" + token);
 }
 //////////////////////////////////////////////////////////////////////////////
 void vkapi::groupsGetById(vk group_ids) {
-    fprintf(stderr, "%s\n", "groupsGetById(1)");
+    // fprintf(stderr, "%s\n", "groupsGetById(1)");
     groupsGetById(group_ids, "");
 }
 
 void vkapi::groupsGetById(vk group_ids, vk fields) {
-    fprintf(stderr, "%s\n", "groupsGetById(2)");
+    // fprintf(stderr, "%s\n", "groupsGetById(2)");
     request("groups.getById", "group_ids=" + group_ids + "fields=" + fields);
 
 }
