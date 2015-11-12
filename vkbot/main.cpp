@@ -20,6 +20,7 @@ int main(int ac, char* av[])
     // vkapiObject->groupsGet(av[1], "0");
     // vkapiObject->groupsGet("53749245", "0");
     // vkapiObject->save("t/"+std::string(av[1]));
+fprintf(stderr, "%s\n", "Before test");
     test(vkapiObject)
     ; return 0;
 }

@@ -1,12 +1,13 @@
 // #include <json.h>
 #include <regex>
+#include <iostream>
 #include "vkapi.h"
 void test(vkapi * vkapiObject) {
     fprintf(stderr, "%s\n", "TEST");
     char * lastResponse = vkapiObject->lastresponse;
     int i = 0;
-    srting response = lastResponse;
-    std::srting s_response("{\"response\":");
+    std::string response = lastResponse;
+    std::string s_response("{\"response\":");
     std::regex r_response(s_response);
     std::cout<<response<<std::endl;
     // while (lastResponse != '\0') {
