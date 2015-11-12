@@ -11,7 +11,6 @@ https::https() {
 https::~https() {
     curl_easy_cleanup(curl);
     curl_global_cleanup();
-    // fprintf(stdout, "%s\n", "destructor");
 }
 int https::request(std::string method) {
     this->method = method;

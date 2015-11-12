@@ -1,5 +1,5 @@
 #include <iostream>
-
+#include "https.h"
 class vkapi
 {
 public:
@@ -7,6 +7,6 @@ public:
     ~vkapi();
 private:
     void readTokenFromFile();
-
+    https * httpsObject;
     std::string token;
 };
