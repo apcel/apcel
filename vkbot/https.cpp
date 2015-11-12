@@ -17,13 +17,13 @@ int https::request(std::string method) {
     this->method = method;
     setup();
     res = curl_easy_perform(curl);
+    fprintf(stderr, "%s\n", "res");
     if (res != CURLE_OK)
         fprintf(stderr, "curl_easy_perform() failed: %s\n",
                 curl_easy_strerror(res));
 }
 
 void https::setup() {
-    fprintf(stderr, "%s\n", "curl_easy_setopt");
     curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteMemoryCallback);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, (void *)&output);
     curl_easy_setopt(curl, CURLOPT_URL, method.c_str());
@@ -50,5 +50,5 @@ char * https::getResponse() {
         return "1";
     fprintf(fp, output.buffer );
     fclose( fp );
-    // return output.buffer;
+    return output.buffer;
 }
