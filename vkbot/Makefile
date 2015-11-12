@@ -4,7 +4,7 @@ CXXFLAGS= -g -O2 -std=c++11
 
 VKFS=bin/main
 
-BOOST=`pkg-config ./boost.pc --cflags --libs`
+#BOOST=`pkg-config ./boost.pc --cflags --libs`
 #GLIB=`pkg-config glib-2.0 --cflags --libs`
 CURL=`pkg-config libcurl --cflags --libs`
 
