@@ -8,7 +8,7 @@ public:
     vkapi();
     vkapi(https *);
     ~vkapi();
-    char * lastresponse;
+    std::string lastresponse;
 
     void execute(vk);
 
