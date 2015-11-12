@@ -8,13 +8,19 @@ public:
     vkapi();
     vkapi(https *);
     ~vkapi();
+    char * lastresponse;
+
     void execute(vk);
+
     void groupsGetById(vk);
     void groupsGetById(vk, vk);
+
     void groupsGetMembers(vk, vk, vk, vk, vk, vk);
     void groupsGetMembers(vk, vk);
+
     void usersGet(vk, vk, vk);
     void usersGet(vk);
+
     void groupsGet(vk, vk, vk, vk, vk, vk);
     void groupsGet(vk, vk);
 
@@ -31,6 +37,5 @@ private:
     void readTokenFromFile();
     https * httpsObject;
     std::string token;
-    char * lastresponse;
 
 };

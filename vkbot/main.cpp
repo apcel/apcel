@@ -6,7 +6,7 @@
 #include <fstream>
 #include "https.h"
 #include "vkapi.h"
-// #include "json-c_test"
+#include "json-c_test"
 
 int main(int ac, char* av[])
 {
@@ -15,12 +15,12 @@ int main(int ac, char* av[])
     // httpsObject->request("https://api.vk.com/method/" + method + "?" + parameters + "&access_token=" + token);
     // test();
     vkapi * vkapiObject = new vkapi(httpsObject);
-    // vkapiObject->groupsGetById("1");
+    vkapiObject->groupsGetById("1");
     // vkapiObject->groupsGetMembers(av[1], av[2]);
-    vkapiObject->groupsGet(av[1], "0");
+    // vkapiObject->groupsGet(av[1], "0");
     // vkapiObject->groupsGet("53749245", "0");
-    vkapiObject->save("t/"+std::string(av[1]));
-
+    // vkapiObject->save("t/"+std::string(av[1]));
+    test(vkapiObject)
     ; return 0;
 }
 
