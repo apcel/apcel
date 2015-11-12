@@ -11,7 +11,7 @@ https::~https() {
   curl_global_cleanup();
 }
 int https::request(std::string method, std::string response) {
-    curl_easy_setopt(curl, CURLOPT_URL, "https://vk.com/");
+    curl_easy_setopt(curl, CURLOPT_URL, method.c_str());
 
 
     /* Perform the request, res will get the return code */
