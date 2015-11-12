@@ -14,7 +14,7 @@ int main(int ac, char* av[])
 
 
     vkapi * vkapiObject = new vkapi;
-    vkapiObject->groupsGetById("1");
+    // vkapiObject->groupsGetById("1");
 
     ; return 0;
 }
