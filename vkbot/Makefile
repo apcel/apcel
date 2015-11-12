@@ -27,7 +27,7 @@ all: folders $(VKFS)
 $(VKFS): $(OBJS)
 	$(CXX) $(CXXFLAGS) -w $(OBJS) -o $(VKFS) $(LIBS)
 
-obj/main.o: main-new.cpp
+obj/main.o: main.cpp
 	$(CXX) $(CXXFLAGS) $(LIBS) -w -c $< -o $@
 # obj/rcfile.o: rcfile.c
 # 	$(CXX) $(CXXFLAGS) $(LIBS) -w -c $< -o $@
