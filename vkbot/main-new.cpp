@@ -21,7 +21,7 @@ int main(int ac, char* av[])
 
     gchar ** my_keys = g_key_file_get_keys(my_key_file, g_key_file_get_start_group (my_key_file), NULL, NULL);
 
-    fprintf(stdout, "%s\n", *my_keys);
+    fprintf(stdout, "%s\n", *(my_keys + 1));
 
 
     return 0;
