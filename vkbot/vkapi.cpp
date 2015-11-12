@@ -56,3 +56,10 @@ void vkapi::usersGet(vk user_ids) {
 void vkapi::usersGet(vk user_ids, vk fields, vk name_case) {
     request("users.get", "user_ids="+user_ids+"&fields="+fields+"&name_case="+name_case);
 }
+
+void vkapi::groupsGet(vk user_id, vk offset) {
+    groupsGet(user_id, "1", "", "", offset, std::to_string(1000));
+}
+void vkapi::groupsGet(vk user_id, vk extended, vk filter, vk fields, vk offset, vk count){
+    request("groups.get", "user_id="+user_id+"&extended="+extended+"&filter="+filter+"&fields="+fields+"&offset="+offset+"&count="+count);
+}

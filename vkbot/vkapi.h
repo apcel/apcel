@@ -15,7 +15,8 @@ public:
     void groupsGetMembers(vk, vk);
     void usersGet(vk, vk, vk);
     void usersGet(vk);
-
+    void groupsGet(vk, vk, vk, vk, vk, vk);
+    void groupsGet(vk, vk);
 
 
 
