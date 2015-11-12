@@ -1,6 +1,7 @@
 #pragma once
 #include "https.h"
 https::https() {
+    fprintf(stderr, "%s\n", "constructor" );
     curl_global_init(CURL_GLOBAL_DEFAULT);
 
     curl = curl_easy_init();
