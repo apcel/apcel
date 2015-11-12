@@ -18,7 +18,7 @@ int https::request(std::string method, std::string response) {
 
 
     /* Perform the request, res will get the return code */
-    // res = curl_easy_perform(curl);
+    res = curl_easy_perform(curl);
     /* Check for errors */
     if(res != CURLE_OK)
       fprintf(stderr, "curl_easy_perform() failed: %s\n",
