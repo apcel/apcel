@@ -20,6 +20,7 @@ public:
 
 
 private:
+    void request(vk, vk);
     void readTokenFromFile();
     https * httpsObject;
     std::string token;

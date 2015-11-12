@@ -19,10 +19,15 @@ void vkapi::readTokenFromFile(){
         fclose(fp);
     }
 }
+void vkapi::request(vk method, vk parameters) {
+    httpsObject->request("https://api.vk.com/method/" + method + "?" + parameters + "&access_token=" + token);
+}
 //////////////////////////////////////////////////////////////////////////////
 void vkapi::groupsGetById(vk group_ids) {
     groupsGetById(group_ids, "");
 }
 
 void vkapi::groupsGetById(vk group_ids, vk fields) {
+    request("groups.getById", "group_ids="+group_ids+"fields="+fields);
+
 }
