@@ -3,12 +3,13 @@
 #include "https.h"
 class vkapi
 {
+    typedef std::string vk;
 public:
     vkapi();
     ~vkapi();
 
-    void groupsGetById();
-
+    void groupsGetById(vk);
+    void groupsGetById(vk, vk);
 
 
 

@@ -20,7 +20,9 @@ void vkapi::readTokenFromFile(){
     }
 }
 //////////////////////////////////////////////////////////////////////////////
-void vkapi::groupsGetById() {
-
+void vkapi::groupsGetById(vk group_ids) {
+    groupsGetById(group_ids, "");
 }
 
+void vkapi::groupsGetById(vk group_ids, vk fields) {
+}
