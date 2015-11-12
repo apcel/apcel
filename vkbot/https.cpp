@@ -45,9 +45,9 @@ size_t https::WriteMemoryCallback(char *ptr, size_t size, size_t nmemb, void *da
     }
     return realsize;
 }
-char * https::getResponse() {
+char * https::getResponse(std::string filename) {
     FILE * fp;
-    fp = fopen( "example.json", "w");
+    fp = fopen( filename.c_str(), "w");
     if ( !fp )
         return "1";
     fprintf(fp, output.buffer );

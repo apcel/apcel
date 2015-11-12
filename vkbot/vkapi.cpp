@@ -28,6 +28,16 @@ void vkapi::request(vk method, vk parameters) {
     httpsObject->request("https://api.vk.com/method/" + method + "?" + parameters + "&access_token=" + token);
 }
 //////////////////////////////////////////////////////////////////////////////
+void vkapi::save() {
+    save("example.json");
+}
+
+void vkapi::save(std::string filename) {
+    
+}
+
+
+
 void vkapi::groupsGetById(vk group_ids) {
     // fprintf(stderr, "%s\n", "groupsGetById(1)");
     groupsGetById(group_ids, "");

@@ -19,7 +19,8 @@ public:
 
 
 
-
+    void save();
+    void save(std::string);
 private:
     void setup(https *);
     void request(vk, vk);
