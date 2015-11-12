@@ -15,8 +15,8 @@ int main(int ac, char* av[])
     std::string method, parameters, token;
     httpsObject->request("https://api.vk.com/method/" + method + "?" + parameters + "&access_token=" + token);
     
-    // vkapi * vkapiObject = new vkapi;
-    // vkapiObject->groupsGetById("1");
+    vkapi * vkapiObject = new vkapi;
+    vkapiObject->groupsGetById("1");
 
     ; return 0;
 }
