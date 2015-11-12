@@ -19,3 +19,8 @@ void vkapi::readTokenFromFile(){
         fclose(fp);
     }
 }
+//////////////////////////////////////////////////////////////////////////////
+void vkapi::groupsGetById() {
+
+}
+

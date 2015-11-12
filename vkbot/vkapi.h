@@ -7,10 +7,8 @@ public:
     vkapi();
     ~vkapi();
 
-    struct groups
-    {
-        getById();
-    };
+    void groupsGetById();
+
 
 
 
