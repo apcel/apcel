@@ -6,8 +6,24 @@ class vkapi
 public:
     vkapi();
     ~vkapi();
+
+    struct groups
+    {
+        getById();
+    };
+
+
+
+
+
+
+
+
+
 private:
     void readTokenFromFile();
     https * httpsObject;
     std::string token;
+
+
 };
