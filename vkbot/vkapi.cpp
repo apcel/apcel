@@ -53,5 +53,5 @@ void vkapi::groupsGetMembers(vk group_id, vk offset) {
 }
 
 void vkapi::groupsGetMembers(vk group_id, vk sort, vk offset, vk count, vk fields, vk filter) {
-    request("groups.getMembers.xml", "group_id=" + group_id + "&sort=" + sort + "&offset=" + offset + "&count=" + count + "&fields=" + fields + "&filter=" + filter);
+    request("groups.getMembers", "group_id=" + group_id + "&sort=" + sort + "&offset=" + offset + "&count=" + count + "&fields=" + fields + "&filter=" + filter);
 }
