@@ -1,6 +1,7 @@
 #include "vkapi.h"
 vkapi::vkapi(){
     readTokenFromFile();
+    fprintf(stdout, "%s\n", token.c_str());
 }
 void vkapi::readTokenFromFile(){
 
