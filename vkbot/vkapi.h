@@ -13,7 +13,8 @@ public:
     void groupsGetById(vk, vk);
     void groupsGetMembers(vk, vk, vk, vk, vk, vk);
     void groupsGetMembers(vk, vk);
-
+    void usersGet(vk, vk, vk);
+    void usersGet(vk);
 
 
 

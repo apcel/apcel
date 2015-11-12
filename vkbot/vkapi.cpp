@@ -34,16 +34,11 @@ void vkapi::save() {
 void vkapi::save(std::string filename) {
     httpsObject->getResponse(filename);
 }
-
-
-
+//////////////////////////////////////////////////////////////////////////////
 void vkapi::groupsGetById(vk group_ids) {
-    // fprintf(stderr, "%s\n", "groupsGetById(1)");
     groupsGetById(group_ids, "");
 }
-
 void vkapi::groupsGetById(vk group_ids, vk fields) {
-    // fprintf(stderr, "%s\n", "groupsGetById(2)");
     request("groups.getById", "group_ids=" + group_ids + "&fields=" + fields);
 
 }
@@ -51,7 +46,13 @@ void vkapi::groupsGetById(vk group_ids, vk fields) {
 void vkapi::groupsGetMembers(vk group_id, vk offset) {
     groupsGetMembers(group_id, "", offset, std::to_string(1000), "", "");
 }
-
 void vkapi::groupsGetMembers(vk group_id, vk sort, vk offset, vk count, vk fields, vk filter) {
     request("groups.getMembers", "group_id=" + group_id + "&sort=" + sort + "&offset=" + offset + "&count=" + count + "&fields=" + fields + "&filter=" + filter);
+}
+
+void vkapi::usersGet(vk user_ids) {
+    usersGet(user_ids, "", "");
+}
+void vkapi::usersGet(vk user_ids, vk fields, vk name_case) {
+
 }
