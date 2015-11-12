@@ -33,7 +33,7 @@ void vkapi::save() {
 }
 
 void vkapi::save(std::string filename) {
-    
+    httpsObject->getResponse(filename);
 }
 
 
