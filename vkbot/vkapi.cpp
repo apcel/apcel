@@ -31,7 +31,6 @@ void vkapi::request(vk method, vk parameters) {
 void vkapi::save() {
     save("example.json");
 }
-
 void vkapi::save(std::string filename) {
     httpsObject->getResponse(filename);
 }
@@ -47,4 +46,8 @@ void vkapi::groupsGetById(vk group_ids, vk fields) {
     // fprintf(stderr, "%s\n", "groupsGetById(2)");
     request("groups.getById", "group_ids=" + group_ids + "&fields=" + fields);
 
+}
+
+void vkapi::groupsGetMembers(vk group_id, vk sort, vk offset, vk count, vk fields, vk filter) {
+    
 }
