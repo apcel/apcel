@@ -12,6 +12,7 @@ LIBS=$(BOOST)\
 	$(CURL)
 
 OBJS=obj/main.o\
+	obj/https.o
 	#obj/rcfile.o
 DIRS=obj\
 	bin
@@ -27,8 +28,12 @@ $(VKFS): $(OBJS)
 
 obj/main.o: main-new.cpp
 	$(CXX) $(CXXFLAGS) $(LIBS) -w -c $< -o $@
-obj/rcfile.o: rcfile.c
+# obj/rcfile.o: rcfile.c
+# 	$(CXX) $(CXXFLAGS) $(LIBS) -w -c $< -o $@
+
+obj/https.o: https.cpp
 	$(CXX) $(CXXFLAGS) $(LIBS) -w -c $< -o $@
+
 #######################################################################
 folders: $(DIRS)
 $(DIRS):

@@ -1,5 +1,6 @@
 #include <netdb.h>
 #include <sys/socket.h>
+#include <iostream>
 class https
 {
 public:
