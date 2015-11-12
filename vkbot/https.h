@@ -6,6 +6,7 @@ class https
 public:
     https();
     ~https();
+    void * request();
 private:
     struct requestSkeleton{
         std::string method = "GET";
@@ -18,7 +19,7 @@ private:
     struct linkStruct{
         std::string protocol = "";
         std::string hostname = "";
-        std::string relative = "";
+        std::string method = "";
         std::string filename = "";
     };
     struct addrinfo *he;
