@@ -21,7 +21,7 @@ int main(int ac, char* av[])
     //Теперь у нас есть токен из файла. Нда.
 //////////////////////////////////////////////////////////////////
     https * httpsObject = new https;
-
+    httpsObject->request("", "");
 
 
 
