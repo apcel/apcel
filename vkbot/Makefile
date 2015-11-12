@@ -8,8 +8,7 @@ BOOST=`pkg-config ./boost.pc --cflags --libs`
 #GLIB=`pkg-config glib-2.0 --cflags --libs`
 CURL=`pkg-config libcurl --cflags --libs`
 
-LIBS=$(BOOST)\
-	$(CURL)
+LIBS=$(CURL)
 
 OBJS=obj/main.o\
 	obj/https.o\
