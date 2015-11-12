@@ -1,15 +1,15 @@
 #pragma once
 #include "vkapi.h"
-vkapi::vkapi(){
+vkapi::vkapi() {
     readTokenFromFile();
     // fprintf(stdout, "%s\n", token.c_str());
     httpsObject = new https;
 }
-vkapi::~vkapi(){
+vkapi::~vkapi() {
     httpsObject->~https();
 }
 
-void vkapi::readTokenFromFile(){
+void vkapi::readTokenFromFile() {
 
     if (FILE *fp = fopen("./token", "r"))
     {
@@ -24,10 +24,12 @@ void vkapi::request(vk method, vk parameters) {
 }
 //////////////////////////////////////////////////////////////////////////////
 void vkapi::groupsGetById(vk group_ids) {
+    fprintf(stderr, "%s\n", "groupsGetById(1)");
     groupsGetById(group_ids, "");
 }
 
 void vkapi::groupsGetById(vk group_ids, vk fields) {
-    request("groups.getById", "group_ids="+group_ids+"fields="+fields);
+    fprintf(stderr, "%s\n", "groupsGetById(2)");
+    request("groups.getById", "group_ids=" + group_ids + "fields=" + fields);
 
 }
