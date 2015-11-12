@@ -1,0 +1,1 @@
+{"error":{"error_code":100,"error_msg":"One of the parameters specified was missing or invalid: group_ids is undefined","request_params":[{"key":"oauth","value":"1"},{"key":"method","value":"groups.getById"},{"key":"group_ids","value":"1fields="}]}}

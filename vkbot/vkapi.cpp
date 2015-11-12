@@ -45,6 +45,6 @@ void vkapi::groupsGetById(vk group_ids) {
 
 void vkapi::groupsGetById(vk group_ids, vk fields) {
     // fprintf(stderr, "%s\n", "groupsGetById(2)");
-    request("groups.getById", "group_ids=" + group_ids + "fields=" + fields);
+    request("groups.getById", "group_ids=" + group_ids + "&fields=" + fields);
 
 }
