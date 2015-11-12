@@ -11,11 +11,7 @@ vkapi::~vkapi() {
 }
 void vkapi::setup(https * httpsObjectReceived) {
     readTokenFromFile();
-    // fprintf(stdout, "%s\n", token.c_str());
     this->httpsObject = httpsObjectReceived;
-
-    std::string method, parameters, token;
-    // httpsObject->request("https://api.vk.com/method/" + method + "?" + parameters + "&access_token=" + token);
 }
 void vkapi::readTokenFromFile() {
 
