@@ -1,5 +1,5 @@
 // #include <json.h>
-#include <regex>
+// #include <regex>
 #include <iostream>
 #include "vkapi.h"
 void test(vkapi * vkapiObject) {
@@ -8,7 +8,7 @@ void test(vkapi * vkapiObject) {
     int i = 0;
     std::string response = lastResponse;
     std::string s_response("{\"response\":");
-    std::regex r_response(s_response);
+    // std::regex r_response(s_response);
     std::cout<<response<<std::endl;
     // while (lastResponse != '\0') {
 
