@@ -26,6 +26,6 @@ int main(int ac, char* av[])
     // httpsObject->getResponse();
     vkapi * vkapiObject = new vkapi;
 
-    httpsObject->~https();
+    
     ; return 0;
 }

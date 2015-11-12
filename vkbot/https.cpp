@@ -1,3 +1,4 @@
+#pragma once
 #include "https.h"
 https::https() {
     curl_global_init(CURL_GLOBAL_DEFAULT);

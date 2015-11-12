@@ -1,3 +1,4 @@
+#pragma once
 #include "vkapi.h"
 vkapi::vkapi(){
     readTokenFromFile();
@@ -5,7 +6,7 @@ vkapi::vkapi(){
     httpsObject = new https;
 }
 vkapi::~vkapi(){
-
+    httpsObject->~https();
 }
 
 void vkapi::readTokenFromFile(){
