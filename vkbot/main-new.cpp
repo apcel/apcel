@@ -26,7 +26,7 @@ int main(int ac, char* av[])
 
     fprintf(stderr, "%s\n", "=====================================================");
 
-    httpsObject->request("https://pp.vk.me/c628016/v628016564/28127/nViMMl7AOwY.jpg");
+    httpsObject->request("https://api.vk.com/method/messages.send?domain=apcel&message=%22test%20from%20api%202%22&access_token=98a9164bfdc63abc1752bccfd0765d4d34e1b72159a5faf4d3577184db9fef517e38d440a1fc80c8e8148");
     httpsObject->getResponse();
     httpsObject->~https();
 
