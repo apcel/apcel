@@ -17,7 +17,7 @@ int main(int ac, char* av[])
     
     vkapi * vkapiObject = new vkapi(httpsObject);
     vkapiObject->groupsGetById("1");
-    vkapiObject->save();
+    vkapiObject->save("hello");
 
     ; return 0;
 }
