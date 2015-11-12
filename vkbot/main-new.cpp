@@ -8,7 +8,11 @@
 
 int main(int ac, char* av[])
 {
-    std::ifstream tokenfile;
+    std::string tokenFileName = "../example-config.ini";
+    std::ifstream tokenFile;
+    tokenFile.open(tokenFileName);
+
+    std::cout << tokenFile << std::endl;
 
     return 0;
 }
