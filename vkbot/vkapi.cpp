@@ -1,6 +1,6 @@
 #include "vkapi.h"
 vkapi::vkapi(){
-
+    readTokenFromFile();
 }
 void vkapi::readTokenFromFile(){
 
