@@ -24,11 +24,11 @@ int main(int ac, char* av[])
     httpsObject->request("example.com", "");
     // httpsObject->request("vk.com", "");
 
-fprintf(stderr, "%s\n", "=====================================================");
+    fprintf(stderr, "%s\n", "=====================================================");
 
     httpsObject->request("example.com", "");
     httpsObject->~https();
 
 
-    ;return 0;
+    ; return 0;
 }
