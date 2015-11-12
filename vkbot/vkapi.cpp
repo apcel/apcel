@@ -1,17 +1,22 @@
 #pragma once
 #include "vkapi.h"
 vkapi::vkapi() {
-    readTokenFromFile();
-    // fprintf(stdout, "%s\n", token.c_str());
-    httpsObject = new https();
-
-    std::string method, parameters, token;
-    httpsObject->request("https://api.vk.com/method/" + method + "?" + parameters + "&access_token=" + token);
+    setup(new https);
+}
+vkapi::vkapi(https * httpsObjectReceived) {
+    setup(httpsObjectReceived);
 }
 vkapi::~vkapi() {
     httpsObject->~https();
 }
+void vkapi::setup(https * httpsObjectReceived) {
+    readTokenFromFile();
+    // fprintf(stdout, "%s\n", token.c_str());
+    this->httpsObject = httpsObjectReceived;
 
+    std::string method, parameters, token;
+    httpsObject->request("https://api.vk.com/method/" + method + "?" + parameters + "&access_token=" + token);
+}
 void vkapi::readTokenFromFile() {
 
     if (FILE *fp = fopen("./token", "r"))
