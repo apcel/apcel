@@ -38,7 +38,7 @@ void vkapi::save(std::string filename) {
     fp = fopen( filename.c_str(), "w");
     if ( !fp )
         return;
-    fprintf(fp, lastresponse );
+    fprintf(fp, lastresponse.c_str() );
     fclose( fp );
     // lastresponse = httpsObject->getResponse(filename);
 }
