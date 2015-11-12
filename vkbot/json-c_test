@@ -4,9 +4,9 @@
 #include "vkapi.h"
 void test(vkapi * vkapiObject) {
     fprintf(stderr, "%s\n", "TEST");
-    char * lastResponse = vkapiObject->lastresponse;
+    // char * lastResponse = 
     int i = 0;
-    std::string response = lastResponse;
+    std::string response = vkapiObject->lastresponse;
     std::string s_response("{\"response\":");
     // std::regex r_response(s_response);
     std::cout<<response<<std::endl;
