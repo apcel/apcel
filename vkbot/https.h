@@ -6,4 +6,9 @@ public:
     https();
     ~https();
 private:
+    struct addrinfo *he;
+    struct requestSkeleton;
+    struct linkStruct;
+    int socketFd;
+    int tempInt;
 };
