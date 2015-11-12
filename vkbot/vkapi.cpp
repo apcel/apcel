@@ -20,6 +20,7 @@ void vkapi::readTokenFromFile() {
     }
 }
 void vkapi::request(vk method, vk parameters) {
+    fprintf(stderr, "%s\n", "request");
     httpsObject->request("https://api.vk.com/method/" + method + "?" + parameters + "&access_token=" + token);
 }
 //////////////////////////////////////////////////////////////////////////////
