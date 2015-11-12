@@ -6,7 +6,7 @@ class https
 public:
     https();
     ~https();
-    void * request();
+    int request(std::string, std::string);
 private:
     struct requestSkeleton{
         std::string method = "GET";
