@@ -11,6 +11,7 @@ https::~https() {
   curl_global_cleanup();
 }
 int https::request(std::string method, std::string response) {
+    
     curl_easy_setopt(curl, CURLOPT_URL, method.c_str());
 
 
