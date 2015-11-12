@@ -8,12 +8,12 @@
 
 int main(int ac, char* av[])
 {
-    std::string tokenFileName = "../example-config.ini";
+    std::string tokenFileName = "./token";
     std::ifstream tokenFile;
     tokenFile.open(tokenFileName);
 
-    char tokenFileContents[50];
-    tokenFile.getline(tokenFileContents, 50);
+    char tokenFileContents[100];
+    tokenFile.getline(tokenFileContents, 100);
     std::cout << tokenFileContents << std::endl;
 
     return 0;
