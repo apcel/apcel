@@ -16,7 +16,7 @@ int main(int ac, char* av[])
 //////////////////////////////////////////////////////////////////
     //Теперь у нас есть токен из файла. Нда.
 //////////////////////////////////////////////////////////////////
-    https * httpsObject = new https;
+
     // httpsObject->request("example.com", "");
     // httpsObject->request("vk.com", "");
 
@@ -25,7 +25,7 @@ int main(int ac, char* av[])
     // httpsObject->request("https://api.vk.com/method/messages.send?domain=apcel&message=%22test%20from%20api%202%22&access_token=98a9164bfdc63abc1752bccfd0765d4d34e1b72159a5faf4d3577184db9fef517e38d440a1fc80c8e8148");
     // httpsObject->getResponse();
     vkapi * vkapiObject = new vkapi;
-
+    vkapiObject->groupsGetById("1");
     
     ; return 0;
 }
