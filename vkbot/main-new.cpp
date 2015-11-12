@@ -16,12 +16,12 @@ int main(int ac, char* av[])
         configFileName,
         gkff,
         &error);
-    std::cout << g_key_file_to_data (my_key_file, NULL, NULL) << std::endl;
+    //std::cout << g_key_file_to_data (my_key_file, NULL, NULL) << std::endl;
 
 
     gchar ** my_keys = g_key_file_get_keys(my_key_file, g_key_file_get_start_group (my_key_file), NULL, NULL);
 
-
+    std::cout << my_keys;
 
     return 0;
 }
