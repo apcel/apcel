@@ -12,11 +12,11 @@
 // #include <boost/asio/ssl.hpp>
 int main(int ac, char* av[])
 {
-    https * httpsObject = new https;
+    // https * httpsObject = new https;
     // std::string method, parameters, token;
     // httpsObject->request("https://api.vk.com/method/" + method + "?" + parameters + "&access_token=" + token);
     test();
-    vkapi * vkapiObject = new vkapi(httpsObject);
+    // vkapi * vkapiObject = new vkapi(httpsObject);
     // vkapiObject->groupsGetById("1");
     // vkapiObject->groupsGetMembers("1", "0");
     // vkapiObject->usersGet("");
