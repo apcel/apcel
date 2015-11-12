@@ -6,16 +6,14 @@
 #include <fstream>
 #include "https.h"
 #include "vkapi.h"
-#include "json-c_test"
-// #include <glib.h>
-// #include <boost/asio.hpp>
-// #include <boost/asio/ssl.hpp>
+// #include "json-c_test"
+
 int main(int ac, char* av[])
 {
     // https * httpsObject = new https;
     // std::string method, parameters, token;
     // httpsObject->request("https://api.vk.com/method/" + method + "?" + parameters + "&access_token=" + token);
-    test();
+    // test();
     // vkapi * vkapiObject = new vkapi(httpsObject);
     // vkapiObject->groupsGetById("1");
     // vkapiObject->groupsGetMembers("1", "0");
