@@ -24,7 +24,7 @@ public:
     void groupsGet(vk, vk, vk, vk, vk, vk);
     void groupsGet(vk, vk);
 
-
+    void messagesSend(vk, vk, vk, vk, vk, vk, vk, vk, vk, vk, vk, vk);
 
 
 

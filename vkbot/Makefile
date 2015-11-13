@@ -7,10 +7,10 @@ VKFS=bin/main
 #BOOST=`pkg-config ./boost.pc --cflags --libs`
 #GLIB=`pkg-config glib-2.0 --cflags --libs`
 CURL=`pkg-config libcurl --cflags --libs`
-JSON=`pkg-config json-c --cflags --libs`
+# JSON=`pkg-config json-c --cflags --libs`
 
-LIBS=$(CURL)\
-	$(JSON)
+LIBS=$(CURL)
+	# $(JSON)
 
 OBJS=obj/main.o\
 	obj/https.o\
