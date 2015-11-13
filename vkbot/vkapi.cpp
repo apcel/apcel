@@ -76,5 +76,5 @@ void vkapi::groupsGet(vk user_id, vk extended, vk filter, vk fields, vk offset, 
 }
 
 void vkapi::messagesSend(vk user_id, vk peer_id, vk domain, vk chat_id, vk user_ids, vk message, vk guid, vk lat, vk long_, vk attachment, vk forwarded_messages, vk sticker_id) {
-    request("messages.send", "domain=" + domain + "&message=" + message);
+    request("messages.send", "user_id=" + user_id + "&message=" + message);
 }
