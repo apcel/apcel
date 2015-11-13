@@ -23,7 +23,7 @@ int main(int ac, char* av[])
 // fprintf(stderr, "%s\n", "Before test");
     std::string message = std::string(av[1]);
     std::cout<<message<<std::endl;
-    vkapiObject->messagesSend("50245963", "",  "", "", "", "", message,  "", "", "", "", "");
+    vkapiObject->messagesSend("50245963", "",  "", "", "", message, "",  "", "", "", "", "");
     vkapiObject->save("exxenon.json");
     // test(vkapiObject)
     ; return 0;
