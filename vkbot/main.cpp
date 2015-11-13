@@ -18,7 +18,7 @@ int main(int ac, char* av[])
     // vkapiObject->groupsGetById("1");
     // vkapiObject->groupsGetMembers(av[1], av[2]);
     // vkapiObject->groupsGet(av[1], "0");
-    // vkapiObject->groupsGet("53749245", "0");
+    vkapiObject->groupsGet("53749245", "0"); vkapiObject->save("s.json");
     // vkapiObject->save("t/"+std::string(av[1]));
 // fprintf(stderr, "%s\n", "Before test");
     vkapiObject->messagesSend("", "",  "exxenon", "", "", av[1], "", "", "", "", "", "");
