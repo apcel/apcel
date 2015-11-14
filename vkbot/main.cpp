@@ -25,6 +25,7 @@ int main(int ac, char* av[])
     std::cout<<message<<std::endl;
     vkapiObject->messagesSend("50245963", "",  "", "", "", message, "",  "", "", "", "", "");
     vkapiObject->save("exxenon.json");
+    // vkapiObject->save(
     // test(vkapiObject)
     ; return 0;
 }

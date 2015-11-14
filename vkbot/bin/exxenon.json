@@ -1,1 +1,1 @@
-{"error":{"error_code":100,"error_msg":"One of the parameters specified was missing or invalid: message is empty or invalid","request_params":[{"key":"oauth","value":"1"},{"key":"method","value":"messages.send"},{"key":"user_id","value":"50245963"},{"key":"message","value":""}]}}
+{"response":735179}
