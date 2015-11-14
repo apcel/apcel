@@ -1,0 +1,1091 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"vk",
+				"vkapiObject"
+			],
+			[
+				"s",
+				"save"
+			],
+			[
+				"me",
+				"messagesSend"
+			],
+			[
+				"file",
+				"fileNum"
+			],
+			[
+				"fi",
+				"fileTo"
+			],
+			[
+				"fil",
+				"fileFrom"
+			],
+			[
+				"image",
+				"image-0001"
+			],
+			[
+				"p",
+				"path"
+			],
+			[
+				"tmp",
+				"tmpath"
+			],
+			[
+				"t",
+				"tscan_"
+			],
+			[
+				"mat",
+				"matrix"
+			],
+			[
+				"M",
+				"MatrixException"
+			],
+			[
+				"th",
+				"throw"
+			],
+			[
+				"get",
+				"getColCount"
+			],
+			[
+				"co",
+				"const"
+			],
+			[
+				"ma",
+				"matrix"
+			],
+			[
+				"si",
+				"size"
+			],
+			[
+				"st",
+				"std"
+			],
+			[
+				"pu",
+				"put"
+			],
+			[
+				"for",
+				"for	For Loop"
+			],
+			[
+				"_",
+				"_Type"
+			],
+			[
+				"in",
+				"int"
+			],
+			[
+				"matri",
+				"Matrix"
+			],
+			[
+				"g",
+				"getRowCount"
+			],
+			[
+				"ge",
+				"getColCount"
+			],
+			[
+				"__",
+				"__test_SaveFile"
+			],
+			[
+				"файл",
+				"файл"
+			],
+			[
+				"файла",
+				"файла"
+			],
+			[
+				"re",
+				"readFromKeyboard"
+			],
+			[
+				"read",
+				"readFromKeyboard"
+			],
+			[
+				"te",
+				"testElement"
+			],
+			[
+				"end",
+				"endl"
+			],
+			[
+				"ro",
+				"rowCount"
+			],
+			[
+				"col",
+				"col"
+			],
+			[
+				"tem",
+				"tempElement"
+			],
+			[
+				"std",
+				"stderr"
+			],
+			[
+				"de",
+				"debug_debug"
+			],
+			[
+				"De",
+				"DEBUG_FUCKN"
+			],
+			[
+				"f",
+				"fprintf	fprintf …"
+			],
+			[
+				"lo",
+				"log"
+			],
+			[
+				"ai",
+				"ai_flags"
+			],
+			[
+				"en",
+				"endif"
+			],
+			[
+				"li",
+				"linkNum"
+			],
+			[
+				"xm",
+				"xmax"
+			],
+			[
+				"func",
+				"function"
+			],
+			[
+				"cl",
+				"clear"
+			],
+			[
+				"row",
+				"rowFirst"
+			],
+			[
+				"rw",
+				"rowFirst"
+			],
+			[
+				"fo",
+				"for	For Loop"
+			],
+			[
+				"a",
+				"argc"
+			],
+			[
+				"igno",
+				"ignoreAllErrors"
+			],
+			[
+				"con",
+				"contentLength"
+			],
+			[
+				"conte",
+				"content-length"
+			],
+			[
+				"temp",
+				"temp"
+			],
+			[
+				"b",
+				"buffer"
+			],
+			[
+				"str",
+				"string"
+			],
+			[
+				"r",
+				"r_symbol"
+			],
+			[
+				"i",
+				"input"
+			],
+			[
+				"siz",
+				"sizeM"
+			],
+			[
+				"size",
+				"sizeN"
+			],
+			[
+				"D",
+				"DEBUG"
+			],
+			[
+				"if",
+				"ifdef"
+			],
+			[
+				"so",
+				"socketFd"
+			],
+			[
+				"se",
+				"server_reply"
+			],
+			[
+				"C",
+				"CONTENTLENGTH"
+			],
+			[
+				"rec",
+				"recvSocketFd"
+			],
+			[
+				"n",
+				"npos"
+			],
+			[
+				"ad",
+				"addr"
+			],
+			[
+				"ai_",
+				"ai_socktype"
+			],
+			[
+				"S",
+				"SOCK_DGRAM"
+			],
+			[
+				"sa",
+				"sa_data"
+			],
+			[
+				"req",
+				"requestSkeleton"
+			],
+			[
+				"op",
+				"opening"
+			],
+			[
+				"ht",
+				"httpVer"
+			],
+			[
+				"add",
+				"addrinfo"
+			],
+			[
+				"int",
+				"temporaryInteger"
+			],
+			[
+				"to",
+				"to_string"
+			],
+			[
+				"tempo",
+				"temporaryInteger"
+			],
+			[
+				"hos",
+				"hostname"
+			],
+			[
+				"be",
+				"begin"
+			],
+			[
+				"beg",
+				"begin"
+			],
+			[
+				"socke",
+				"socketFd"
+			],
+			[
+				"c",
+				"c_str"
+			],
+			[
+				"DE",
+				"DEBUG"
+			],
+			[
+				"ret",
+				"return"
+			],
+			[
+				"e",
+				"endOfHostPosition"
+			],
+			[
+				"geth",
+				"gethost"
+			],
+			[
+				"ar",
+				"argv"
+			],
+			[
+				"arg",
+				"argv"
+			],
+			[
+				"el",
+				"elN"
+			],
+			[
+				"k",
+				"key"
+			],
+			[
+				"sort",
+				"sortBubble"
+			],
+			[
+				"sor",
+				"sortCount"
+			],
+			[
+				"ns",
+				"nswap"
+			],
+			[
+				"sy",
+				"sys_clear"
+			],
+			[
+				"def",
+				"define"
+			],
+			[
+				"I",
+				"InputFileSize"
+			],
+			[
+				"In",
+				"InputFileName"
+			],
+			[
+				"cu",
+				"curmode"
+			],
+			[
+				"cur",
+				"curnum"
+			],
+			[
+				"Fi",
+				"FILE"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "main.cpp",
+			"settings":
+			{
+				"buffer_size": 1203,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/apcel/.config/sublime-text-3/Packages/ClangAutoComplete/ClangAutoComplete.sublime-settings",
+			"settings":
+			{
+				"buffer_size": 1237,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "vkapi.h",
+			"settings":
+			{
+				"buffer_size": 740,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "vkapi.cpp",
+			"settings":
+			{
+				"buffer_size": 2857,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+		[
+			[
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					""
+				],
+				[
+					"Packages/C++/C++ Single File.sublime-build",
+					"Run"
+				]
+			],
+			[
+				"Packages/C++/C++ Single File.sublime-build",
+				"Run"
+			]
+		],
+		[
+			[
+				[
+					"Packages/Makefile/Make.sublime-build",
+					""
+				],
+				[
+					"Packages/Makefile/Make.sublime-build",
+					"Clean"
+				]
+			],
+			[
+				"Packages/Makefile/Make.sublime-build",
+				""
+			]
+		]
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 131.0,
+		"last_filter": "install",
+		"selected_items":
+		[
+			[
+				"install",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: ",
+				"Package Control: Discover Packages"
+			],
+			[
+				"Package Control: ins",
+				"Package Control: Install Package"
+			],
+			[
+				"Package Control: insta",
+				"Package Control: Install Package"
+			],
+			[
+				"pack",
+				"Preferences: Browse Packages"
+			],
+			[
+				"insta",
+				"Package Control: Install Package"
+			],
+			[
+				"packa",
+				"Package Control: Install Package"
+			],
+			[
+				"menu",
+				"View: Toggle Menu"
+			],
+			[
+				"Package Control: in",
+				"Package Control: Install Package"
+			]
+		],
+		"width": 424.0
+	},
+	"console":
+	{
+		"height": 174.0,
+		"history":
+		[
+			"help",
+			"?",
+			"perltidy",
+			"import urllib.request,os,hashlib; h = 'eb2297e1a458f27d836c04bb0cbaf282' + 'd0e7a3098092775ccb37ca9d6b2e4b7d'; pf = 'Package Control.sublime-package'; ipp = sublime.installed_packages_path(); urllib.request.install_opener( urllib.request.build_opener( urllib.request.ProxyHandler()) ); by = urllib.request.urlopen( 'http://packagecontrol.io/' + pf.replace(' ', '%20')).read(); dh = hashlib.sha256(by).hexdigest(); print('Error validating download (got %s instead of %s), please try manual install' % (dh, h)) if dh != h else open(os.path.join( ipp, pf), 'wb' ).write(by) "
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/usr/share/doc/boost-1.57.0/html/libs/program_options/example/first.cpp",
+		"/home/apcel/git/apcel/vkbot/main-new.cpp",
+		"/usr/include/boost/program_options/errors.hpp",
+		"/home/apcel/.config/sublime-text-3/Packages/User/SublimeAStyleFormatter.sublime-settings",
+		"/home/apcel/.config/sublime-text-3/Packages/SublimeAStyleFormatter/SublimeAStyleFormatter.sublime-settings",
+		"/home/apcel/Pictures/scanned/rotate.bash",
+		"/home/apcel/Pictures/scanned/adf/rotate_main.sh",
+		"/home/apcel/Pictures/scanned/adf/yadsk.sh",
+		"/home/apcel/Pictures/scanned/adf/rotate.sh",
+		"/usr/share/applications/XRCed.desktop",
+		"/home/apcel/Pictures/scanned/adf/_scan.sh",
+		"/home/apcel/Pictures/scanned/adf/yadsk",
+		"/home/apcel/git/ivb-3-14/prog/2014/ivb-3-14/Хлебников.А.А/Лабораторная работа №8/Matrix/Matrix/matrix.h",
+		"/home/apcel/git/ivb-3-14/prog/2014/ivb-3-14/Хлебников.А.А/Лабораторная работа №8/Matrix/Matrix/main.cpp",
+		"/home/apcel/git/ivb-3-14/prog/2014/ivb-3-14/Максимов А.Ю/2 Семестр/matrix.h",
+		"/home/apcel/git/ivb-3-14/prog/2014/ivb-3-14/Максимов А.Ю/2 Семестр/main.cpp",
+		"/home/apcel/git/apcel/Kursach_2Sem/main.cpp",
+		"/home/apcel/git/apcel/UchPr/2/matrix.m",
+		"/home/apcel/git/apcel/UchPr/2/main.cpp",
+		"/home/apcel/git/apcel/UchPr/2/matrix.h",
+		"/home/apcel/git/apcel/UchPr/2/matrix.cpp",
+		"/home/apcel/git/apcel/UchPr/1/MyVector2.m",
+		"/home/apcel/git/apcel/UchPr/2/matrix1.txt",
+		"/home/apcel/git/apcel/UchPr/1/main.cpp",
+		"/tmp/main.cpp",
+		"/tmp/matrix.h",
+		"/home/apcel/git/apcel/UchPr/1/MyVector.cpp",
+		"/home/apcel/git/apcel/UchPr/1/MyVector.h",
+		"/home/apcel/git/apcel/UchPr/3/f123.m",
+		"/home/apcel/git/apcel/UchPr/3/f4.m",
+		"/home/apcel/git/apcel/UchPr/3/example.m",
+		"/home/apcel/git/apcel/UchPr/3/example1.m",
+		"/home/apcel/git/apcel/UchPr/3/example2.m",
+		"/home/apcel/.config/sublime-text-3/Packages/User/matlab.sublime-build",
+		"/home/apcel/.config/sublime-text-3/Packages/Package Control/Package Control.sublime-settings",
+		"/home/apcel/git/ivb-3-14/prog/2014/ivb-3-14/Максимов А.Ю/2 Семестр/задание 2/matrix/matrix.cpp",
+		"/home/apcel/git/ivb-3-14/prog/2014/ivb-3-14/Максимов А.Ю/2 Семестр/задание 2/matrix/matrix.h",
+		"/home/apcel/git/ivb-3-14/prog/2014/ivb-3-14/Максимов А.Ю/2 Семестр/задание 2/matrix/main.cpp",
+		"/home/apcel/git/apcel/Учебная практика 1->2 курс/2/matrix.cpp",
+		"/home/apcel/git/apcel/vkbot/main.cpp",
+		"/home/apcel/git/ivb-3-14/prog/2014/ivb-3-14/Максимов А.Ю/3. Курсовая -_-/main.cpp",
+		"/home/apcel/git/apcel/Курсовая Прога 2семестр \"wget\"/main.cpp",
+		"/home/apcel/.config/sublime-text-3/Packages/User/Preferences.sublime-settings",
+		"/home/apcel/scripts/player.pl",
+		"/home/apcel/git/ivb-3-14/prog/2014/ivb-3-14/Максимов А.Ю/2 Семестр/lab7.pl",
+		"/home/apcel/git/ivb-3-14/prog/2014/ivb-3-14/Максимов А.Ю/2 Семестр/lab7.cpp",
+		"/tmp/a.in",
+		"/home/apcel/git/apcel/Учебная практика 1->2 курс/2/main.cpp",
+		"/home/apcel/git/apcel/Учебная практика 1->2 курс/2/matrix.h",
+		"/home/apcel/git/apcel/Учебная практика 1->2 курс/1/MyVector.h",
+		"/home/apcel/git/apcel/Учебная практика 1->2 курс/1/MyVector.cpp",
+		"/home/apcel/git/apcel/Учебная практика 1->2 курс/1/main.cpp",
+		"/home/apcel/git/apcel/Учебная практика 1->2 курс/2/Matrix.h",
+		"/home/apcel/git/apcel/Учебная практика 1->2 курс/2/Matrix.cpp",
+		"/home/apcel/scripts/prog/uchpr/2/Matrix.h",
+		"/home/apcel/scripts/prog/uchpr/2/Matrix.cpp",
+		"/home/apcel/scripts/prog/uchpr/2/main.cpp",
+		"/home/apcel/git/ivb-3-14/prog/2014/ivb-3-14/Максимов А.Ю/3. Курсовая -_-/src-orig/utils.c",
+		"/home/apcel/git/ivb-3-14/prog/2014/ivb-3-14/Максимов А.Ю/3. Курсовая -_-/src/main.cpp",
+		"/home/apcel/git/ivb-3-14/prog/2014/ivb-3-14/Максимов А.Ю/3. Курсовая -_-/src-orig/init.c",
+		"/home/apcel/git/ivb-3-14/prog/2014/ivb-3-14/Максимов А.Ю/3. Курсовая -_-/src-orig/host.c",
+		"/home/apcel/git/apcel/Курсовая Прога 2семестр \"wget\"/id1",
+		"/home/apcel/git/apcel/Курсовая Прога 2семестр \"wget\"/resolve.cpp",
+		"/home/apcel/.config/sublime-text-3/Packages/User/Git.sublime-settings",
+		"/home/apcel/scripts/prog/recv.cpp",
+		"/home/apcel/scripts/prog/resolve.h",
+		"/home/apcel/Desktop/Запустить The Sims 3 (с ограничением в 30 кадров).desktop",
+		"/home/apcel/scripts/prog/uchpr/2/test.cpp",
+		"/home/apcel/.config/sublime-text-3/Packages/User/c++11.sublime-build",
+		"/_make/vkfske-2.0/src/vklib.hpp",
+		"/_make/vkfske-2.0/src/vklib.cpp",
+		"/_make/vkfske-2.0/src/vkfslib.hpp",
+		"/_make/vkfske-2.0/src/vkfslib.cpp",
+		"/_make/vkfske-2.0/src/vkfske.cpp",
+		"/_make/vkfske-2.0/src/stoplog.h",
+		"/_make/vkfske-2.0/src/precompiler.hpp",
+		"/_make/vkfske-2.0/src/startlog.h",
+		"/_make/vkfske-2.0/src/log.hpp",
+		"/_make/vkfske-2.0/src/log.cpp",
+		"/_make/vkfske-2.0/src/files.hpp",
+		"/_make/vkfske-2.0/src/files.cpp",
+		"/_make/vkfske-2.0/src/exif.hpp",
+		"/_make/vkfske-2.0/src/exif.cpp",
+		"/_make/vkfske-2.0/src/dos.hpp",
+		"/_make/vkfske-2.0/src/dos.cpp",
+		"/_make/vkfske-2.0/src/conv.hpp",
+		"/_make/vkfske-2.0/src/conv.cpp",
+		"/_make/vkfske-2.0/src/cach.hpp",
+		"/_make/vkfske-2.0/src/cach.cpp",
+		"/media/tb/trash/tmp/uchpr/matrix-1.h",
+		"/media/tb/trash/Ya.Dsk/Загрузки/UchPr/uchpr rar/Matrix/c++/MatrixFile/MatrixFile.cpp",
+		"/media/tb/trash/tmp/uchpr/main-1.cpp",
+		"/home/apcel/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
+		"/home/apcel/.config/sublime-text-3/Packages/User/trailing_spaces.sublime-settings",
+		"/_make/fb2c/ui",
+		"/home/apcel/.config/sublime-text-3/Packages/TrailingSpaces/README.md",
+		"/home/apcel/.config/sublime-text-3/Packages/Default/Default (Linux).sublime-keymap",
+		"/home/apcel/scripts/prog/uchpr/1/MyVector.h",
+		"/home/apcel/scripts/prog/uchpr/1/MyVector.cpp",
+		"/home/apcel/scripts/prog/uchpr/1/main.cpp",
+		"/home/apcel/scripts/prog/uchpr/2/MyVector.cpp",
+		"/home/apcel/scripts/prog/uchpr/2/MyVector.h",
+		"/home/apcel/scripts/prog/uchpr/MyVector2.m",
+		"/home/apcel/scripts/prog/uchpr/main.cpp",
+		"/home/apcel/scripts/prog/uchpr/MyVector.cpp",
+		"/home/apcel/scripts/prog/uchpr/MyVector.h",
+		"/home/apcel/scripts/prog/uchpr/MyVector.m",
+		"/media/tb/trash/Ya.Dsk/Загрузки/UchPr/uchpr rar/Graph/Sec.m",
+		"/media/tb/trash/Ya.Dsk/Загрузки/UchPr/uchpr rar/Graph/Graph.m",
+		"/media/tb/trash/Ya.Dsk/Загрузки/UchPr/uchpr rar/Graph/gr2.m",
+		"/media/tb/trash/Ya.Dsk/Загрузки/UchPr/uchpr rar/Graph/dihot.m",
+		"/media/tb/trash/Ya.Dsk/Загрузки/UchPr/uchpr rar/Graph/gr1.m",
+		"/usr/share/applications/wine-browsedrive.desktop",
+		"/home/apcel/scripts/prog/uchpr/test.cpp",
+		"/home/apcel/scripts/prog/uchpr/myvector.cpp",
+		"/media/tb/torrents/gentoo_tor/Matlab714_MacUnix/1/Matlab.desktop",
+		"/tmp/t/AndroidManifest.xml",
+		"/home/apcel/git/2014/ivb-3-14/Шмидт М.И/Laba1.cpp",
+		"/home/apcel/git/2014/ivb-3-14/Максимов А.Ю/3. Курсовая ._./src-orig/wget.h",
+		"/_make/wget-1.16/src/warc.h",
+		"/_make/wget-1.16/src/warc.c",
+		"/home/apcel/git/2014/ivb-3-14/Максимов А.Ю/3. Курсовая ._./src-orig/utils.h",
+		"/home/apcel/git/2014/ivb-3-14/Максимов А.Ю/3. Курсовая ._./src-orig/utils.c",
+		"/home/apcel/git/2014/ivb-3-14/Максимов А.Ю/3. Курсовая ._./src-orig/url.h",
+		"/home/apcel/git/2014/ivb-3-14/Максимов А.Ю/3. Курсовая ._./src-orig/url.c",
+		"/home/apcel/git/2014/ivb-3-14/Максимов А.Ю/3. Курсовая ._./src-orig/test.h",
+		"/home/apcel/git/2014/ivb-3-14/Максимов А.Ю/3. Курсовая ._./src-orig/test.c",
+		"/home/apcel/git/2014/ivb-3-14/Максимов А.Ю/3. Курсовая ._./src-orig/sysdep.h"
+	],
+	"find":
+	{
+		"height": 27.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": true,
+		"find_history":
+		[
+			"statusfile",
+			";\n",
+			"nswap_",
+			"A",
+			"файкл",
+			"//.*",
+			"s",
+			"cout",
+			"std::cout",
+			"(*maxSize)",
+			"invert",
+			"minor",
+			"\n#",
+			"print",
+			"%s [-id][-o FILENAME][--ignore-all] ADDRESS\\n\", cmdname);",
+			"DEBUG",
+			"xmax",
+			"матрица'",
+			"№14",
+			"__test_LoadByFile",
+			"MatrixT",
+			"trans",
+			"Read",
+			"Save",
+			"Load",
+			"MatrixT",
+			"Matrix::",
+			"for each",
+			"isSymmetric",
+			"speed",
+			"minor",
+			"transposition",
+			"exit",
+			"!ignoreErrors",
+			"gethost",
+			";\n",
+			"flag",
+			"CONTENTLENGTH",
+			"fopen",
+			"));\n",
+			" =",
+			"link",
+			"link\\s",
+			"link[^-]",
+			"link",
+			"sa_data",
+			"result->protocol",
+			"PREFIX_FILENAME",
+			"MyVector",
+			"&",
+			"case k ==",
+			"_nswap_",
+			"nswap",
+			"comp",
+			"end\\n\\s*if",
+			"%pause();",
+			"index",
+			"temp",
+			"//",
+			"\\/\\/",
+			"//",
+			"findDirection",
+			"mas",
+			"vect",
+			"A",
+			"();\n",
+			"\n				",
+			";\n",
+			"nview",
+			"nview[.\\+\\;]+",
+			"nview[.\\+\\;]*",
+			"nview.*(\\+|\\;)*",
+			"nview.*(+|;)*",
+			"nview.*",
+			"nview(\\+|;)*$",
+			"nview(\\+||;)+$",
+			"nview(\\+|;)+$",
+			"nview[^$]+$",
+			"this.",
+			"count",
+			"max",
+			"min",
+			"arr",
+			"endl",
+			"cin",
+			"cout",
+			"MyVector",
+			"')\n",
+			" case Bubble: \n	  {\n        sortBubble();// Сортировка пузырьком\n        break;\n      }",
+			"optind",
+			"opt",
+			"getopt_long",
+			"TEST",
+			"((, FILE \\*)|, )fd\\)",
+			"((, FILE \\*)|, )fd)",
+			"(, FILE \\*|, )fd)",
+			"((, FILE \\*)|, )fd\\)",
+			"((, FILE \\*)?|, )fd\\)",
+			"((, FILE \\*)?| )fd\\)",
+			"\\(!(, FILE \\*)?fd\\)",
+			"!\\((, FILE \\*)?fd\\)",
+			"(, FILE \\*)?fd\\)",
+			"(FILE \\*)?fd\\)",
+			"[FILE \\*]fd\\)",
+			"fd\\)",
+			"fd)",
+			"fd",
+			"fd)",
+			"\\snum",
+			" num",
+			"\\snum",
+			"static",
+			"d",
+			"'",
+			"+"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": true,
+		"replace_history":
+		[
+			"statusFile",
+			"nswap",
+			"vect",
+			"",
+			"std::cin",
+			"std::cout",
+			"cout",
+			"maxSize",
+			"invert_",
+			"minor_",
+			"матрица '",
+			"№13",
+			"Matrix",
+			"Matrix<_Type>::",
+			"(!ignoreErrors) && (!ignoreAllErrors)",
+			"parceHost",
+			"previousTrue",
+			"contentLength",
+			"linkStruct",
+			"link_struct\\s",
+			"link_struct",
+			"MyMatrix",
+			"&&",
+			"case",
+			"nswap_",
+			"_nswap_",
+			"nswap",
+			"case",
+			"",
+			"%",
+			"vect",
+			"(*this)",
+			"this->",
+			"tempVector",
+			"countMax",
+			"countMin",
+			"(*this)",
+			"std::endl",
+			"std::cin",
+			"std::cout",
+			")",
+			"result",
+			"f",
+			""
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "main.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1203,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								901,
+								901
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/home/apcel/.config/sublime-text-3/Packages/ClangAutoComplete/ClangAutoComplete.sublime-settings",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1237,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1235,
+								1235
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/JavaScript/JSON.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "vkapi.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 740,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "vkapi.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 2857,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"tab_size": 4,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 2,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 27.0
+	},
+	"input":
+	{
+		"height": 130.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.astyle_error_message":
+	{
+		"height": 0.0
+	},
+	"output.exec":
+	{
+		"height": 139.0
+	},
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"output.unsaved_changes":
+	{
+		"height": 178.0
+	},
+	"pinned_build_system": "Packages/Makefile/Make.sublime-build",
+	"project": "untitled.sublime-project",
+	"replace":
+	{
+		"height": 50.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 150.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

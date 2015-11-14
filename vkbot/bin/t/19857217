@@ -1,1 +1,0 @@
-{"error":{"error_code":7,"error_msg":"Permission to perform this action is denied","request_params":[{"key":"oauth","value":"1"},{"key":"method","value":"groups.get"},{"key":"user_id","value":"19857217"},{"key":"extended","value":"1"},{"key":"filter","value":""},{"key":"fields","value":""},{"key":"offset","value":"0"},{"key":"count","value":"1000"}]}}

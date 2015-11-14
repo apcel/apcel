@@ -1,1 +1,0 @@
-{"error":{"error_code":10,"error_msg":"Internal server error: Database problems, try later","request_params":[{"key":"oauth","value":"1"},{"key":"method","value":"groups.get"},{"key":"user_id","value":"102831345"},{"key":"extended","value":"1"},{"key":"filter","value":""},{"key":"fields","value":""},{"key":"offset","value":"0"},{"key":"count","value":"1000"}]}}
