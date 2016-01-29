@@ -2,7 +2,7 @@ CXX=g++
 CXXFLAGS= -g -std=c++11 -O2
 # INGRESS_INTEL_BOT-CPP=`pkg-config ./tgbot-cpp.pc --cflags --libs`
 
-INGRESS_INTEL_BOT=iitc
+INGRESS_INTEL_BOT=iitc-bin
 LIBS=-lpthread\
 	-lssl\
 	-lcrypto\
