@@ -12,15 +12,17 @@ LIBS=-lpthread\
 	# -lboost_system\
 	# $(TGdBOT-CPP)\
 
-OBJS=main.o
+OBJS=main.o\
+	iitc.o
 
-all: clean $(INGRESS_INTEL_BOT)
+all: $(INGRESS_INTEL_BOT)
 
 $(INGRESS_INTEL_BOT): $(OBJS)
 	$(CXX) $(CXXFLAGS) -w $(OBJS) -o $(INGRESS_INTEL_BOT) $(LIBS)
 
 main.o: main.cpp
 	$(CXX) $(CXXFLAGS) $(LIBS) -w -c $< -o $@
-
+iitc.o: iitc.cpp
+	$(CXX) $(CXXFLAGS) $(LIBS) -w -c $< -o $@
 clean:
 	rm -f $(INGRESS_INTEL_BOT) $(OBJS)
