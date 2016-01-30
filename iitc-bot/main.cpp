@@ -13,7 +13,7 @@ rapidjson::Document loadSettings(std::string fileName) {
                              std::istreambuf_iterator<char>());
     rapidjson::Document d;
     d.Parse(jsonSettings.c_str());
-    if ( !d.IsObject()) {
+    if (d.HasParseError()) {
         std::cerr << "Troubles with parsing json settings in '" + fileName + "'"  << std::endl
                   << "Please ensure it is a correct json object" << std::endl;
         exit(1);
