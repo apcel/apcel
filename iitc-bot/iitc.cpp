@@ -1,4 +1,6 @@
+#pragma once
 #include "iitc.h"
+
 iitc::iitc(std::string SACSID, std::string headerCSRF, std::string cookieCSRF) {
     setCookieSACSID(SACSID);
     setCSRF(cookieCSRF, headerCSRF);
