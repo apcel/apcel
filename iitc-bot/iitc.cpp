@@ -38,14 +38,15 @@ rapidjson::Document iitc::request(std::string method, std::string params) {
     }
                     );
 
-    std::cout << response.text << std::endl << std::endl;
+    // std::cout << response.text << std::endl << std::endl;
 
 
     rapidjson::Document jsonResponse;
     jsonResponse.Parse(response.text.c_str());
     if (jsonResponse.HasParseError()) {
-        std::cout << response.text << std::endl;
-        assert(false);
+        std::cerr << "Error with parsing server response. See yourself:" << std::endl;
+        std::cerr << response.text << std::endl;
+        exit(2);
     };
     return jsonResponse;
 
