@@ -57,7 +57,7 @@ private:
     resonator resonators[8];
     std::string owner = "";
 
-
+    bool fullInfo = false;
     std::string raw = "";
     short resonatorsLevelSum = 0;
 };
