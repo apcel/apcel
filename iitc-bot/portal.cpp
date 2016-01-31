@@ -22,7 +22,7 @@ void portal::reset() {
     }
     resonator resonators[8];
     owner = "";
-
+    resonatorsLevelSum = 0;
 
     raw = "";
 
@@ -79,6 +79,18 @@ bool portal::parseArray(rapidjson::Value * JSON) {
             // if(JSON[0][14][3].HasMember("REMOVAL_STICKINESS"))
             // mods[i].stats.removal_stickiness=JSON[0][14][3]["REMOVAL_STICKINESS"].GetUint();
         }
+        rapidjson::Value & resonatorsJSON = JSON[0][15];
+        for (int i = 0; i < 8; i++) {
+            rapidjson::Value & resonatorJSON = resonatorsJSON[i];
+            if (resonatorJSON[1].GetInt() == 0)
+                continue;
+            resonators[i].owner = resonatorJSON[0].GetString();
+            resonators[i].level = resonatorJSON[1].GetInt();
+            resonators[i].energy = resonatorJSON[2].GetInt();
+
+            //Collect total resonators level. Can be used for alarms, for example
+            resonatorsLevelSum += resonators[i].level;
+        }
     }
     printData();
     return true;
@@ -89,7 +101,7 @@ bool portal::parseArray(rapidjson::Value * JSON) {
 
 void portal::printData() {
     std::cout << std::endl <<
-              raw << std::endl << std::endl <<
+              // raw << std::endl << std::endl <<
               "Team:          " << team << std::endl <<
               "latE6:         " << latE6 << std::endl <<
               "lngE6:         " << lngE6 << std::endl <<
@@ -98,15 +110,28 @@ void portal::printData() {
               "Resonators:    " << resCount << std::endl <<
               "Image link:    " << image << std::endl <<
               "Title:         " << title << std::endl <<
-              "Timestamp:     " << timestamp << std::endl;
+              "Timestamp:     " << timestamp << std::endl <<
+
+              "Mods:" << std::endl;
+
     for (int i = 0; i < 4; i++) {
-        std::cout << "Mod in slot " << i + 1 << ":" << std::endl;
+        std::cout << "\tMod in slot " << i + 1 << ":" << std::endl;
         if (mods[i].name == "") {
-            std::cout << "\tNot installed" << std::endl;
+            std::cout << "\t\tNot installed" << std::endl;
             continue;
         }
-        std::cout << "\tName:   " << mods[i].name << std::endl <<
-                  "\tRarity: " << mods[i].rarity << std::endl <<
-                  "\tOwner:  " << mods[i].owner << std::endl;
+        std::cout << "\t\tName:   " << mods[i].name << std::endl <<
+                  "\t\tRarity: " << mods[i].rarity << std::endl <<
+                  "\t\tOwner:  " << mods[i].owner << std::endl;
+    }
+    if (resonatorsLevelSum > 0) {
+        std::cout << "Resonators: " << std::endl;
+        for (int i = 0; i < 8; i++) {
+            std::cout << "\tResonator " << i << ":" << std::endl <<
+                      "\t\tLevel :  " << resonators[i].level <<  std::endl <<
+                      "\t\tOwner :  " << resonators[i].owner << std::endl <<
+                      "\t\tCharge:  " << resonators[i].energy << std::endl;
+        }
+        /* code */
     }
 }

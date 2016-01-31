@@ -27,9 +27,10 @@ private:
     };
 
     class resonator {
-        std::string owner;
-        short level;
-        int energy;
+    public:
+        std::string owner = "";
+        short level = 0;
+        int energy = 0;
     };
     bool parseArray(rapidjson::Value * JSON);
     bool parseObject(rapidjson::Value * JSON);
@@ -58,6 +59,7 @@ private:
 
 
     std::string raw = "";
+    short resonatorsLevelSum = 0;
 };
 /*
 "team": "R",
