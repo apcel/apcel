@@ -39,7 +39,7 @@ public:
     ~portal();
     bool parseJSON(rapidjson::Value * JSON);
     // void parseJSON(rapidjson::Document * JSON);
-
+    void reset();
     void printData();
 private:
     std::string uid = "";

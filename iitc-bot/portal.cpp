@@ -1,12 +1,33 @@
 #pragma once
 #include "portal.h"
-portal::portal() {};
+portal::portal() {reset();};
 portal::~portal() {};
+void portal::reset() {
+    uid = "";
+    team = "";
+    latE6 = 0;
+    lngE6 = 0;
+    level = 0;
+    health = 0;
+    resCount = 0;
+    image = "";
+    title = "";
+    timestamp = 0;
+
+    // modInfo mods[4];
+    for (int i = 0; i < 4; i++) {
+        mods[i].name = "";
+        mods[i].owner = "";
+        mods[i].rarity = "";
+    }
+    resonator resonators[8];
+    owner = "";
 
 
-// void portal::parseJSON(rapidjson::Document * JSON) {
-//     bool a = parseJSON(JSON);
-// }
+    raw = "";
+
+};
+
 void portal::debugJsonErr(rapidjson::Value * JSON) {
 #ifdef DEBUG
     rapidjson::StringBuffer buffer;
@@ -15,8 +36,10 @@ void portal::debugJsonErr(rapidjson::Value * JSON) {
     std::cerr << "For debugging purposes, printing serialized input json:" << std::endl <<
               buffer.GetString() << std::endl;
 #endif
-}
+};
+
 bool portal::parseJSON(rapidjson::Value * JSON) {
+    reset();
     /*..and save raw portal data*/
     rapidjson::StringBuffer buffer;
     rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
@@ -26,12 +49,7 @@ bool portal::parseJSON(rapidjson::Value * JSON) {
         assert(JSON[0].HasMember("result"));
         return parseArray(&JSON[0]["result"]);
     } else {
-
-        assert(parseArray(&JSON[0][2]));
-
-
-        /**/
-        return true;
+        return parseArray(&JSON[0][2]);
     }
     return false;
 };
@@ -52,10 +70,12 @@ bool portal::parseArray(rapidjson::Value * JSON) {
     //JSON[0][8] is ornaments
     this->timestamp = JSON[0][13].GetUint64(); //   printData();
     if (JSON->Size() > 14) {
+        rapidjson::Value & modsJSON = JSON[0][14];
         for (int i = 0; i < 4; i++) {
-            mods[i].owner   = JSON[0][14][i][0].GetString();
-            mods[i].name    = JSON[0][14][i][1].GetString();
-            mods[i].rarity  = JSON[0][14][i][2].GetString();
+            rapidjson::Value & mod = modsJSON[i];
+            mods[i].owner   = mod[0].GetString();
+            mods[i].name    = mod[1].GetString();
+            mods[i].rarity  = mod[2].GetString();
             // if(JSON[0][14][3].HasMember("REMOVAL_STICKINESS"))
             // mods[i].stats.removal_stickiness=JSON[0][14][3]["REMOVAL_STICKINESS"].GetUint();
         }
@@ -69,7 +89,7 @@ bool portal::parseArray(rapidjson::Value * JSON) {
 
 void portal::printData() {
     std::cout << std::endl <<
-              // raw << std::endl << std::endl <<
+              raw << std::endl << std::endl <<
               "Team:          " << team << std::endl <<
               "latE6:         " << latE6 << std::endl <<
               "lngE6:         " << lngE6 << std::endl <<
