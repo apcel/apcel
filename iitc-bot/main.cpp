@@ -5,9 +5,10 @@
 
 #include "rapidjson/document.h"
 #include "iitc.h"
+#include "portal.h"
 // #include "rapidjson/stringbuffer.h"
 
-rapidjson::Document loadSettings(std::string fileName) {
+rapidjson::Document parceJSONFromFile(std::string fileName) {
     std::ifstream jsonSettingsFile(fileName);
     std::string jsonSettings((std::istreambuf_iterator<char>(jsonSettingsFile)),
                              std::istreambuf_iterator<char>());
@@ -24,10 +25,18 @@ rapidjson::Document loadSettings(std::string fileName) {
 
 
 int main(int argc, char** argv) {
-    rapidjson::Document settings = loadSettings("jsonSettingsFile.json");
-    iitc iitc(settings["cookieSACSID"].GetString(), settings["headerCSRF"].GetString(), settings["cookieCSRF"].GetString());
-    rapidjson::Document response = iitc.request("getPortalDetails", "");
-    std::cout << response["result"][1].GetString() << std::endl;
+    // rapidjson::Document settings = parceJSONFromFile("jsonSettingsFile.json");
+    // iitc iitc(settings["cookieSACSID"].GetString(), settings["headerCSRF"].GetString(), settings["cookieCSRF"].GetString());
+    // rapidjson::Document response = iitc.request("getPortalDetails", "");
+    // std::cout << response["result"][1].GetString() << std::endl;
     // std::cout << response.text << std::endl;
+    portal portal;
+    rapidjson::Document portalJSON1 = parceJSONFromFile("out.json");
+    rapidjson::Document portalJSON2 = parceJSONFromFile("portal.json");
+
+    // if(!portal.parseJSON(&portalJSON))
+    //     std::cout << "Error while parsing" << std::endl;
+    if(portal.parseJSON(&portalJSON1)){};
+    if(portal.parseJSON(&portalJSON2)){};
     return 0;
 }
