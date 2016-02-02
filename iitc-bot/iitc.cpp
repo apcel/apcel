@@ -12,7 +12,7 @@ iitc::~iitc() {
 
 rapidjson::Document iitc::request(std::string method, std::string params) {
 
-    auto cookies =  cpr::Cookies
+    auto cookies = cpr::Cookies
     {
         {
             "SACSID", cookieSACSID
@@ -42,7 +42,7 @@ rapidjson::Document iitc::request(std::string method, std::string params) {
     {
         params
     };
-    auto url =                         cpr::Url
+    auto url = cpr::Url
     {
         iitcBaseURL + method
     };
@@ -52,16 +52,9 @@ rapidjson::Document iitc::request(std::string method, std::string params) {
                         body,
                         url
                     );
-
-    // std::cout << response.text << std::endl << std::endl;
-
-
     rapidjson::Document jsonResponse;
     jsonResponse.Parse(response.text.c_str());
     if (jsonResponse.HasParseError()) {
-        // std::cerr << response.
-        auto another_r = cpr::Get(cpr::Url{"http://www.httpbin.org/cookies"}, cookies);
-        std::cout << another_r.text << std::endl;
         std::cerr << "Error with parsing server response. See yourself:" << std::endl;
         std::cerr << response.text << std::endl;
         exit(2);
@@ -75,24 +68,20 @@ void iitc::setCookieSACSID(std::string SACSID) {
     cookieSACSID = SACSID;
 };
 void iitc::setCSRF(std::string CSRF) {
-    // assert(!cookie.empty());
-    // assert(!header.empty());
-    // headerCSRF = header;
+    assert(!CSRF.empty());
     cookieCSRF = CSRF;
 };
 
 long long iitc::lngToTile(long long lng1, int tilesPerEdge) {
-    float lng = static_cast<float>(lng1) / 1000000;
-    // std::cout << tilesPerEdge << " " << lng << " " << 3.1415926f << std::endl;
+    float lng = static_cast<float>(lng1) / 1e6; //portals have lngE6 coords
     float value = tilesPerEdge * (lng + 180) / 360;
     return floorf(value);
 };
 long long iitc::latToTile(long long lat1, int tilesPerEdge) {
-    float lat = static_cast<float>(lat1) / 1000000;
+    float lat = static_cast<float>(lat1) / 1e6; //portals have latE6 coords
     float sina = sin(lat * pi / 180);
     float cosa = cos(lat * pi / 180);
     float loga = log((sina + 1) / cosa);
-
     float value =  tilesPerEdge * (1 - loga / pi) / 2;
     return floorf(value);
 };
@@ -106,28 +95,3 @@ long long iitc::tileToLat(long long yTile, int tilesPerEdge) {
 std::string iitc::pointToTileId(long long x, long long y, int zoom, short level) {
     return std::to_string(zoom) + "_" + std::to_string(x) + "_" + std::to_string(y) + "_" + std::to_string(level) + "_8_100";
 };
-/*
-window.lngToTile = function(lng, params) {
-    return floor((lng + 180) / 360 * params.tilesPerEdge);
-}
-
-window.latToTile = function(lat, params) {
-    return floor((1 - log(tan(lat * pi / 180) +
-      1 / cos(lat * pi / 180)) / pi) / 2 * params.tilesPerEdge);
-}
-
-window.tileToLng = function(x, params) {
-    return x / params.tilesPerEdge * 360 - 180;
-}
-
-window.tileToLat = function(y, params) {
-    var n = pi - 2 * pi * y / params.tilesPerEdge;
-    return 180 / pi * atan(0.5 * (exp(n) - exp(-n)));
-}
-
-window.pointToTileId = function(params, x, y) {
-    //change to quadkey construction
-    //as of 2014-05-06: zoom_x_y_minlvl_maxlvl_maxhealth
-
-    return params.zoom + "_" + x + "_" + y + "_" + params.level + "_8_100";
-}*/
