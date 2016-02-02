@@ -1,9 +1,9 @@
 #pragma once
 #include "iitc.h"
 
-iitc::iitc(std::string SACSID, std::string headerCSRF, std::string cookieCSRF) {
+iitc::iitc(std::string SACSID, std::string cookieCSRF) {
     setCookieSACSID(SACSID);
-    setCSRF(cookieCSRF, headerCSRF);
+    setCSRF(cookieCSRF);
 }
 iitc::~iitc() {
 
@@ -12,17 +12,19 @@ iitc::~iitc() {
 
 rapidjson::Document iitc::request(std::string method, std::string params) {
 
-    auto response = cpr::Post(
-                        cpr::Url
-    {
-        iitcBaseURL + method
-    },
-
-    cpr::Header
+    auto cookies =  cpr::Cookies
     {
         {
-            "Cookie", cookieSACSID + cookieCSRF
+            "SACSID", cookieSACSID
         },
+
+        {
+            "csrftoken", cookieCSRF
+        }
+    };
+    auto headers = cpr::Header
+    {
+
         {
             "Accept", "application/json"
         },
@@ -30,14 +32,25 @@ rapidjson::Document iitc::request(std::string method, std::string params) {
             "Referer", "https://www.ingress.com/intel"
         },
         {
-            "X-CSRFToken", headerCSRF
+            "X-CSRFToken", cookieCSRF
+        },
+        {
+            "X-Requested-With", "XMLHttpRequest"
         }
-    },
-
-    cpr::Body
+    };
+    auto body = cpr::Body
     {
-        "{\"guid\":\"fa0838e5401643b6ac6b58b981f3994f.16\",\"v\":\"9ffe0cfdf367c491a20802d3c606d679992e8b08\"}"
-    }
+        params
+    };
+    auto url =                         cpr::Url
+    {
+        iitcBaseURL + method
+    };
+    auto response = cpr::Post(
+                        cookies,
+                        headers,
+                        body,
+                        url
                     );
 
     // std::cout << response.text << std::endl << std::endl;
@@ -46,6 +59,9 @@ rapidjson::Document iitc::request(std::string method, std::string params) {
     rapidjson::Document jsonResponse;
     jsonResponse.Parse(response.text.c_str());
     if (jsonResponse.HasParseError()) {
+        // std::cerr << response.
+        auto another_r = cpr::Get(cpr::Url{"http://www.httpbin.org/cookies"}, cookies);
+        std::cout << another_r.text << std::endl;
         std::cerr << "Error with parsing server response. See yourself:" << std::endl;
         std::cerr << response.text << std::endl;
         exit(2);
@@ -58,25 +74,33 @@ void iitc::setCookieSACSID(std::string SACSID) {
     assert(!SACSID.empty());
     cookieSACSID = SACSID;
 };
-void iitc::setCSRF(std::string cookie, std::string header) {
-    assert(!cookie.empty());
-    assert(!header.empty());
-    headerCSRF = header;
-    cookieCSRF = cookie;
+void iitc::setCSRF(std::string CSRF) {
+    // assert(!cookie.empty());
+    // assert(!header.empty());
+    // headerCSRF = header;
+    cookieCSRF = CSRF;
 };
 
-long long iitc::lngToTile(long long lng, int tilesPerEdge) {
-    return tilesPerEdge * (lng + 180) / 360;
+long long iitc::lngToTile(long long lng1, int tilesPerEdge) {
+    float lng = static_cast<float>(lng1) / 1000000;
+    // std::cout << tilesPerEdge << " " << lng << " " << 3.1415926f << std::endl;
+    float value = tilesPerEdge * (lng + 180) / 360;
+    return floorf(value);
 };
-long long iitc::latToTile(long long lat, int tilesPerEdge) {
-    return  tilesPerEdge * (1 - log(tan(lat * pi / 180)
-                    + 1 / cos(lat * pi / 180)) / pi) / 2;
+long long iitc::latToTile(long long lat1, int tilesPerEdge) {
+    float lat = static_cast<float>(lat1) / 1000000;
+    float sina = sin(lat * pi / 180);
+    float cosa = cos(lat * pi / 180);
+    float loga = log((sina + 1) / cosa);
+
+    float value =  tilesPerEdge * (1 - loga / pi) / 2;
+    return floorf(value);
 };
 long long iitc::tileToLng(long long xTile, int tilesPerEdge) {
     return xTile / tilesPerEdge * 360 - 180;
 };
 long long iitc::tileToLat(long long yTile, int tilesPerEdge) {
-    double n = pi - 2 * pi * yTile / tilesPerEdge;
+    float n = pi - 2 * pi * yTile / tilesPerEdge;
     return 180 / pi * atan(0.5 * (exp(n) - exp(-n)));
 };
 std::string iitc::pointToTileId(long long x, long long y, int zoom, short level) {

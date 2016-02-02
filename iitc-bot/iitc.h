@@ -9,19 +9,19 @@
 class iitc
 {
 public:
-    iitc(std::string SACSID, std::string headerCSRF, std::string cookieCSRF);
+    iitc(std::string SACSID, std::string cookieCSRF);
     ~iitc();
     rapidjson::Document request(std::string method, std::string params);
     void setCookieSACSID(std::string SACSID);
-    void setCSRF(std::string cookie, std::string header);
+    void setCSRF(std::string header);
 private:
     std::string cookieSACSID;
     std::string cookieCSRF;
     std::string headerCSRF;
     std::string iitcBaseURL     = "https://www.ingress.com/r/";
 
-
-    double pi = 4 * atan(1);
+    float one = 1.0f;
+    float pi = 4 * atan(one);
 public:
     int TILES_PER_EDGE[16] = {1, 1, 1, 40, 40, 80, 80, 320, 1000, 2000, 2000, 4000, 8000, 16000, 16000, 32000};
     long long lngToTile(long long lng, int tilesPerEdge);
