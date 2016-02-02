@@ -5,6 +5,8 @@
 
 #define RAPIDJSON_NOMEMBERITERATORCLASS
 #include "rapidjson/document.h"
+#include "rapidjson/filewritestream.h"
+#include "rapidjson/prettywriter.h"
 #include "iitc.h"
 #include "portal.h"
 // #include "rapidjson/stringbuffer.h"
@@ -22,7 +24,23 @@ rapidjson::Document parceJSONFromFile(std::string fileName) {
     };
     return d;
 }
-
+void saveJSONToFile(rapidjson::Document *JSON, std::string file) {
+    rapidjson::StringBuffer buffer;
+    // rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+    // rapidjson::FileWriteStream
+    // buffer.Reserve(JSON.Size());
+    FILE * output = fopen(file.c_str(), "w");
+    if (!output) {
+        std::ofstream fileCreator(file);
+        fileCreator << "";
+        fileCreator.clear();
+        output = fopen(file.c_str(), "w");
+    }
+    char writeBuffer[65536];
+    rapidjson::FileWriteStream os(output, writeBuffer, sizeof(writeBuffer));
+    rapidjson::PrettyWriter<rapidjson::FileWriteStream> writer(os);
+    JSON->Accept(writer);
+}
 
 
 int main(int argc, char** argv) {
@@ -40,13 +58,13 @@ int main(int argc, char** argv) {
         );
     std::cout << titlekeys << std::endl;
     std::string params = "{\"tileKeys\": [\"" + titlekeys + "\"],\"v\":\"9ffe0cfdf367c491a20802d3c606d679992e8b08\"}";
-        // "{\"tileKeys\":[\"15_19362_10000_0_8_100\",\"15_19362_9999_0_8_100\",\"15_19363_10000_0_8_100\",\"15_19363_9999_0_8_100\",\"15_19361_10000_0_8_100\",\"15_19361_9999_0_8_100\"],\"v\":\"9ffe0cfdf367c491a20802d3c606d679992e8b08\"}";
+    // "{\"tileKeys\":[\"15_19362_10000_0_8_100\",\"15_19362_9999_0_8_100\",\"15_19363_10000_0_8_100\",\"15_19363_9999_0_8_100\",\"15_19361_10000_0_8_100\",\"15_19361_9999_0_8_100\"],\"v\":\"9ffe0cfdf367c491a20802d3c606d679992e8b08\"}";
     std::cout << params << std::endl;
     rapidjson::Document response = iitc.request("getEntities", params);
     // std::cout << response["result"][1].GetString() << std::endl;
     // std::cout << response.text << std::endl;
     // portal portal;
-    // rapidjson::Document territoryJSON = parceJSONFromFile("territory.json");
+    // rapidjson::Document territoryJSON = parceJSONFromFile("file.txt");
     // rapidjson::Document portalJSON2 = parceJSONFromFile("portal.json");
     rapidjson::Document & territoryJSON = response;
     // if(!portal.parseJSON(&portalJSON))
@@ -91,8 +109,12 @@ int main(int argc, char** argv) {
         for (auto entities : *chunks)
             delete entities;
         delete chunks;
-    }
-
+    };
+    rapidjson::Document doc;
+    doc.SetObject();
+    rapidjson::Document::AllocatorType& allocator = doc.GetAllocator();
+    doc.AddMember("map", mapJSON, allocator);
+    saveJSONToFile(&doc, "file.txt");
     // for (auto chunks : *map)
     return 0;
 }
