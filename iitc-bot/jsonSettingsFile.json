@@ -1,0 +1,5 @@
+{
+	"google_email": "nickname on Google (e.g, for 'asdf@gmail.com' it'll be 'asdf')",
+	"google_password": "Password. remember not to share this file after adding this.",
+	"format": "'%a, %d %b %Y %T GMT' is time format for using in c++ strptime(3) for determining cookies expiration"
+}
