@@ -1,7 +1,11 @@
 #pragma once
 #include "iitc.h"
 
-iitc::iitc(std::string SACSID, std::string cookieCSRF) {
+iitc::iitc(std::string SACSID, std::string cookieCSRF, std::string expires) {
+    if(GMTtoUNIX(expires) - 100 < std::time(0)) {
+        std::cerr << "Logind?";
+        system("phantomjs phantomjs.js");
+    }
     setCookieSACSID(SACSID);
     setCSRF(cookieCSRF);
 }
@@ -95,3 +99,14 @@ long long iitc::tileToLat(long long yTile, int tilesPerEdge) {
 std::string iitc::pointToTileId(long long x, long long y, int zoom, short level) {
     return std::to_string(zoom) + "_" + std::to_string(x) + "_" + std::to_string(y) + "_" + std::to_string(level) + "_8_100";
 };
+
+time_t iitc::GMTtoUNIX(std::string time) {
+    struct tm tm;
+    char buf[255];
+    memset(&tm, 0, sizeof(struct tm));
+    time_t expiration;
+    strptime(time.c_str(), "%a, %d %b %Y %T GMT", &tm);
+    strftime(buf, sizeof(buf), "%s" , &tm);
+    expiration = atoi(buf);
+    return expiration;
+}
