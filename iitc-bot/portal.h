@@ -6,60 +6,62 @@
 class portal
 {
 private:
-    class modInfo
+  class modInfo
+  {
+  public:
+    std::string owner;
+    std::string name;
+    std::string rarity;
+    class statsStruct
     {
     public:
-        std::string owner;
-        std::string name;
-        std::string rarity;
-        class statsStruct
-        {
-        public:
-            long removal_stickiness = 0;
-            short mitigation = 0;
-            short burnout_insulation = 0;
-            long hack_speed = 0;
-            int force_amplifier = 0;
-            long hit_bonus = 0;
-            int attack_frequency = 0;
-            short outgoing_links = 0;
-        } stats;
-    };
+      long removal_stickiness = 0;
+      short mitigation = 0;
+      short burnout_insulation = 0;
+      long hack_speed = 0;
+      int force_amplifier = 0;
+      long hit_bonus = 0;
+      int attack_frequency = 0;
+      short outgoing_links = 0;
+    } stats;
+  };
 
-    class resonator {
-    public:
-        std::string owner = "";
-        short level = 0;
-        int energy = 0;
-    };
-    bool parseArray(rapidjson::Value * JSON);
-    bool parseObject(rapidjson::Value * JSON);
-    void debugJsonErr(rapidjson::Value * JSON);
-public:
-    portal();
-    ~portal();
-    bool parseJSON(rapidjson::Value * JSON);
-    // void parseJSON(rapidjson::Document * JSON);
-    void reset();
-    void printData();
-private:
-    std::string uid = "";
-    std::string team = "";
-    long latE6 = 0;
-    long lngE6 = 0;
-    short level = 0;
-    double health = 0;
-    short resCount = 0;
-    std::string image = "";
-    std::string title = "";
-    long long timestamp = 0;
-    modInfo mods[4];
-    resonator resonators[8];
+  class resonator {
+  public:
     std::string owner = "";
+    short level = 0;
+    int energy = 0;
+  };
+  bool parseArray(rapidjson::Value * JSON);
+  bool parseObject(rapidjson::Value * JSON);
+  void debugJsonErr(rapidjson::Value * JSON);
+public:
+  portal();
+  ~portal();
+  bool parseJSON(rapidjson::Value * JSON);
+  // void parseJSON(rapidjson::Document * JSON);
+  void reset();
+  void printData();
 
-    bool fullInfo = false;
-    std::string raw = "";
-    short resonatorsLevelSum = 0;
+private:
+  rapidjson::Document json;
+  std::string uid = "";
+  std::string team = "";
+  long latE6 = 0;
+  long lngE6 = 0;
+  short level = 0;
+  double health = 0;
+  short resCount = 0;
+  std::string image = "";
+  std::string title = "";
+  long long timestamp = 0;
+  modInfo mods[4];
+  resonator resonators[8];
+  std::string owner = "";
+
+  bool fullInfo = false;
+  std::string raw = "";
+  short resonatorsLevelSum = 0;
 };
 /*
 "team": "R",
