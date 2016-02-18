@@ -2,7 +2,7 @@
 #include <cpr/cpr.h>
 #include <fstream>
 #include <iostream>
-
+#include <time.h>
 #define RAPIDJSON_NOMEMBERITERATORCLASS
 #include "rapidjson/document.h"
 #include "rapidjson/filewritestream.h"
@@ -46,7 +46,12 @@ void saveJSONToFile(rapidjson::Document *JSON, std::string file) {
 int main(int argc, char** argv) {
 
     rapidjson::Document settings = parceJSONFromFile("jsonSettingsFile.json");
-    iitc iitc(settings["cookieSACSID"].GetString(),  settings["CSRF"].GetString());
+    iitc iitc(settings["cookieSACSID"].GetString(),  settings["CSRF"].GetString(), settings["expires"].GetString());
+    time_t asdf = iitc.GMTtoUNIX(std::string(settings["expires"].GetString()));
+
+
+    exit(0);
+
 
     short zoom = 15;
     std::string titlekeys =
@@ -59,14 +64,14 @@ int main(int argc, char** argv) {
     std::cout << titlekeys << std::endl;
     std::string params = "{\"tileKeys\": [\"" + titlekeys + "\"],\"v\":\"9ffe0cfdf367c491a20802d3c606d679992e8b08\"}";
     // "{\"tileKeys\":[\"15_19362_10000_0_8_100\",\"15_19362_9999_0_8_100\",\"15_19363_10000_0_8_100\",\"15_19363_9999_0_8_100\",\"15_19361_10000_0_8_100\",\"15_19361_9999_0_8_100\"],\"v\":\"9ffe0cfdf367c491a20802d3c606d679992e8b08\"}";
-    std::cout << params << std::endl;
-    rapidjson::Document response = iitc.request("getEntities", params);
+    // std::cout << params << std::endl;
+    // rapidjson::Document response = iitc.request("getEntities", params);
     // std::cout << response["result"][1].GetString() << std::endl;
     // std::cout << response.text << std::endl;
     // portal portal;
-    // rapidjson::Document territoryJSON = parceJSONFromFile("file.txt");
+    rapidjson::Document territoryJSON = parceJSONFromFile("file.txt");
     // rapidjson::Document portalJSON2 = parceJSONFromFile("portal.json");
-    rapidjson::Document & territoryJSON = response;
+    // rapidjson::Document & territoryJSON = response;
     // if(!portal.parseJSON(&portalJSON))
     //     std::cout << "Error while parsing" << std::endl;
     // if(portal.parseJSON(&portalJSON1)){};
