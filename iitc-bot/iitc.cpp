@@ -1,18 +1,42 @@
 #pragma once
 #include "iitc.h"
 
-iitc::iitc(std::string SACSID, std::string cookieCSRF, std::string expires) {
-    if(GMTtoUNIX(expires) - 100 < std::time(0)) {
-        std::cerr << "Logind?";
+iitc::iitc(std::string settingsFileName) {
+    rapidjson::Document settings = parceJSONFromFile(settingsFileName);
+    // iitc iitc(settings["cookieSACSID"].GetString(),  settings["CSRF"].GetString(), settings["expires"].GetString());
+
+    if (
+        !settings.HasMember("cookieSACSID") ||
+        !settings.HasMember("CSRF") ||
+        !settings.HasMember("expires") ||
+        GMTtoUNIX(settings["expires"].GetString()) - 100 < std::time(0)
+    ) {
         system("phantomjs phantomjs.js");
+        settings = parceJSONFromFile(settingsFileName);
+        assert(settings.HasMember("expires"));
+        assert(settings.HasMember("cookieSACSID"));
+        assert(settings.HasMember("CSRF"));
     }
-    setCookieSACSID(SACSID);
-    setCSRF(cookieCSRF);
+
+    setCookieSACSID(settings["SACSID"].GetString());
+    setCSRF(settings["cookieCSRF"].GetString());
 }
 iitc::~iitc() {
 
 }
-
+rapidjson::Document iitc::parceJSONFromFile(std::string fileName) {
+    std::ifstream jsonSettingsFile(fileName);
+    std::string jsonSettings((std::istreambuf_iterator<char>(jsonSettingsFile)),
+                             std::istreambuf_iterator<char>());
+    rapidjson::Document d;
+    d.Parse(jsonSettings.c_str());
+    if (d.HasParseError()) {
+        std::cerr << "Troubles with parsing json settings in '" + fileName + "'"  << std::endl
+                  << "Please ensure it is a correct json object" << std::endl;
+        exit(1);
+    };
+    return d;
+}
 
 rapidjson::Document iitc::request(std::string method, std::string params) {
 

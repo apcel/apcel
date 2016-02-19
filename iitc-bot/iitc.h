@@ -3,6 +3,7 @@
 #include <cpr/cpr.h>
 #include <cmath>
 #include <time.h> //gmt to utc time.
+#include <fstream>
 
 #include "rapidjson/document.h"
 #include "rapidjson/writer.h"
@@ -10,13 +11,15 @@
 class iitc
 {
 public:
-    iitc(std::string SACSID, std::string cookieCSRF, std::string expires);
+    iitc(std::string settingsFileName);
     ~iitc();
     rapidjson::Document request(std::string method, std::string params);
     void setCookieSACSID(std::string SACSID);
     void setCSRF(std::string header);
     void login();
     time_t GMTtoUNIX(std::string time);
+    rapidjson::Document parceJSONFromFile(std::string fileName);
+
 private:
     std::string cookieSACSID;
     std::string cookieCSRF;
