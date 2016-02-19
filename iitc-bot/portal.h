@@ -1,12 +1,15 @@
 #pragma once
 #include <iostream>
+#include <fstream>
 #include "rapidjson/document.h"
 #include "rapidjson/writer.h"
+#include "rapidjson/filewritestream.h"
+#include "rapidjson/prettywriter.h"
 
 class portal
 {
 private:
-  class modInfo
+/*  class modInfo
   {
   public:
     std::string owner;
@@ -25,43 +28,67 @@ private:
       short outgoing_links = 0;
     } stats;
   };
-
-  class resonator {
-  public:
-    std::string owner = "";
-    short level = 0;
-    int energy = 0;
-  };
-  bool parseArray(rapidjson::Value * JSON);
-  bool parseObject(rapidjson::Value * JSON);
+*/
+  /* class resonator {
+   public:
+     std::string owner = "";
+     short level = 0;
+     int energy = 0;
+   };*/
+  // bool parseArray(rapidjson::Value * JSON);
+  // bool parseObject(rapidjson::Value * JSON);
   void debugJsonErr(rapidjson::Value * JSON);
 public:
-  portal();
+  // portal();
+  portal(rapidjson::Value& parent);
   ~portal();
-  bool parseJSON(rapidjson::Value * JSON);
+  void updateWith(rapidjson::Value JSON);
   // void parseJSON(rapidjson::Document * JSON);
-  void reset();
+  // void reset();
   void printData();
 
 private:
+
   rapidjson::Document json;
-  std::string uid = "";
-  std::string team = "";
-  long latE6 = 0;
-  long lngE6 = 0;
-  short level = 0;
-  double health = 0;
-  short resCount = 0;
-  std::string image = "";
-  std::string title = "";
-  long long timestamp = 0;
-  modInfo mods[4];
-  resonator resonators[8];
-  std::string owner = "";
+  // std::string uid = "";
+  // std::string team = "";
+  // long latE6 = 0;
+  // long lngE6 = 0;
+  // short level = 0;
+  // double health = 0;
+  // short resCount = 0;
+  // std::string image = "";
+  // std::string title = "";
+  // long long timestamp = 0;
+  // modInfo mods[4];
+  // resonator resonators[8];
+  // std::string owner = "";
 
   bool fullInfo = false;
   std::string raw = "";
   short resonatorsLevelSum = 0;
+
+
+  std::string getTeam();
+  int getLatE6();
+  long getLngE6();
+  int getLevel();
+  double getHealth();
+  int getResCount();
+  std::string getImage();
+  std::string getTitle();
+
+
+
+
+
+  rapidjson::Document parseResonator(rapidjson::Value &arr);
+  rapidjson::Document parseMod(rapidjson::Value &arr);
+  rapidjson::Document corePortalData(rapidjson::Value &arr);
+  rapidjson::Document summaryPortalData(rapidjson::Value &arr);
+  rapidjson::Document portalDetail(rapidjson::Value &arr);
+
+
 };
 /*
 "team": "R",
