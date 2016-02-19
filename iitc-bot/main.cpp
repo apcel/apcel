@@ -3,7 +3,6 @@
 #include <fstream>
 #include <iostream>
 #include <time.h>
-#define RAPIDJSON_NOMEMBERITERATORCLASS
 #include "rapidjson/document.h"
 #include "rapidjson/filewritestream.h"
 #include "rapidjson/prettywriter.h"
@@ -45,13 +44,24 @@ void saveJSONToFile(rapidjson::Document *JSON, std::string file) {
 
 int main(int argc, char** argv) {
 
-    rapidjson::Document settings = parceJSONFromFile("jsonSettingsFile.json");
-    iitc iitc(settings["cookieSACSID"].GetString(),  settings["CSRF"].GetString(), settings["expires"].GetString());
-    time_t asdf = iitc.GMTtoUNIX(std::string(settings["expires"].GetString()));
+    // rapidjson::Document settings = parceJSONFromFile("jsonSettingsFile.json");
+    // std::string settingsFileName = "jsonSettingsFile.json";
+    // iitc iitc(settingsFileName);
+    // time_t asdf = iitc.GMTtoUNIX(std::string(settings["expires"].GetString()));
+
+
+
+
+    // rapidjson::Document portalJson = parceJSONFromFile("portal.json");
+    rapidjson::Document fullPortalJson = parceJSONFromFile("jsons/out.json");
+    portal portalObject(fullPortalJson["result"]);
+    portalObject.printData();
+    std::cout << std::endl;
 
 
     exit(0);
-
+}
+#ifdef RANDOM_STRING_NOT_DEFINED
 
     short zoom = 15;
     std::string titlekeys =
@@ -91,10 +101,10 @@ int main(int argc, char** argv) {
             rapidjson::Value  & entities = entityJSON->value;
             for (int i = 0; i < entities.Size(); i++) {
                 rapidjson::Value & tempValue = entities[i];
-                if (entity->parseJSON( & tempValue )) {
-                    chunk->push_back(entity);
-                    entity = new portal();
-                };
+                // if (entity->parseJSON( & tempValue )) {
+                chunk->push_back(entity);
+                entity = new portal();
+                // };
             };
         };
         std::cout << "#####################################################" << std::endl;
@@ -123,3 +133,4 @@ int main(int argc, char** argv) {
     // for (auto chunks : *map)
     return 0;
 }
+#endif
