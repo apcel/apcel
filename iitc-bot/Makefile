@@ -1,5 +1,5 @@
 CXX=g++
-CXXFLAGS= -g -std=c++11 -O2 -DDEBUG -march=native
+CXXFLAGS= -g -std=c++11 -O0 -DDEBUG -march=native
 # INGRESS_INTEL_BOT-CPP=`pkg-config ./tgbot-cpp.pc --cflags --libs`
 
 INGRESS_INTEL_BOT=iitc-bin
@@ -14,7 +14,8 @@ LIBS=-lpthread\
 
 OBJS=main.o\
 	iitc.o\
-	portal.o
+	portal.o\
+	multiplePortals.o
 
 all: $(INGRESS_INTEL_BOT)
 
@@ -26,6 +27,9 @@ main.o: main.cpp
 iitc.o: iitc.cpp
 	$(CXX) $(CXXFLAGS) $(LIBS) -w -c $< -o $@
 portal.o: portal.cpp
+	$(CXX) $(CXXFLAGS) $(LIBS) -w -c $< -o $@
+
+multiplePortals.o: 	multiplePortals.cpp
 	$(CXX) $(CXXFLAGS) $(LIBS) -w -c $< -o $@
 
 
