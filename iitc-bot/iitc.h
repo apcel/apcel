@@ -7,6 +7,7 @@
 
 #include "rapidjson/document.h"
 #include "rapidjson/writer.h"
+#include "portal.h"
 
 class iitc
 {
@@ -28,6 +29,11 @@ private:
 
     float one = 1.0f;
     float pi = 4 * atan(one);
+
+    std::string version_constant = "e5c8023daa723ce23479a6671c34b5c8112f9cb7";
+    std::string constructRequest(std::vector<std::string> tileKeys, std::string version);
+
+    std::vector<std::string> tempString;
 public:
     int TILES_PER_EDGE[16] = {1, 1, 1, 40, 40, 80, 80, 320, 1000, 2000, 2000, 4000, 8000, 16000, 16000, 32000};
     long long lngToTile(long long lng, int tilesPerEdge);
@@ -35,4 +41,6 @@ public:
     long long tileToLng(long long xTile, int tilesPerEdge);
     long long tileToLat(long long yTile, int tilesPerEdge);
     std::string pointToTileId(long long x, long long y, int zoom, short level);
+
+    std::vector<portal*> fetchPortals(std::vector<std::string> tiles);
 };
