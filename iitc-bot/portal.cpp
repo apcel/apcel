@@ -6,32 +6,8 @@ portal::portal( rapidjson::Value& parent) {
 
 };
 portal::~portal() {};
-/*void portal::reset() {
- uid = "";
- team = "";
- latE6 = 0;
- lngE6 = 0;
- level = 0;
- health = 0;
- resCount = 0;
- image = "";
- title = "";
- timestamp = 0;
+portal::portal() {};
 
- // modInfo mods[4];
- for (int i = 0; i < 4; i++) {
- mods[i].name = "";
- mods[i].owner = "";
- mods[i].rarity = "";
- }
- resonator resonators[8];
- owner = "";
- resonatorsLevelSum = 0;
-
- raw = "";
-
-};
-*/
 void portal::debugJsonErr(rapidjson::Value * JSON) {
 // #ifdef DEBUG
     rapidjson::StringBuffer buffer;
@@ -41,31 +17,6 @@ void portal::debugJsonErr(rapidjson::Value * JSON) {
               buffer.GetString() << std::endl;
 // #endif
 };
-/*std::string portal::getTeam() {
- return json[0][1].GetString();
-}
-int portal::getLatE6() {
- return json[0][2].GetInt();
-}
-long portal::getLngE6() {
- return json[0][3].GetUint64();
-}
-int portal::getLevel() {
- return json[0][4].GetInt();
-}
-double portal::getHealth() {
- return json[0][5].GetDouble();
-}
-int portal::getResCount() {
- return json[0][6].GetInt();
-}
-std::string portal::getImage() {
- return json[0][7].GetString();
-}
-std::string portal::getTitle() {
- return json[0][8].GetString();
-}
-*/
 void portal::updateWith(rapidjson::Value JSON) {
 
 // // reset();
@@ -133,7 +84,10 @@ void portal::printData() {
     char writeBuffer[65536];
     rapidjson::FileWriteStream os(stdout, writeBuffer, sizeof(writeBuffer));
     rapidjson::PrettyWriter<rapidjson::FileWriteStream> writer(os);
+
+    std::cout << std::endl;
     json.Accept(writer);
+    std::cout << std::endl;
 }
 
 
@@ -185,16 +139,21 @@ rapidjson::Document portal::summaryPortalData(rapidjson::Value &arr) {
     return summary;
 };
 
-rapidjson::Document portal::portalDetail(rapidjson::Value &arr) {
+rapidjson::Document portal::portalDetail(rapidjson::Value &fullArr) {
     rapidjson::Document details(rapidjson::kObjectType);
-    if ( strncmp(arr[0].GetString(), "p", 1) ) {
+    if ( !strncmp(fullArr[0].GetString(), "p", 1) ) {
+        std::cerr << "Not a portal!" << std::endl;
+        debugJsonErr(&fullArr);
         return details;
     };
+    rapidjson::Value & arr = fullArr[2];
     assert(arr.Size() <= 18);
-    std::cerr << "Here [asserted]\n";
+    // std::cerr << "Here [asserted]\n";
     details = summaryPortalData(arr);
-    std::cerr << "Here [summary got]\n";
-    std::cerr << "Size: " << arr.Size() << "\n";
+    details.AddMember("id", fullArr[0], json.GetAllocator());
+    details.AddMember("timestamp", fullArr[1], json.GetAllocator());
+    // std::cerr << "Here [summary got]\n";
+    // std::cerr << "Size: " << arr.Size() << "\n";
 
     if (arr.Size() > 14) {
         rapidjson::Value mods(rapidjson::kArrayType);
@@ -211,3 +170,75 @@ rapidjson::Document portal::portalDetail(rapidjson::Value &arr) {
     return details;
 };
 
+
+bool portal::operator < ( portal& that)
+{
+    if (this->hasFullInfo() && that.hasFullInfo())
+        return (this->getResCount() < that.getResCount());
+    else
+        return (this->getLevel() < that.getLevel());
+}
+
+ bool portal::hasFullInfo() {
+    return fullInfo;
+}
+
+ std::string portal::getTeam() {
+    if (!json.HasMember("team")) {
+        std::cerr << "Error while getting " << "team" << std::endl;
+        return "";
+    }
+    return json["team"].GetString();
+}
+ int portal::getLatE6() {
+    if (!json.HasMember("latE6")) {
+        std::cerr << "Error while getting " << "latE6" << std::endl;
+        return 0;
+    }
+    return json["latE6"].GetInt();
+}
+ long portal::getLngE6() {
+    if (!json.HasMember("lngE6")) {
+        std::cerr << "Error while getting " << "lngE6" << std::endl;
+        return 0;
+    }
+    return json["lngE6"].GetUint64();
+}
+ int portal::getLevel() {
+    if (!json.HasMember("level")) {
+        std::cerr << "Error while getting " << "level" << std::endl;
+        return 0;
+    }
+    return json["level"].GetInt();
+}
+ double portal::getHealth() {
+    if (!json.HasMember("health")) {
+        std::cerr << "Error while getting " << "health" << std::endl;
+        return 0;
+    }
+    return json["health"].GetDouble();
+}
+ int portal::getResCount() {
+    if (!json.HasMember("resCount")) {
+        std::cerr << "Error while getting " << "resCount" << std::endl;
+        return 0;
+    }
+    return json["resCount"].GetInt();
+}
+ std::string portal::getImage() {
+    if (!json.HasMember("image")) {
+        std::cerr << "Error while getting " << "image" << std::endl;
+        return "";
+    }
+    return json["image"].GetString();
+}
+ std::string portal::getTitle() {
+    if (!json.HasMember("title")) {
+        std::cerr << "Error while getting " << "title" << std::endl;
+        return "";
+    }
+    return json["title"].GetString();
+}
+ short portal::getResSum() {
+    return resonatorsLevelSum;
+}
