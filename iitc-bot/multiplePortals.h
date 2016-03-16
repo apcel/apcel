@@ -24,12 +24,18 @@ class multiplePortals
         std::vector < double        >       polyY;
         std::vector < std::string   >       tiles;
         std::vector < portal *      >       portals;
+        std::vector < double        >       constant;
+        std::vector < double        >       multiple;
     };
     // double x, y;
 
     std::vector < portalsInPolygon * > pocessedPolygons;
+    std::string jsonSettingsFile = "secure/jsonSettingsFile.json";
+    void precalc_values(portalsInPolygon * polygon);
+    bool pointInPolygon(portalsInPolygon * polygon, double x, double y);
+    int portalsWithLevel[9][2] = {{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0},{0,0}};
 public:
-    std::vector < portal *          > gotPortals;
+    std::vector < portal  *          > gotPortals;
     // multiplePortals();
     // ~multiplePortals();
 
@@ -42,4 +48,18 @@ public:
     void highestLevel(int numberOfSuch);
     void atLevel(short level);
     void wtf();
+
+
+
+
+    struct greater
+    {
+        template<class T>
+        bool operator()(T const &a, T const &b) const { return a > b; }
+    };
+    struct less
+    {
+        template<class T>
+        bool operator()(T const &a, T const &b) const { return a < b; }
+    };
 };
