@@ -1,0 +1,1 @@
+Trying to understand using of mongodb under c++
