@@ -10,7 +10,8 @@ var system = require('system'),
     google_email,
     google_password,
     startDate = new Date().getTime(),
-    oldSettings, newSettings;
+    oldSettings, newSettings,
+    jsonSettingsFile = "secure/jsonSettingsFile.json";
 
 page.loadInProgress = false;
 
@@ -115,11 +116,11 @@ var steps = [
         testReady = true;
     },
     function() { //8. Save all cookies to file
-        fs.write("jsonSettingsFile.json", JSON.stringify(newSettings, null, '\t'), "w");
+        fs.write(jsonSettingsFile, JSON.stringify(newSettings, null, '\t'), "w");
     }
 ];
 /*************************************************************************************/
-var tmp = fs.read("jsonSettingsFile.json");
+var tmp = fs.read(jsonSettingsFile);
 eval("oldSettings = " + tmp);
 newSettings = oldSettings;
 google_password = oldSettings.google_password;
@@ -127,7 +128,7 @@ google_email = oldSettings.google_email;
 
 if ((typeof(oldSettings) != "object") || (google_password === undefined) || (google_email === undefined)) {
     console.error('You must specify a json object containing at least' +
-        ' "google_email" and "google_password" variables in file "jsonSettingsFile.json"');
+        ' "google_email" and "google_password" variables in file "' + jsonSettingsFile +'"');
     phantom.exit();
 }
 
@@ -141,7 +142,7 @@ var loginLoop = setInterval(function() {
         steps[testindex]();
         testindex++;
         // window.setTimeout(shot(page, "phantom_" + startDate + "_step_" + testindex + ".png"), 50);
-        fs.write('/dev/stdout', 'V', 'w');
+        fs.write('/dev/stderr', 'V', 'w');
     } else
-        fs.write('/dev/stdout', '.', 'w');
+        fs.write('/dev/stderr', '.', 'w');
 }, 2000);
