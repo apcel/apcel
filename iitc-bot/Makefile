@@ -1,5 +1,5 @@
 CXX=g++
-CXXFLAGS= -g -std=c++11 -O0 -DDEBUG -march=native
+CXXFLAGS= -g -std=c++11 -O1 -DDEBUG -march=native
 # INGRESS_INTEL_BOT-CPP=`pkg-config ./tgbot-cpp.pc --cflags --libs`
 
 INGRESS_INTEL_BOT=iitc-bin
