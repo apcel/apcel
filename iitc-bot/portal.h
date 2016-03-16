@@ -13,7 +13,9 @@ public:
   portal();
   portal(rapidjson::Value& parent);
   ~portal();
-  void updateWith(rapidjson::Value JSON);
+  portal(const portal *);
+  portal(const portal &);
+  void updateWith(rapidjson::Value &JSON);
   // void parseJSON(rapidjson::Document * JSON);
   // void reset();
   void printData();
@@ -36,7 +38,7 @@ public:
   short getResSum();
 
   std::string getTeam();
-  int getLatE6();
+  long getLatE6();
   long getLngE6();
   int getLevel();
   double getHealth();
@@ -44,5 +46,7 @@ public:
   std::string getImage();
   std::string getTitle();
   bool operator < ( portal& that);
+  bool operator > ( portal& that);
+  void operator = ( portal& that);
   bool hasFullInfo();
 };
