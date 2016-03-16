@@ -59,15 +59,27 @@ int main(int argc, char** argv) {
     // portal portalObject(fullPortalJson["result"]);
     // portalObject.printData();
     // std::cout << std::endl;
-    std::string drawTools = "[{\"type\":\"polygon\",\"latLngs\":[{\"lat\":55.76592736299077,\"lng\":37.78829097747803},{\"lat\":55.752026,\"lng\":37.78283},{\"lat\":55.74972397348254,\"lng\":37.845325469970696},{\"lat\":55.77140746269181,\"lng\":37.83519744873047}],\"color\":\"#a24ac3\"}]";
+    // std::string drawTools = "[{\"type\":\"polygon\",\"latLngs\":[{\"lat\":55.77163075438439,\"lng\":37.83434987068176},{\"lat\":55.770417721952036,\"lng\":37.83322334289551},{\"lat\":55.76854680190691,\"lng\":37.832547426223755},{\"lat\":55.768245032200014,\"lng\":37.83345937728882},{\"lat\":55.768383846555295,\"lng\":37.836302518844604},{\"lat\":55.770556528570836,\"lng\":37.836785316467285}],\"color\":\"#a24ac3\"}]";
+    std::string drawToolsFile = argv[2];
+    
+    std::ifstream loader;
+    loader.open(drawToolsFile);
+    std::string drawTools((std::istreambuf_iterator<char>(loader)),
+                          std::istreambuf_iterator<char>());
+    loader.close();
+    std::stringstream a;
+    a << (argv[1]);
+    short levelToFind;
+    a >> levelToFind;
+
     multiplePortals territory;
     if (territory.acceptIITCPolygon(drawTools)) {
-        std::cout << "IT WORKS!!\n";
+        // std::cout << "IT WORKS!!\n";
         territory.process();
         // territory.highestLevel(7);
-        // territory.atLevel(8);
-        // territory.wtf();
-        std::cout << "IT WORKS!!\n";
+        // territory.atLevel(levelToFind);
+        territory.wtf();
+        // std::cout << "IT WORKS!!\n";
 
     } else {
         std::cerr << "Nope.\n";
