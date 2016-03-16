@@ -1,22 +1,12 @@
 #pragma once
 #include "iitc.h"
 
-iitc::iitc(std::string settingsFileName) {
-    rapidjson::Document settings = parceJSONFromFile(settingsFileName);
-    // iitc iitc(settings["cookieSACSID"].GetString(),  settings["CSRF"].GetString(), settings["expires"].GetString());
+iitc::iitc(std::string gotSettingsFileName): settingsFileName(gotSettingsFileName) {
+    // this->settingsFileName = gotSettingsFileName;
+    settings = parceJSONFromFile(settingsFileName);
 
-    if (
-        !settings.HasMember("cookieSACSID") ||
-        !settings.HasMember("CSRF") ||
-        !settings.HasMember("expires") ||
-        GMTtoUNIX(settings["expires"].GetString()) - 100 < std::time(0)
-    ) {
-        system("phantomjs phantomjs.js");
-        settings = parceJSONFromFile(settingsFileName);
-        assert(settings.HasMember("expires"));
-        assert(settings.HasMember("cookieSACSID"));
-        assert(settings.HasMember("CSRF"));
-    }
+    if (cookiesExpired())
+        reLogin();
 
     setCookieSACSID(settings["cookieSACSID"].GetString());
     setCSRF(settings["CSRF"].GetString());
@@ -24,6 +14,33 @@ iitc::iitc(std::string settingsFileName) {
 iitc::~iitc() {
 
 }
+bool iitc::cookiesExpired() {
+    settings = parceJSONFromFile(settingsFileName);
+    // iitc iitc(settings["cookieSACSID"].GetString(),  settings["CSRF"].GetString(), settings["expires"].GetString());
+
+    if ( true //for identation
+            && settings.HasMember("cookieSACSID")
+            && settings.HasMember("CSRF")
+            && settings.HasMember("expires")
+            && (GMTtoUNIX(settings["expires"].GetString()) - 100 > std::time(0))
+       ) {
+        //they are valid
+        return false;
+    }
+    return true;
+}
+void iitc::reLogin() {
+    system("phantomjs phantomjs.js");
+    settings = parceJSONFromFile(settingsFileName);
+    assert(settings.HasMember("expires"));
+    assert(settings.HasMember("cookieSACSID"));
+    assert(settings.HasMember("CSRF"));
+
+    setCookieSACSID(settings["cookieSACSID"].GetString());
+    setCSRF(settings["CSRF"].GetString());
+}
+
+
 rapidjson::Document iitc::parceJSONFromFile(std::string fileName) {
     std::ifstream jsonSettingsFile(fileName);
     std::string jsonSettings((std::istreambuf_iterator<char>(jsonSettingsFile)),
@@ -39,6 +56,8 @@ rapidjson::Document iitc::parceJSONFromFile(std::string fileName) {
 }
 
 rapidjson::Document iitc::request(std::string method, std::string params) {
+    if (cookiesExpired())
+        reLogin();
 
     auto cookies = cpr::Cookies
     {
@@ -78,15 +97,26 @@ rapidjson::Document iitc::request(std::string method, std::string params) {
                         cookies,
                         headers,
                         body,
-                        url
+                        url//,
+                        // cpr::Timeout{1000}
                     );
     rapidjson::Document jsonResponse;
     jsonResponse.Parse(response.text.c_str());
     if (jsonResponse.HasParseError()) {
         std::cerr << "Error with parsing server response [iitc.cpp ~86 line]. See yourself:" << std::endl;
         std::cerr << response.text << std::endl;
-        exit(2);
+        if (retried)
+            exit(2);
+        retried = true;
+
+        reLogin();
+        return request(method, params);
+        // std::cerr << "Request parms were: " << std::endl;
+        // std::cerr << response.url << std::endl;
+        // std::cerr << response.cookies.GetEncoded() << std::endl;
+
     };
+    retried = false;
     return jsonResponse;
 
 }
@@ -139,8 +169,7 @@ std::string iitc::constructRequest(std::vector<std::string> tileKeys, std::strin
     rapidjson::Document params;
     params.SetObject();
 
-    rapidjson::StringBuffer buffer;
-    buffer.Clear();
+
 
     // rapidjson::Document::AllocatorType & allocator = params.GetAllocator();
     rapidjson::Document::AllocatorType & allocator = params.GetAllocator();
@@ -163,84 +192,191 @@ std::string iitc::constructRequest(std::vector<std::string> tileKeys, std::strin
 
 
     // std::string constructRequest(std::vector<std::string> tileKeys, std::string version);
-    buffer.Clear();
 
+
+    rapidjson::StringBuffer buffer;
     rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
     params.Accept(writer);
-
-    // return buffer.GetString();
-    return "{\"tileKeys\":[\"15_19358_9999_0_8_100\",\"15_19360_9999_0_8_100\",\"15_19357_10003_0_8_100\",\"15_19357_10002_0_8_100\",\"15_19357_10001_0_8_100\"],\"v\":\"e5c8023daa723ce23479a6671c34b5c8112f9cb7\"}";
+    // std::cout << buffer.GetString();
+    return buffer.GetString();
+    // return "{\"tileKeys\":[\"15_19358_9999_0_8_100\",\"15_19360_9999_0_8_100\",\"15_19357_10003_0_8_100\",\"15_19357_10002_0_8_100\",\"15_19357_10001_0_8_100\"],\"v\":\"e5c8023daa723ce23479a6671c34b5c8112f9cb7\"}";
 };
 
+void iitc::shrink(std::vector<std::string> *from, std::vector<std::string> *to) {
+    if (from->size() < toShrink)
+        toShrink = from->size();
+    // std::cout << from->size() << std::endl;
+    for (int i = 0; i < toShrink; i++) {
+        // std::cout << from->back() << "\n";
+        to->push_back(from->back());
+        // std::cout << to->back() << "\n";
+
+        from->pop_back();
+        // std::cout << to->back() << "\n";
+
+    }
+
+};
 
 
 std::vector<portal*> iitc::fetchPortals(std::vector<std::string> tiles) {
     portal debugger;
-    tempString = tiles;
-// std::cout << "here";
-
     std::vector<portal*> portalsFromTiles;
-    std::string params = constructRequest(tempString, this->version_constant);
-    rapidjson::Document area = request("getEntities", params);
-
-    //get all portals
-    if (false
-            || (!area.IsObject())
-            || (!area.HasMember("result"))
-            || (!area["result"].IsObject())
-            || (!area["result"].HasMember("map"))
-            || (!area["result"]["map"].IsObject())
-       ) {
-        std::cerr << "error while getting data!\n";
-        if (!area.IsObject())
-            std::cerr << "(!area.IsObject())" << std::endl;
-        else if (!area.HasMember("result"))
-            std::cerr << "(!area.HasMember(\"result\"))" << std::endl;
-        else if (!area["result"].IsObject())
-            std::cerr << "(!area[\"result\"].IsObject())" << std::endl;
-        else if (!area["result"].HasMember("map"))
-            std::cerr << "(!area[\"result\"].HasMember(\"map\"))" << std::endl;
-        else if (!area["result"]["map"].IsObject())
-            std::cerr << "(!area[\"result\"][\"map\"].IsObject())" << std::endl;
-        debugger.debugJsonErr(&area);
-
-        exit(1);
-    }
+//reorganize
+    // std::vector<std::string> tiles;
 
 
-    rapidjson::Value & map = area["result"]["map"];
-    for (
-        rapidjson::Value::MemberIterator responsedTile = map.MemberBegin();
-        responsedTile != map.MemberEnd();
-        responsedTile++
-    ) {
-        rapidjson::Value & tileFromResponse = responsedTile->value;
-        if (false
-                || (!tileFromResponse.IsObject())
-                || (!tileFromResponse.HasMember("gameEntities"))
-                || (!tileFromResponse["gameEntities"].IsArray())
-           ) {
-            std::cerr << "error while parsing tile data! skipping..\n";
-            continue;
-        }
-        for (
-            rapidjson::SizeType numberOfEntity = 0;
-            numberOfEntity < tileFromResponse["gameEntities"].Size();
-            numberOfEntity++
-        ) {
-            std::string type = tileFromResponse["gameEntities"][numberOfEntity][2][0].GetString();
 
-            if (!strcmp(type.c_str(), "p")) //is portal
-            {
-                debugger.debugJsonErr(&tileFromResponse["gameEntities"][numberOfEntity]);
-                portal * tempPortal = new portal(tileFromResponse["gameEntities"][numberOfEntity]);
-                portalsFromTiles.push_back(tempPortal);
+// std::cout << "here";
+    tilesToRetry.clear();
+    for (int i = 0; i < 3; ++i)
+    {
+
+        int retries = 0;
+        while ( false
+                || (
+                    ( !tilesToRetry.empty() )
+                    && (retries < 5)
+                )
+                || retries < 1
+              )
+        {
+            if (tiles.empty())
+                retries++;
+            usleep(1e5 * 1); //one millisecond
+
+            ///////////////
+
+            std::vector<std::string> finalParms;
+
+            std::string symbol;
+            std::string params;
+            if (!tiles.empty()) {
+                shrink(&tiles, &finalParms);
+                symbol = ".";
+            } else {
+                shrink(&tilesToRetry, &finalParms);
+                usleep(1e6); //one second
+                symbol = "'";
             }
-            // else
-            // std::cerr << "not a portal\n";
-        };
-    };
+            if (finalParms.empty())
+                continue;
 
+            params = constructRequest(finalParms, this->version_constant);
+            // std::cout << params << "\n";
+            rapidjson::Document area = request("getEntities", params);
+
+            ////////////////
+
+
+
+            //get all portals
+            if (false
+                    || (!area.IsObject())
+                    || (!area.HasMember("result"))
+                    || (!area["result"].IsObject())
+                    || (!area["result"].HasMember("map"))
+                    || (!area["result"]["map"].IsObject())
+               ) {
+                std::cerr << "error while getting data!\n";
+                if (!area.IsObject())
+                    std::cerr << "(!area.IsObject())" << std::endl;
+                else if (!area.HasMember("result"))
+                    std::cerr << "(!area.HasMember(\"result\"))" << std::endl;
+                else if (!area["result"].IsObject())
+                    std::cerr << "(!area[\"result\"].IsObject())" << std::endl;
+                else if (!area["result"].HasMember("map"))
+                    std::cerr << "(!area[\"result\"].HasMember(\"map\"))" << std::endl;
+                else if (!area["result"]["map"].IsObject())
+                    std::cerr << "(!area[\"result\"][\"map\"].IsObject())" << std::endl;
+                debugger.debugJsonErr(&area);
+
+                exit(1);
+            }
+
+
+            bool saved = false;
+            rapidjson::Value & map = area["result"]["map"];
+            for (
+                rapidjson::Value::MemberIterator responsedTile = map.MemberBegin();
+                responsedTile != map.MemberEnd();
+                responsedTile++
+            ) {
+                rapidjson::Value & tileFromResponse = responsedTile->value;
+                std::string tileName = responsedTile->name.GetString();
+                if (false
+                        || (!tileFromResponse.IsObject())
+                        || (
+                            (
+                                (!tileFromResponse.HasMember("gameEntities"))
+                                || (!tileFromResponse["gameEntities"].IsArray())
+                            )
+                            && tileFromResponse.HasMember("error")
+                        )
+                   ) {
+                    if (!saved) {
+                        // logger.open("log", "app");
+                        logger.open("log", std::fstream::app | std::fstream::out);
+
+                        logger << std::endl << "/*//////////////////////////*/" << std::endl;
+                        rapidjson::StringBuffer buffer;
+                        rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
+                        area.Accept(writer);
+                        logger << buffer.GetString() << std::endl;
+                        logger.close();
+                        saved = true;
+                    }
+                    // std::cerr << "error while parsing " + tileName + " tile data! gonna try later..\n";
+                    debugger.debugJsonErr(&tileFromResponse);
+                    if (tileFromResponse.HasMember("error")) {
+                        tilesToRetry.push_back(tileName);
+                        if (!strcasecmp(tileFromResponse["error"].GetString(), "error"))
+                            std::cerr << tileFromResponse["error"].GetString() << "\n";
+                        std::cerr << "e";
+                    } else {
+                        std::cerr << "N";
+                    }
+
+                    continue;
+                } else {
+                    std::cerr << symbol;
+                    // tilesToRetry.delete
+                    // debugger.debugJsonErr(&tileFromResponse);
+                    // std::cerr << "Tile " + tileName + " done successfully" << std::endl;
+                    tilesToRetry.erase(std::remove(tilesToRetry.begin(), tilesToRetry.end(), tileName), tilesToRetry.end());
+                }
+                for (
+                    rapidjson::SizeType numberOfEntity = 0;
+                    numberOfEntity < tileFromResponse["gameEntities"].Size();
+                    numberOfEntity++
+                ) {
+                    std::string type = tileFromResponse["gameEntities"][numberOfEntity][2][0].GetString();
+
+                    portal * tempPortal = new portal();
+                    if (!strcmp(type.c_str(), "p")) //is portal
+                    {
+                        // debugger.debugJsonErr(&tileFromResponse["gameEntities"][numberOfEntity]);
+                        // portal tempPortal;
+                        tempPortal->updateWith(tileFromResponse["gameEntities"][numberOfEntity]);
+                        portalsFromTiles.push_back(tempPortal);
+                        // portalsFromTiles.back()->printData();
+                    } else {
+                        delete tempPortal;
+                    }
+                    // std::cerr << "not a portal\n";
+                };
+            };
+        }
+        if (!tilesToRetry.empty()) {
+            std::cerr << "could not fetch all tiles\n";
+            std::sort(tilesToRetry.begin(), tilesToRetry.end());
+            usleep(1e5); //0.1 second
+        }
+    }
+    if (!tilesToRetry.empty())
+        std::cout << "Warning! Could not fetch all data\n";
+    // for (auto i : portalsFromTiles)
+    //     i->printData();
     return portalsFromTiles;
 }
 
