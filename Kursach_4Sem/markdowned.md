@@ -45,6 +45,50 @@
 
 ###Принципы разделения пространств (namespaces, cgroups)
 Не забыть про плюсы и минусы  
+####Namespaces
+Согласно официальной документации ядра Linux, размещённой на сайте kernel.org,  
+
+    A namespace wraps a global system resource in an abstraction that
+    makes it appear to the processes within the namespace that they have
+    their own isolated instance of the global resource.  Changes to the
+    global resource are visible to other processes that are members of
+    the namespace, but are invisible to other processes.  One use of
+    namespaces is to implement containers.
+
+    Linux provides the following namespaces:
+
+        Namespace   Constant          Isolates
+        Cgroup      CLONE_NEWCGROUP   Cgroup root directory
+        IPC         CLONE_NEWIPC      System V IPC, POSIX message queues
+        Network     CLONE_NEWNET      Network devices, stacks, ports, etc.
+        Mount       CLONE_NEWNS       Mount points
+        PID         CLONE_NEWPID      Process IDs
+        User        CLONE_NEWUSER     User and group IDs
+        UTS         CLONE_NEWUTS      Hostname and NIS domain name
+
+То есть, упрощённо, namespaces позволяют ограничивать видимость некоторых глобальных ресурсов программами. Например, идентификаторов процессов (PID), что позволяет разделять области видимости для процессов, которым не требуется больше: к примеру, некоторый пакетный менеджер не требует для нормальной работы доступа к запущенному веб-браузеру. Но, в случае использования злоумышленником некоторой уязвимости, он мог бы получить к нему доступ.  
+####Cgroups
+Согласно документации,  
+
+    A cgroup is a collection of processes that are bound to a set of
+    limits or parameters defined via the cgroup filesystem.
+
+    A subsystem is a kernel component that modifies the behavior of the
+    processes in a cgroup.  Various subsystems have been implemented,
+    making it possible to do things such as limiting the amount of CPU
+    time and memory available to a cgroup, accounting for the CPU time
+    used by a cgroup, and freezing and resuming execution of the
+    processes in a cgroup.  Subsystems are sometimes also known as
+    resource controllers (or simply, controllers).
+
+    The cgroups for a subsystem are arranged in a hierarchy.  This
+    hierarchy is defined by creating, removing, and renaming
+    subdirectories within the cgroup filesystem.  At each level of the
+    hierarchy, attributes (e.g., limits) can be defined; these attributes
+    may govern or propagate to child cgroups and and their descendants in
+    the hierarchy.
+
+Таким образом, данная технология позволяет ограничить используемые процессом (или группой процессов) ресурсы вплоть до полной остановки группы (контроллер _freezer_), включая её иерархических "потомков", сообщить приложению меньшее количество оперативной памяти/процессорных ядер процессора, чем на самом деле присутствует в системе, тем самым оставив большее количество ресурсов прочим приложениям, и так далее (см. `man 7 cgroups`, раздел subsystems, для большей информации)
 
 ###Принципы контейнерной виртуализации
 А-ля "вот вам предыдущая глава, но другими словами"  
@@ -104,3 +148,4 @@ __+__Бла-бла-бла, вы всегда можете взять что-то
 3. [Установка Docker на 32х-битной системе (англ.)](http://mwhiteley.com/linux-containers/2013/08/31/docker-on-i386.html)  
 4. Примеры статей на сайте habrahabr.ru о Docker: [Поняв Docker](https://habrahabr.ru/post/277699/), [Понимая Docker](https://habrahabr.ru/post/253877/)  
 5. [Короткое объяснение некоторых принципов работы Docker (англ.)](http://blog.thoward37.me/articles/where-are-docker-images-stored/)  
+6. Документация Linux manpages: namespaces(7)
